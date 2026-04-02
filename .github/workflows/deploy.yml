@@ -1,0 +1,259 @@
+name: CI/CD to Cloud Run (grtlakecdl)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: top-cedar-471512-k3
+  PROJECT_NUMBER: 30228073381
+  REGION: us-east1
+  SERVICE_NAME: grtlakecdl
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      service_url: ${{ steps.deploy.outputs.url }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/ugtf-github-pool/providers/github-actions
+          service_account: github-runner-ugtf@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Build and push Docker image
+        id: build
+        run: |
+          IMAGE_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
+          echo "Building image: $IMAGE_TAG"
+          docker build -t "$IMAGE_TAG" .
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+          docker push "$IMAGE_TAG"
+          echo "image=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE_NAME }}
+          region: ${{ env.REGION }}
+          image: ${{ steps.build.outputs.image }}
+          wait: true
+
+  health-check:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Cloud Run deployment health
+        env:
+          SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
+        run: |
+          echo "Checking service health at $SERVICE_URL..."
+          for i in {1..12}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SERVICE_URL")
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check passed (HTTP 200)"
+              exit 0
+            fi
+            echo "Waiting for service... (status $STATUS)"
+            sleep 5
+          done
+          echo "Service did not become healthy in time."
+          exit 1
+
+  lighthouse-audit:
+    needs: [build-and-deploy, health-check]
+    runs-on: ubuntu-latest
+    outputs:
+      lighthouse_summary: ${{ steps.summary.outputs.lighthouse_summary }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Lighthouse CI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          npm install -g @lhci/cli@0.13.x
+
+      - name: Run Lighthouse audit
+        env:
+          SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
+        run: |
+          mkdir -p .lighthouseci
+
+          echo "Running Lighthouse (Desktop)..."
+          lhci collect \
+            --url="$SERVICE_URL" \
+            --numberOfRuns=1 \
+            --settings.formFactor=desktop \
+            --settings.screenEmulation.mobile=false \
+            --settings.throttlingMethod=provided || true
+
+          DESKTOP_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
+          cp "$DESKTOP_REPORT" .lighthouseci/lighthouse-desktop.json
+
+          echo "Running Lighthouse (Mobile)..."
+          lhci collect \
+            --url="$SERVICE_URL" \
+            --numberOfRuns=1 \
+            --settings.formFactor=mobile \
+            --settings.throttlingMethod=simulate || true
+
+          MOBILE_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
+          cp "$MOBILE_REPORT" .lighthouseci/lighthouse-mobile.json
+
+      - name: Extract Lighthouse scores
+        id: summary
+        run: |
+          DESKTOP_REPORT=".lighthouseci/lighthouse-desktop.json"
+          MOBILE_REPORT=".lighthouseci/lighthouse-mobile.json"
+
+          if [ ! -f "$DESKTOP_REPORT" ] || [ ! -f "$MOBILE_REPORT" ]; then
+            echo "Missing one or both Lighthouse reports."
+            exit 1
+          fi
+
+          DESKTOP_PERF=$(jq '.categories.performance.score' "$DESKTOP_REPORT")
+          DESKTOP_ACC=$(jq '.categories.accessibility.score' "$DESKTOP_REPORT")
+          DESKTOP_BP=$(jq '.categories["best-practices"].score' "$DESKTOP_REPORT")
+          DESKTOP_SEO=$(jq '.categories.seo.score' "$DESKTOP_REPORT")
+
+          MOBILE_PERF=$(jq '.categories.performance.score' "$MOBILE_REPORT")
+          MOBILE_ACC=$(jq '.categories.accessibility.score' "$MOBILE_REPORT")
+          MOBILE_BP=$(jq '.categories["best-practices"].score' "$MOBILE_REPORT")
+          MOBILE_SEO=$(jq '.categories.seo.score' "$MOBILE_REPORT")
+
+          SUMMARY="Desktop: Performance=$DESKTOP_PERF, Accessibility=$DESKTOP_ACC, BestPractices=$DESKTOP_BP, SEO=$DESKTOP_SEO | Mobile: Performance=$MOBILE_PERF, Accessibility=$MOBILE_ACC, BestPractices=$MOBILE_BP, SEO=$MOBILE_SEO"
+          echo "lighthouse_summary=$SUMMARY" >> "$GITHUB_OUTPUT"
+
+  seo-audit:
+    needs: [build-and-deploy, lighthouse-audit]
+    runs-on: ubuntu-latest
+    outputs:
+      issues_summary: ${{ steps.summary.outputs.issues_summary }}
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 lxml
+
+      - name: Run SEO audit
+        env:
+          SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
+        run: |
+          python - <<'EOF'
+          import json
+          import os
+          from urllib.parse import urljoin
+
+          import requests
+          from bs4 import BeautifulSoup
+
+          url = os.environ["SERVICE_URL"]
+          print(f"Auditing {url} for SEO issues...")
+          resp = requests.get(url, timeout=10)
+          resp.raise_for_status()
+          soup = BeautifulSoup(resp.text, "lxml")
+
+          issues = []
+          if not soup.title or not soup.title.string or not soup.title.string.strip():
+              issues.append("Missing <title>")
+          if not soup.find("meta", attrs={"name": "description"}):
+              issues.append("Missing meta description")
+          if not soup.find("h1"):
+              issues.append("Missing <h1> tag")
+
+          broken_links = []
+          for a in soup.find_all("a", href=True):
+              link = urljoin(url, a["href"])
+              if link.startswith(("tel:", "mailto:", "javascript:")):
+                  continue
+              try:
+                  r = requests.head(link, allow_redirects=True, timeout=5)
+                  if r.status_code >= 400:
+                      broken_links.append(link)
+              except Exception:
+                  broken_links.append(link)
+
+          if broken_links:
+              issues.append(f"{len(broken_links)} broken links found")
+
+          with open("seo-results.json", "w", encoding="utf-8") as f:
+              json.dump(
+                  {
+                      "url": url,
+                      "issues": issues,
+                      "broken_links": broken_links,
+                      "total_issues": len(issues),
+                  },
+                  f,
+                  indent=2,
+              )
+
+          print(f"SEO audit complete: {len(issues)} issues found.")
+          EOF
+
+      - name: Generate SEO summary
+        id: summary
+        run: |
+          SUMMARY=$(python - <<'EOF'
+          import json
+
+          with open("seo-results.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
+
+          issues = data.get("issues", [])
+          print(", ".join(issues[:3]) if issues else "No SEO issues detected")
+          EOF
+          )
+          echo "issues_summary=$SUMMARY" >> "$GITHUB_OUTPUT"
+
+  notify:
+    needs: [build-and-deploy, lighthouse-audit, seo-audit]
+    if: ${{ secrets.EMAIL_USER != '' && secrets.EMAIL_PASS != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send email summary
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASS }}
+          subject: "grtlakecdl deployment report"
+          to: ono@ugtf.org
+          from: UGTF CI Bot
+          body: |
+            Deployment completed for ${{ env.SERVICE_NAME }}
+
+            URL: ${{ needs.build-and-deploy.outputs.service_url }}
+
+            Lighthouse:
+            ${{ needs.lighthouse-audit.outputs.lighthouse_summary }}
+
+            SEO:
+            ${{ needs.seo-audit.outputs.issues_summary }}
