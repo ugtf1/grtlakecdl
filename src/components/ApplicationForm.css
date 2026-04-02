@@ -1,0 +1,230 @@
+.application-form {
+  max-width: 100%;
+  width: 70%;
+  margin: 7rem auto 2rem;
+  padding: 3rem;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,        
+    #fdf5f05b 40%,       
+    #f0f4ff71 100%     
+  );
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.form-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #121212;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.progress-step-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.progress-step {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: #555;
+  transition: background 0.3s ease, color 0.3s ease;
+  z-index: 1;
+}
+
+.progress-step.active {
+  background: #FF6E00;
+  color: #fff;
+}
+
+.progress-title {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  color: #121212;
+}
+
+.progress-divider {
+  position: absolute;
+  top: 20px; /* aligns with circle center */
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background: #ddd;
+  z-index: 0;
+}
+
+.progress-step-wrapper:not(:last-child) .progress-divider {
+  background: #ddd;
+}
+
+.progress-step-wrapper .progress-step.active ~ .progress-divider {
+  background: #FF6E00;
+}
+
+.form-section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 1.5rem 0 1rem;
+  border-bottom: 2px solid #FF6E00;
+  padding-bottom: 0.4rem;
+  color: #121212;
+}
+
+.form-subtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.2rem 0 0.8rem;
+  color: #0A3383;
+}
+
+.form-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+  width: 100%;
+  align-items: start;
+}
+
+.form-content input,
+.form-content select,
+textarea {
+  padding: 0.9rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.form-row label {
+  font-weight: 600;
+}
+
+.form-navigation {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.nav-btn {
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.nav-btn.next {
+  background: #FF6E00;
+  color: #fff;
+}
+
+.nav-btn.next:hover {
+  background: #e65c00;
+}
+
+.nav-btn.prev {
+  background: #ccc;
+  color: #121212;
+}
+
+.nav-btn.submit {
+  background: #0A3383;
+  color: #fff;
+}
+
+.nav-btn.submit:hover {
+  background: #06245c;
+}
+
+/* ✅ Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .application-form {
+    width: 85%;
+    padding: 2.5rem;
+    margin: 4rem auto 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .application-form {
+    width: 90%;
+    padding: 2rem;
+    margin: 3rem auto 2rem;
+  }
+  .form-content {
+    grid-template-columns: 1fr; /* collapse to single column */
+  }
+  .progress-bar {
+    gap: 0.5rem;
+  }
+  .progress-title {
+    font-size: 0.75rem;
+  }
+  .progress-step {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .application-form {
+    width: 90%;
+    padding: 1rem;
+    margin: 6rem auto;
+    border: #5c3e06 2px solid;
+  }
+  .form-title {
+    font-size: 1.6rem;
+  }
+  .form-section-title {
+    font-size: 1.1rem;
+  }
+  .nav-btn {
+    flex: 1; /* buttons stretch full width */
+  }
+  .form-navigation {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
