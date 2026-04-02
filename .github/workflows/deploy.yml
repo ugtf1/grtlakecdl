@@ -12,7 +12,6 @@ env:
   PROJECT_NUMBER: 30228073381
   REGION: us-east1
   SERVICE_NAME: grtlakecdl
-  SERVICE_ACCOUNT: github-runner-ugtf@top-cedar-471512-k3.iam.gserviceaccount.com
 
 jobs:
   build-and-deploy:
@@ -63,32 +62,14 @@ jobs:
   health-check:
     needs: build-and-deploy
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     steps:
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/ugtf-github-pool/providers/github-actions
-          service_account: ${{ env.SERVICE_ACCOUNT }}
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-
       - name: Verify Cloud Run deployment health
         env:
           SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
         run: |
-          ID_TOKEN=$(gcloud auth print-identity-token --audiences="$SERVICE_URL")
           echo "Checking service health at $SERVICE_URL..."
           for i in {1..12}; do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-              -H "Authorization: Bearer $ID_TOKEN" \
-              "$SERVICE_URL")
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SERVICE_URL")
             if [ "$STATUS" = "200" ]; then
               echo "Health check passed (HTTP 200)"
               exit 0
@@ -102,26 +83,11 @@ jobs:
   lighthouse-audit:
     needs: [build-and-deploy, health-check]
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     outputs:
       lighthouse_summary: ${{ steps.summary.outputs.lighthouse_summary }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/ugtf-github-pool/providers/github-actions
-          service_account: ${{ env.SERVICE_ACCOUNT }}
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
 
       - name: Install Lighthouse CI
         run: |
@@ -134,8 +100,6 @@ jobs:
           SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
         run: |
           mkdir -p .lighthouseci
-          ID_TOKEN=$(gcloud auth print-identity-token --audiences="$SERVICE_URL")
-          EXTRA_HEADERS=$(printf '{"Authorization":"Bearer %s"}' "$ID_TOKEN")
 
           echo "Running Lighthouse (Desktop)..."
           lhci collect \
@@ -143,7 +107,6 @@ jobs:
             --numberOfRuns=1 \
             --settings.formFactor=desktop \
             --settings.screenEmulation.mobile=false \
-            --settings.extraHeaders="$EXTRA_HEADERS" \
             --settings.throttlingMethod=provided || true
 
           DESKTOP_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
@@ -154,7 +117,6 @@ jobs:
             --url="$SERVICE_URL" \
             --numberOfRuns=1 \
             --settings.formFactor=mobile \
-            --settings.extraHeaders="$EXTRA_HEADERS" \
             --settings.throttlingMethod=simulate || true
 
           MOBILE_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
@@ -187,24 +149,9 @@ jobs:
   seo-audit:
     needs: [build-and-deploy, lighthouse-audit]
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     outputs:
       issues_summary: ${{ steps.summary.outputs.issues_summary }}
     steps:
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/ugtf-github-pool/providers/github-actions
-          service_account: ${{ env.SERVICE_ACCOUNT }}
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -219,7 +166,6 @@ jobs:
         env:
           SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
         run: |
-          export ID_TOKEN="$(gcloud auth print-identity-token --audiences="$SERVICE_URL")"
           python - <<'EOF'
           import json
           import os
@@ -229,9 +175,8 @@ jobs:
           from bs4 import BeautifulSoup
 
           url = os.environ["SERVICE_URL"]
-          headers = {"Authorization": f"Bearer {os.environ['ID_TOKEN']}"}
           print(f"Auditing {url} for SEO issues...")
-          resp = requests.get(url, headers=headers, timeout=10)
+          resp = requests.get(url, timeout=10)
           resp.raise_for_status()
           soup = BeautifulSoup(resp.text, "lxml")
 
@@ -249,7 +194,7 @@ jobs:
               if link.startswith(("tel:", "mailto:", "javascript:")):
                   continue
               try:
-                  r = requests.head(link, headers=headers, allow_redirects=True, timeout=5)
+                  r = requests.head(link, allow_redirects=True, timeout=5)
                   if r.status_code >= 400:
                       broken_links.append(link)
               except Exception:
