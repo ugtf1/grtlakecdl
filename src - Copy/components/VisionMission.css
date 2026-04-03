@@ -1,0 +1,210 @@
+.vision-mission {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,        
+    #e6783411 100%,       
+    #f0f4ff44 40%     
+  ); 
+  padding: 3rem 2rem;    
+  font-family: 'Inter', sans-serif;
+  max-width: 1400px;    
+  margin: 0 auto;      
+  border-radius: 12px;
+  height: auto;    
+}
+
+.vm-top-heading {
+  text-align: center;
+  font-size: 1.8rem;     
+  font-weight: 700;
+  color: #121212;
+  margin-bottom: 2rem;   
+  width: 55%;          
+  margin: 0 auto;
+  padding-bottom: 5rem;
+}
+
+.vm-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1200px;
+  align-items: stretch;   
+}
+
+.vm-card {
+  flex: 1;
+  border-radius: 8px;
+  position: relative;
+  display: flex;         
+  flex-direction: column;
+}
+
+.vm-left-card {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,        
+    #e6783411 100%,       
+    #f0f4ff44 40%     
+  );
+  padding: 1.5rem;      
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.vm-left-card,
+.vm-right-card {
+  flex: 1;
+  border-radius: 8px;
+  position: relative;
+  margin: 0 auto;       
+}
+
+.vm-small-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #121212;
+  margin-bottom: 0.5rem;
+}
+
+.vm-text1 {
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.vm-text {
+  font-size: 0.7rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  width: 70%;
+}
+
+.vm-button-heading {
+  background: #223899;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  width: fit-content;
+}
+
+.vm-lightbulb {
+  width: 320px;      
+  height: 250px;
+  position: absolute;
+  bottom: 4rem;       
+  right: -.7rem;        
+}
+
+
+.vm-right-card {
+  position: relative;
+  flex: 1;
+  border-radius: 8px;
+  background: url("/src/assets/network-overlay.png") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;     
+  opacity: 2.9;        
+}
+
+.vm-handshake {
+  width: 90%;           
+  height: 90%;           
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth transitions for all cards */
+.vm-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect: subtle lift + shadow */
+.vm-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Button headings (Mission/ Vision) */
+.vm-button-heading {
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.vm-button-heading:hover {
+  background: #2947a8;   
+  transform: scale(1.05);
+}
+
+/* Handshake image */
+.vm-handshake {
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.vm-handshake:hover {
+  transform: scale(1.03);
+  opacity: 0.95;
+}
+
+/* Lightbulb watermark */
+.vm-lightbulb {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.vm-left-card:hover .vm-lightbulb {
+  opacity: 0.2;          
+  transform: scale(1.05);
+}
+
+.vm-top-heading {
+  transition: color 0.3s ease;
+}
+
+.vm-top-heading:hover {
+  color: #FF6E00;        
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vm-cards {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .vm-handshake {
+    width: 100%;
+  }
+
+  .vm-lightbulb {
+    width: 200px;       
+    right: -2rem;
+  }
+
+  .vm-top-heading {
+    width: 90%;         
+    font-size: 1.5rem;
+  }
+
+  .vm-small-heading1 {
+    font-size: 1rem; 
+    align-items: center;   
+    text-align: center;
+  }
+
+  .vm-text1 {
+    font-size: 0.8rem;   
+    text-align: center;
+  }
+}
