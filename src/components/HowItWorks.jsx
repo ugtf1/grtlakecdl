@@ -3,7 +3,7 @@ import "./HowItWorks.css";
 
 // Import assets
 import callImg from "../assets/call.jpg";
-import advisorImg from "../assets/advisor.jpg";
+import advisorImg from "../assets/advisor.png";
 import trainingImg from "../assets/training.jpg";
 // import trucksBg from "../assets/trucks-bg.jpg";
 

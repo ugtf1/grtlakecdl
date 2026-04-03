@@ -11,7 +11,7 @@ export default function Wcu() {
     <section className="wcu">
       <div className="wcu-header">
         <h2>Why Choose Us</h2>
-        <p>More Than Training — We Help You Build a Better Future</p>
+        <p>More Than Training — We Help You Build a <br></br>Better Future</p>
       </div>
 
       <div className="wcu-body">

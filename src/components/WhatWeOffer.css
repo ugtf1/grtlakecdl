@@ -106,22 +106,22 @@
 }
 
 .wwo-btn.enroll {
-  background: #FF6E00;
+  background: #140979;
   color: #fff;
   text-decoration: none;
 }
 
 .wwo-btn.enroll:hover {
-  background: #e65c00;
+  background: #0f0946;
 }
 
 .wwo-btn.call {
-  background: #FF6E00;
+  background: #140979;
   color: #fff;
 }
 
 .wwo-btn.call:hover {
-  background: #792e10;
+  background: #0f0946;
 }
 
 /* Responsive */

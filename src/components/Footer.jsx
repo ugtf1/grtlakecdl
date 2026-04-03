@@ -4,6 +4,7 @@ import "./Footer.css";
 // Import images
 import truckImg from "../assets/footimg.png"; // replace with your truck image
 import { FaInstagram, FaTwitter, FaLinkedin, FaFacebook, FaPhone } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 export default function Footer() {
@@ -18,34 +19,25 @@ export default function Footer() {
           <div className="link-group">
             <h4>Main Page</h4>
             <ul>
-              <li>Home</li>
-              <li>About</li>
-              <li>Contact</li>
-              <li>Blog</li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/admin">Admin Page</a></li>
+              {/* <li>Blog</li> */}
             </ul>
           </div>
 
           <div className="link-group">
-            <h4>Inner Page</h4>
+            
             <ul>
-              <li>Admin Page</li>
-              <li>Sign Up</li>
+              {/* <li>Sign Up</li>
               <li>Forgot</li>
-              <li>Confirm Email</li>
-              <li>Privacy Policy</li>
+              <li>Confirm Email</li> */}
+              {/* <li>Privacy Policy</li> */}
             </ul>
           </div>
 
-          <div className="link-group">
-            <h4>Courses Pages</h4>
-            <ul>
-              <li>Style Guide</li>
-              <li>Change Log</li>
-              <li>404 Page</li>
-              <li>Licenses</li>
-              <li>Protected</li>
-            </ul>
-          </div>
+         
         </div>
 
         <div className="footer-social">

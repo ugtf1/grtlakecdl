@@ -37,9 +37,9 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
-  transition: all 0.2s ease;
-  animation: pulseGlow 1s infinite;
+  /* transition: background 0.3s ease; */
+  /* transition: all 0.2s ease; */
+  /* animation: pulseGlow 1s infinite; */
   text-decoration: none;
   font-family: 'Inter', sans-serif;
 }

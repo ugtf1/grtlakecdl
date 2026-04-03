@@ -35,6 +35,12 @@
   font-weight: 700;
 }
 
+.mission-card h2 {
+  font-size: 2.1rem;
+  width: 60%;
+  /* border-bottom: 2px solid #0A3383; */
+}
+
 .left-card h2 {
   /* font-size: 2.2rem; */
   /* width: 50%; */
@@ -53,9 +59,28 @@
 }
 
 .mission-card img {
-  width: 100%;
+  height: 150px;
+  max-width: 100%;
+  width: 1200px;
   border-radius: 8px;
   object-fit: cover;
+  /* border: 2px solid #311717; */
+}
+
+.right-card img {
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  object-fit: cover;
+  /* border: 2px solid #d80b0b; */
+}
+
+.left-card img {
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  object-fit: cover;
+  /* border: 2px solid #d80b0b; */
 }
 
 .mission-banner {

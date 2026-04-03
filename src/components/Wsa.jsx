@@ -10,73 +10,63 @@ import fastTrackImg from "../assets/fast-track.png";
 import opportunitiesImg from "../assets/job-opportunities.png";
 
 export default function Wsa() {
+  // Reusable arrow icon
+  const ArrowIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M5 12h14M13 5l7 7-7 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M5 5l7 7-7 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+
+  const cards = [
+    { img: jobImg, title: "Job Results", points: [
+      "We deliver top placement rates nationwide",
+      "Others offer no clear job outcomes"
+    ]},
+    { img: industryImg, title: "Industry Connection", points: [
+      "We connect you directly with employers",
+      "Others have little or no connection"
+    ]},
+    { img: trainingImg, title: "Hands-on Training", points: [
+      "We provide real driving experience",
+      "Others offer limited practice time"
+    ]},
+    { img: supportImg, title: "Full Support", points: [
+      "We guide you from start to job placement",
+      "Others leave you on your own after training"
+    ]},
+    { img: fastTrackImg, title: "Fast-Track Program", points: [
+      "Get job-ready in 4–6 structured weeks",
+      "Others drag out training with no clear structure"
+    ]},
+    { img: opportunitiesImg, title: "Job Opportunities", points: [
+      "We provide direct pathways to employment",
+      "Others leave you with no clear next step"
+    ]}
+  ];
+
   return (
     <section className="wsa">
       <div className="wsa-header">
-        <h2>Why We Stand Above Other CDL Schools</h2>
+        <h2>Why We Stand Above Other <br /> CDL Schools</h2>
         <p>The difference is clear when you know what to look for.</p>
       </div>
 
       <div className="wsa-grid">
-        {/* Card 1 */}
-        <div className="wsa-card">
-          <img src={jobImg} alt="Job Results" />
-          <h4>Job Results</h4>
-          <ul>
-            <li><span className="tick"></span> We deliver top placement rates nationwide</li>
-            <li><span className="tick"></span> Others offer no clear job outcomes</li>
-          </ul>
-        </div>
-
-        {/* Card 2 */}
-        <div className="wsa-card">
-          <img src={industryImg} alt="Industry Connection" />
-          <h4>Industry Connection</h4>
-          <ul>
-            <li><span className="tick"></span> We connect you directly with employers</li>
-            <li><span className="tick"></span> Others have little or no connection</li>
-          </ul>
-        </div>
-
-        {/* Card 3 */}
-        <div className="wsa-card">
-          <img src={trainingImg} alt="Hands-on Training" />
-          <h4>Hands-on Training</h4>
-          <ul>
-            <li><span className="tick"></span> We provide real driving experience</li>
-            <li><span className="tick"></span> Others offer limited practice time</li>
-          </ul>
-        </div>
-
-        {/* Card 4 */}
-        <div className="wsa-card">
-          <img src={supportImg} alt="Full Support" />
-          <h4>Full Support</h4>
-          <ul>
-            <li><span className="tick"></span> We guide you from start to job placement</li>
-            <li><span className="tick"></span> Others leave you on your own after training</li>
-          </ul>
-        </div>
-
-        {/* Card 5 */}
-        <div className="wsa-card">
-          <img src={fastTrackImg} alt="Fast-Track Program" />
-          <h4>Fast-Track Program</h4>
-          <ul>
-            <li><span className="tick"></span> Get job-ready in 4–6 structured weeks</li>
-            <li><span className="tick"></span> Others drag out training with no clear structure</li>
-          </ul>
-        </div>
-
-        {/* Card 6 */}
-        <div className="wsa-card">
-          <img src={opportunitiesImg} alt="Job Opportunities" />
-          <h4>Job Opportunities</h4>
-          <ul>
-            <li><span className="tick"></span> We provide direct pathways to employment</li>
-            <li><span className="tick"></span> Others leave you with no clear next step</li>
-          </ul>
-        </div>
+        {cards.map((card, idx) => (
+          <div className="wsa-card" key={idx}>
+            <div className="image-wrapper">
+              <img src={card.img} alt={card.title} />
+              <div className="card-icon"><ArrowIcon /></div>
+            </div>
+            <h4>{card.title}</h4>
+            <ul>
+              {card.points.map((point, i) => (
+                <li key={i}><span className="tick"></span> {point}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   );

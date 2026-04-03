@@ -4,7 +4,7 @@ import "./Mission.css";
 // Import your images
 import classroomImg from "../assets/classroom-discussion.png";
 import cabImg from "../assets/truck-cab-training.png";
-import missionImg from "../assets/mission-banner.png"; // placeholder for "Our Mission is Simple"
+import missionImg from "../assets/mission-banner.png";
 
 export default function MissionTwoCards() {
   return (

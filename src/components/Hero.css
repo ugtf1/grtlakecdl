@@ -1,38 +1,40 @@
 .hero {
-  position: relative;         
+  position: relative;
   display: flex;
-  flex-direction: column;     
+  flex-direction: column;
   min-height: 100vh;
-   background: linear-gradient(
+  overflow-x: hidden; 
+  background: linear-gradient(
     135deg,
-    #ffffff 0%,        
-    #e6783411 100%,       
-    #f0f4ff44 40%     
-  ); 
+    #ffffff 0%,
+    #e6783411 100%,
+    #f0f4ff44 40%
+  );
 }
 
 .hero-container {
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center; 
   width: 100%;
+  max-width: 1400px;  
   margin: 0 auto;
-  padding: 0;
+  padding: 0 2rem;
+  box-sizing: border-box;
 }
 
 .hero-content {
   flex: 1;
-  padding: 7rem;
+  padding: 4rem;      
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 5rem;
+  margin-top: 0;      
   position: relative;
   z-index: 1;
   animation: fadeInLeft 1s ease-out;
 }
 
-/* Orange gradient overlay */
 .hero-content::before {
   content: "";
   position: absolute;
@@ -50,11 +52,12 @@
 }
 
 .hero-content h1 {
-  font-size: 2.2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  font-size: 2.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;   
   font-family: 'Geist', sans-serif;
   animation: fadeUp 1.2s ease-out;
+  /* border: teal 2px solid; */
 }
 
 p, .subtext, .trust-top {
@@ -66,7 +69,8 @@ p, .subtext, .trust-top {
   color: #555;
   display: flex;
   align-items: center;
-  margin: 1rem 0;
+  margin: 1rem 0; 
+  margin-top: 3rem;    
 }
 
 .glow-dot {
@@ -78,28 +82,13 @@ p, .subtext, .trust-top {
   box-shadow: 0 0 10px #00ff40, 
               0 0 20px #00ff40;
   animation: pulseGlowDot 1s infinite; 
-  
 }
 
-/* Keyframes for trust bullet glow */
 @keyframes pulseGlowDot {
-  0% {
-    box-shadow: 0 0 8px #00ff40,
-                0 0 16px #00ff40;
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 15px #00ff40,
-                0 0 30px #00ff40;
-    transform: scale(1.2);         
-  }
-  100% {
-    box-shadow: 0 0 8px #00ff40,
-                0 0 16px #00ff40;
-    transform: scale(1);
-  }
+  0% { box-shadow: 0 0 8px #00ff40, 0 0 16px #00ff40; transform: scale(1); }
+  50% { box-shadow: 0 0 15px #00ff40, 0 0 30px #00ff40; transform: scale(1.2); }
+  100% { box-shadow: 0 0 8px #00ff40, 0 0 16px #00ff40; transform: scale(1); }
 }
-
 
 .subtext {
   font-size: 1.2rem;
@@ -114,19 +103,20 @@ p, .subtext, .trust-top {
   animation: fadeUp 1.8s ease-out;
 }
 
-/* Apply Now button with glowing pulse */
 .btn-apply {
-  padding: 2rem 1.6rem;
-  border-radius: 17px;
+  display: inline-flex;         
+  align-items: center;          
+  justify-content: center;      
+  padding: 0.8rem 1.6rem;       
+  border-radius: 24px;
   border: none;
   background: #ff6e00;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
-  transition: all 0.2s ease;
-  animation: pulseGlow 1s infinite;
+  transition: all 0.8s ease;
+  animation: pulseGlow 4s infinite;
   text-decoration: none;
   font-family: 'Inter', sans-serif;
 }
@@ -137,7 +127,6 @@ p, .subtext, .trust-top {
   box-shadow: 0 0 20px #ff6e00;
 }
 
-/* Call button */
 .btn-call {
   background: white;
   color: #ff6e00;
@@ -157,63 +146,36 @@ p, .subtext, .trust-top {
   color: white;
   transform: scale(1.05);
   box-shadow: 0 4px 12px #ff6e00;
-  text-decoration: none;   
 }
 
-
 .hero-image {
-  flex: 1.5;
-  height: 100vh;
-  margin-top: 0;
-  animation: fadeInRight 1.5s ease-out;
+  flex: 1;
+  max-height: 90vh;   
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-image img {
   width: 100%;
-  height: 100%;
+  height: auto;     
   object-fit: cover;
   border-radius: 0;
 }
 
-/* Keyframes */
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-50px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(50px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Animations */
+@keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 10px #FF6E00,
-                0 0 20px #FF6E00;
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 20px #FF6E00,
-                0 0 40px #FF6E00;
-    transform: scale(1.05);
-  }
-  100% {
-    box-shadow: 0 0 10px #FF6E00,
-                0 0 20px #ff6f005e;
-    transform: scale(1);
-  }
-
+  0% { box-shadow: 0 0 10px #FF6E00, 0 0 20px #FF6E00; transform: scale(1); }
+  50% { box-shadow: 0 0 20px #FF6E00, 0 0 40px #FF6E00; transform: scale(1.05); }
+  100% { box-shadow: 0 0 10px #FF6E00, 0 0 20px #ff6f005e; transform: scale(1); }
 }
 
 .trust-bottom-container {
   width: 100%;
   text-align: center;
-  padding: -6rem 0;
   position: absolute;       
   bottom: 0;
   left: 0;
@@ -228,116 +190,42 @@ p, .subtext, .trust-top {
   font-family: 'Poppins', sans-serif;
 }
 
-
-/* Responsive Design */
+/* Large Desktop Screens */
+@media (min-width: 1600px) {
+  .hero-container { max-width: 1600px; padding: 0 3rem; }
+  .hero-content { padding: 5rem; }
+  .hero-content h1 { font-size: 3rem; }
+  .subtext { font-size: 1.4rem; max-width: 800px; margin: 0 auto; }
+  .hero-image { flex: 1; max-width: 700px; }
+}
 
 /* Tablets */
 @media (max-width: 1024px) {
-  .hero-content {
-    margin-top: 6rem;
-    padding: 5rem;
-  }
-
-  .hero-content h1 {
-    font-size: 2.5rem;
-  }
-
-  .subtext {
-    font-size: 1rem;
-  }
-
-  .hero-image {
-    flex: 1;
-    height: auto;
-  }
+  .hero-content { margin-top: 6rem; padding: 5rem; }
+  .hero-content h1 { font-size: 2.5rem; }
+  .subtext { font-size: 1rem; }
+  .hero-image { flex: 1; height: auto; }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    margin-top: -60px;
-  }
-
-  .hero-container {
-    flex-direction: column;
-  }
-
-  .hero-content {
-    margin-top: 5rem;
-    padding: 1.5rem;
-    text-align: center;
-    align-items: center;
-    padding: 5rem;
-  }
-
-  .hero-content h1 {
-    font-size: 2rem;
-  }
-
-  .subtext {
-    font-size: 0.95rem;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .btn-apply, .btn-call {
-    width: 100%;
-    text-align: center;
-  }
-
-  .hero-image {
-    height: 50vh;
-    margin-top: 1rem;
-  }
-
-  .hero-image img {
-    height: 100%;
-    object-fit: cover;
-  }
+  .hero { flex-direction: column; margin-top: -60px; }
+  .hero-container { flex-direction: column; }
+  .hero-content { margin-top: 5rem; padding: 2rem; text-align: center; align-items: center; }
+  .hero-content h1 { font-size: 2rem; }
+  .subtext { font-size: 0.95rem; }
+  .hero-buttons { flex-direction: column; gap: 0.8rem; }
+  .btn-apply, .btn-call { width: 100%; text-align: center; }
+  .hero-image { height: 50vh; margin-top: 1rem; }
+  .hero-image img { height: 100%; object-fit: cover; }
 }
 
 /* Small Mobile */
 @media (max-width: 480px) {
-  .hero-content h1 {
-    font-size: 1.6rem;
-    width: 80vw;
-  }
-  
-  .subtext {
-    font-size: 0.85rem;
-  }
-  
-  .trust-top {
-    width: 80vw;
-    justify-content: center;
-
-  }
-  
-  .trust-bottom-container {
-    padding: 20rem 0;
-    width: 80vw;
-    padding-left: 3rem;
-  }
-
-.trust-bottom {
-  padding: 5rem 0;
-}
-
-.btn-call {
-  width: 7rem;
-}
-
-.trust-top {
-  width: 90vw;
-  justify-content: center;
-}
-
-  .btn-apply, .btn-call {
-    font-size: 0.9rem;
-    padding: 0.7rem 1rem;
-  }
+  .hero-content h1 { font-size: 1.6rem; width: 80vw; }
+  .subtext { font-size: 0.85rem; }
+  .trust-top { width: 90vw; justify-content: center; }
+  .trust-bottom-container { width: 100%; padding: 2rem 0; }
+  .btn-call { width: 7rem; }
+  .btn-apply, .btn-call { font-size: 0.9rem; padding: 0.7rem 1rem; }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import "./VisionMission.css";
 
 // Import assets
-import handshakeImg from "../assets/handshake.jpg";
+import handshakeImg from "../assets/handshake.png";
 import lightbulbIcon from "../assets/lightbulb.png";
 // import networkOverlay from "../assets/network-overlay.png";
 

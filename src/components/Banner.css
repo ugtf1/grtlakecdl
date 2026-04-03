@@ -29,16 +29,16 @@
 
 .banner-btn {
   padding: 0.8rem 1.6rem;
-  border-radius: 17px;
+  border-radius: 25px;
   border: none;
   background: #ff6e00;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
-  transition: all 0.2s ease;
-  animation: pulseGlow 1s infinite;
+  /* transition: background 0.3s ease; */
+  /* transition: all 0.2s ease; */
+  /* animation: pulseGlow 1s infinite; */
   text-decoration: none;
   font-family: 'Inter', sans-serif;
 }

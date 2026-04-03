@@ -15,7 +15,7 @@
 
 .vm-top-heading {
   text-align: center;
-  font-size: 1.8rem;     
+  font-size: 2.2rem;     
   font-weight: 700;
   color: #121212;
   margin-bottom: 2rem;   
@@ -57,12 +57,19 @@
   overflow: hidden;
 }
 
-.vm-left-card,
-.vm-right-card {
-  flex: 1;
-  border-radius: 8px;
-  position: relative;
-  margin: 0 auto;       
+.vm-card.vm-left-card {
+  display: flex;
+  flex-direction: column;   
+  gap: 0.8rem;            
+  padding: 1rem;            
+  margin: 0 auto;           
+  max-width: 600px;         
+}
+
+.vm-card.vm-left-card h2,
+.vm-card.vm-left-card h3,
+.vm-card.vm-left-card p {
+  margin: 0.1rem 0;         
 }
 
 .vm-small-heading {
@@ -72,18 +79,30 @@
   margin-bottom: 0.5rem;
 }
 
+.vm-small-heading1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #121212;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  /* border: teal 2px solid; */
+}
+
 .vm-text1 {
   font-size: 0.875rem;
   color: #555;
   margin-bottom: 1.5rem;
   width: 100%;
+  /* border: teal 2px solid; */
 }
 
 .vm-text {
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: #555;
   margin-bottom: 1.5rem;
-  width: 70%;
+  width: 60%;
+  /* border: teal 2px solid; */
 }
 
 .vm-button-heading {
@@ -102,7 +121,7 @@
   width: 320px;      
   height: 250px;
   position: absolute;
-  bottom: 4rem;       
+  bottom: 5rem;       
   right: -.7rem;        
 }
 
