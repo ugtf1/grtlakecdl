@@ -55,6 +55,15 @@
   margin-bottom: 0.4rem;
   cursor: pointer;
   transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff6e00;
 }
 
 .link-group li:hover {

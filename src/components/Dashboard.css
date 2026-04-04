@@ -1,18 +1,22 @@
-/* General dashboard container */
+/* ===========================
+   Dashboard Container
+   =========================== */
 .dashboard {
   width: 100%;
   padding: 1rem;
-  box-sizing: border-box;
   margin: 7rem 0;
-   background: linear-gradient(
+  box-sizing: border-box;
+  background: linear-gradient(
     135deg,
-    #ffffff 0%,        
-    #e6783411 100%,       
-    #f0f4ff44 40%     
-  ); 
+    #ffffff 0%,
+    #e6783411 100%,
+    #f0f4ff44 40%
+  );
 }
 
-/* Pipeline header */
+/* ===========================
+   Pipeline Header & Stages
+   =========================== */
 .pipeline-header {
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +63,7 @@
   box-shadow: 0 0 12px rgba(255,255,255,0.6);
 }
 
-/* Stage colors */
+/* Stage Colors */
 .pipeline-stage.leads { background: #f57c00; }
 .pipeline-stage.leads::after { border-left-color: #f57c00; }
 
@@ -69,30 +73,31 @@
 .pipeline-stage.applied { background: #2196f3; }
 .pipeline-stage.applied::after { border-left-color: #2196f3; }
 
-.pipeline-stage.approved { background: #1be222; color: #fff; }
+.pipeline-stage.approved { background: #1be222; }
 .pipeline-stage.approved::after { border-left-color: #1be222; }
 
-.pipeline-stage.pending { background: #4b534c; color: #fff; }
+.pipeline-stage.pending { background: #4b534c; }
 .pipeline-stage.pending::after { border-left-color: #4b534c; }
 
-/* Table wrapper */
+/* ===========================
+   Tables
+   =========================== */
 .table-wrapper {
-  margin: 1.5rem auto;
+  margin: 1rem auto; /* reduced spacing */
   padding: 0 1rem;
   max-width: 100%;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
-/* Table styling */
 .styled-table {
   width: 100%;
+  min-width: 650px;
   border-collapse: collapse;
   font-size: 0.95rem;
   border-radius: 12px;
+  border: 4px solid #240e0e;
   overflow: hidden;
   margin: 0 auto;
-  min-width: 650px; 
-  border: 4px solid #240e0e;
 }
 
 .styled-table th {
@@ -116,10 +121,12 @@
   transition: background 0.3s ease;
 }
 
-/* Card wrapper */
+/* ===========================
+   Cards
+   =========================== */
 .card {
   max-width: 95%;
-  margin: 2rem auto;
+  margin: 1rem auto; /* reduced from 2rem */
   padding: 1.5rem;
   background: #fff;
   border-radius: 12px;
@@ -128,14 +135,21 @@
 
 .card h2 {
   margin-bottom: 1rem;
-  text-align: left;
   padding-left: 1rem;
   font-size: 1.3rem;
   font-weight: 600;
   color: #333;
+  text-align: left;
 }
 
-/* Contact form */
+/* Special spacing for Submitted Applications */
+.card.submitted-applications {
+  margin-top: 0.5rem;
+}
+
+/* ===========================
+   Contact Form
+   =========================== */
 .contact-card {
   max-width: 800px;
   margin: 2rem auto;
@@ -186,15 +200,17 @@
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s ease;
-  white-space: nowrap; 
-  display: inline-block; 
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .contact-btn:hover {
   background: #e9a67a;
 }
 
-/* Modal overlay */
+/* ===========================
+   Modal
+   =========================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -235,14 +251,15 @@
 .modal .contact-btn {
   background: #1b3d99;
   color: #fff;
-  border: none;
 }
 
 .modal .contact-btn:hover {
   background: #121a61;
 }
 
-/* Charts */
+/* ===========================
+   Charts
+   =========================== */
 .charts {
   display: flex;
   flex-wrap: wrap;
@@ -255,22 +272,12 @@
   flex: 1 1 300px;
   max-width: 500px;
   padding: 20px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.charts canvas {
-  max-height: 300px;
-}
-
-/* 📱 Tablet adjustments */
+/* ===========================
+   Responsive Adjustments
+   =========================== */
 @media (max-width: 768px) {
-
-  .styled-table {
-    font-size: 0.8rem;
-    min-width: 550px; 
-  }
   .pipeline-header {
     flex-direction: column;
     align-items: stretch;
@@ -303,13 +310,12 @@
     width: 95%;
     padding: 1rem;
   }
-
 }
 
-/* 📱 Extra small screens */
 @media (max-width: 480px) {
   .styled-table {
     font-size: 0.75rem;
+    min-width: 450px;
   }
 
   .styled-table th,
@@ -328,26 +334,7 @@
   }
 
   .contact-btn {
-    width: 100%; 
-  }
-
-   .styled-table {
-    font-size: 0.75rem;
-    min-width: 450px; 
-  }
-
-  .styled-table th,
-  .styled-table td {
-    padding: 8px;
-  }
-
-  .card h2 {
-    font-size: 1rem;
-    padding-left: 0.5rem;
-  }
-
-  .contact-btn {
-    width: 100%; 
+    width: 100%;
     text-align: center;
   }
 }

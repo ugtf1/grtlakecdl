@@ -63,24 +63,44 @@
 /* Responsive */
 @media (max-width: 992px) {
   .about-gallery {
-    flex-direction: row;   
-    flex-wrap: wrap;       
-    gap: 1rem;
+    flex-direction: row;  
+    flex-wrap: nowrap;         
+    justify-content: space-between; 
+    gap: 0.5rem;
+    width: 100%;           
   }
 
   .about-card {
-    flex: 1 1 45%;         
+    flex: 1 1 auto;          
+    min-width: 0;           
+    max-width: 100%;        
+  }
+
+  .about-card img {
+    width: 100%;              
+    height: auto;             
+    object-fit: cover;
   }
 }
 
 @media (max-width: 600px) {
   .about-gallery {
     flex-direction: row;   
-    flex-wrap: wrap;       
-    gap: 1rem;
+    flex-wrap: nowrap;     
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;          
   }
 
   .about-card {
-    flex: 1 1 45%;        
+    flex: 1 1 auto;           
+    min-width: 0;         
+    max-width: 100%;          
+  }
+
+  .about-card img {
+    width: 100%;            
+    height: auto;             
+    object-fit: cover;
   }
 }

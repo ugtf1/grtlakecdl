@@ -10,7 +10,7 @@ export default function Hero() {
   <div className="hero-container">
     <div className="hero-content">
       <p className="trust-top">
-        <span className="glow-dot"></span> Trusted by 20,000+ Happy Earners
+        <span className="glow-dot"></span> Trusted by 1000s of CDL graduates
       </p>
 
       <h1>Struggling with money? Your high-paying CDL path starts here.”</h1>

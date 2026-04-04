@@ -81,7 +81,7 @@ export default function ApplicationForm() {
             <h2 className="form-section-title">Driving History</h2>
 
             <label>Do you have commercial driving experience?</label>
-            <div className="form-row">
+            <div className="form-row form-tarea">
               <label><input type="checkbox" /> Yes</label>
               <label><input type="checkbox" /> No</label>
             </div>
@@ -151,11 +151,13 @@ export default function ApplicationForm() {
               "Have you ever been convicted of an offense involving the use of drugs or alcohol?",
               "Have you ever tested positive on any drug test, tested at a breath alcohol concentration level of 0.02% or greater, or refused to take a required test?",
               "Have you ever committed any other violations of DOT drug and alcohol testing regulations?"
-            ].map((q, idx) => (
-              <div className="form-row" key={idx}>
+            ].map((q) => (
+              <div className="form-row">
                 <label>{q}</label>
-                <label><input type="checkbox" /> Yes</label>
-                <label><input type="checkbox" /> No</label>
+                <div className="checkbox-group">
+                  <label><input type="checkbox" /> YES</label>
+                  <label><input type="checkbox" /> NO</label>
+                </div>
               </div>
             ))}
 
@@ -256,17 +258,17 @@ export default function ApplicationForm() {
             </div>
 
             <h3 className="form-subtitle">Applicant Questionnaire</h3>
-            <input type="text" placeholder="How soon do you want to start your new career?" />
-            <div className="form-row">
+            <textarea placeholder="How soon do you want to start your new career?" />
+            <div className="form-row tarea">
               <label><input type="checkbox" /> Family Support: Yes</label>
               <label><input type="checkbox" /> No</label>
             </div>
-            <input type="text" placeholder="Why are you interested in becoming a Professional Driver?" />
+            <textarea placeholder="Why are you interested in becoming a Professional Driver?" />
             <div className="form-row">
               <label><input type="checkbox" /> Employment within 2 weeks: Yes</label>
               <label><input type="checkbox" /> No</label>
             </div>
-            <input type="text" placeholder="If no, please explain why not" />
+            <textarea placeholder="If no, please explain why not" />
 
             <h3 className="form-subtitle">Student Acknowledgement & Signature</h3>
             <p>

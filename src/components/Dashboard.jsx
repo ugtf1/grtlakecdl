@@ -12,6 +12,7 @@ import {
   LinearScale
 } from "chart.js";
 import "./Dashboard.css";
+import Pipeline from "./Pipeline"; 
 
 ChartJS.register(
   Title,
@@ -49,7 +50,7 @@ const Dashboard = () => {
   const [selectedStage, setSelectedStage] = useState("Leads");
 
   const stages = [
-    { name: "Leads", color: "#f57c00" },
+    { name: "Leads", color: "#723e09" },
     { name: "Contacted", color: "#ff9800" },
     { name: "Applied", color: "#2196f3" },
     { name: "Approved", color: "#4caf50" },
@@ -76,40 +77,48 @@ const Dashboard = () => {
     ]
   };
 
-  // Line chart: visitors per date
-  const dates = [...new Set(visitors.map(v => v.date))].sort();
+  // Line chart: Visit Conversion Rate (Jan–May)
   const lineData = {
-    labels: dates,
-    datasets: stages.map(stage => ({
-      label: stage.name,
-      data: dates.map(
-        d => visitors.filter(v => v.date === d && v.stages.includes(stage.name)).length
-      ),
-      borderColor: stage.color,
-      backgroundColor: stage.color,
-      fill: false,
-      tension: 0.3
-    }))
+    labels: ["January", "February", "March", "April", "May"],
+    datasets: [
+      {
+        label: "Visit Conversion Rate",
+        data: [2620, 4812, 3513, 312, 815],
+        borderColor: "#2196f3",
+        backgroundColor: "rgba(33, 150, 243, 0.2)",
+        fill: true,
+        tension: 0.3,
+        pointBackgroundColor: "#2196f3",
+        pointBorderColor: "#fff",
+        pointRadius: 5,
+      }
+    ]
   };
 
   return (
     <div className="dashboard">
-      <div className="pipeline-header">
-        {stages.map(stage => {
-          const count = visitors.filter(v => v.stages.includes(stage.name)).length;
-          return (
-            <div
-              key={stage.name}
-              className={`pipeline-stage ${stage.name.toLowerCase()} ${selectedStage === stage.name ? "active" : ""}`}
-              onClick={() => setSelectedStage(stage.name)}
-            >
-              {stage.name} ({count})
-            </div>
-          );
-        })}
+      {/* Pipeline cards */}
+      <Pipeline
+        selectedStage={selectedStage}
+        setSelectedStage={setSelectedStage}
+        stages={stages}
+        visitors={visitors}
+      />
+
+      {/* Charts immediately after pipeline */}
+      <div className="charts">
+        <section className="card">
+          <h2>Leads Distribution (Pie)</h2>
+          <Pie data={pieData} />
+        </section>
+
+        <section className="card">
+          <h2>Visit Conversion Rate</h2>
+          <Line data={lineData} />
+        </section>
       </div>
 
-      {/* Visitor details */}
+      {/* Leads section */}
       <section className="card">
         <h2>{selectedStage}</h2>
         <div className="table-wrapper">
@@ -137,7 +146,9 @@ const Dashboard = () => {
               ))}
               {filteredVisitors.length === 0 && (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: "center" }}>No visitors in this stage</td>
+                  <td colSpan="6" style={{ textAlign: "center" }}>
+                    No visitors in this stage
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -145,7 +156,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* Contact Messages */}
+      {/* Contact Messages after Leads */}
       <section className="card">
         <h2>Contact Messages</h2>
         <div className="table-wrapper">
@@ -169,28 +180,10 @@ const Dashboard = () => {
                   <td>{m.date}</td>
                 </tr>
               ))}
-              {messages.length === 0 && (
-                <tr>
-                  <td colSpan="5" style={{ textAlign: "center" }}>No messages received</td>
-                </tr>
-              )}
             </tbody>
           </table>
         </div>
       </section>
-
-      {/* Charts */}
-      <div className="charts">
-        <section className="card">
-          <h2>Leads Distribution (Pie)</h2>
-          <Pie data={pieData} />
-        </section>
-
-        <section className="card">
-          <h2>Leads Trend Over Time (Line)</h2>
-          <Line data={lineData} />
-        </section>
-      </div>
     </div>
   );
 };

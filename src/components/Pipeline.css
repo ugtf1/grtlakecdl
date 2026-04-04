@@ -1,0 +1,58 @@
+.pipeline-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pipeline-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pipeline-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.pipeline-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #ff6e00;
+}
+
+.pipeline-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #2b2727;
+}
+
+.pipeline-card p {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.pipeline-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.3rem;
+}
+
+.pipeline-indicator {
+  font-size: 0.85rem;
+  color: #4caf50; /* green for positive trend */
+  font-weight: 600;
+}
+
+/* Active card highlight */
+.pipeline-card.active {
+  border: 2px solid #ff6e00;
+}

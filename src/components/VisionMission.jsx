@@ -21,7 +21,7 @@ export default function VisionMission() {
             We Change Lives Through Career-Focused Training
           </h2>
           <p className="">
-            With over 25 years of experience, Great Lake CDL Academy helps
+            With over 25 years of experience, Great Lakes CDL Academy helps
             everyday people gain the skills, support, and job opportunities
             needed to build stable and rewarding careers.
           </p>
