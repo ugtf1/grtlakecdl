@@ -46,7 +46,7 @@ export default function Footer() {
           <FaLinkedin className="social-icon" />
           <FaFacebook className="social-icon" />
           <div className="footer-contact">
-            <FaPhone /> <span>+1 (314) 484-6208</span>
+            <FaPhone /> <span>+1 (313) 474-9777</span>
           </div>
         </div>
       </div>

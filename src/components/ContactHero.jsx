@@ -15,14 +15,17 @@ export default function ContactHero() {
 
       {/* Contact Form */}
       <form className="contact-form">
-        <div className="form-group">
-          <label>First Name</label>
-          <input type="text" placeholder="Ex. James" />
+        <div className="form-row">
+          <div className="form-group half-width">
+            <label>First Name</label>
+            <input type="text" placeholder="Ex. James" />
         </div>
-        <div className="form-group">
+        <div className="form-group half-width">
           <label>Last Name</label>
           <input type="text" placeholder="Ex. Walker" />
+          </div>
         </div>
+
         <div className="form-group">
           <label>Phone Number</label>
           <input type="text" placeholder="Ex. (225) 454-2586" />
@@ -40,26 +43,27 @@ export default function ContactHero() {
         </button>
       </form>
 
+
       {/* Contact Info Cards */}
       <div className="contact-info">
         <div className="info-card">
           <FaPhoneAlt className="info-icon" />
           <h4>Give Us a Call</h4>
-          <p>(233)-454-6125</p>
+          <p>(313)-474-9777</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
 
         <div className="info-card">
           <FaEnvelope className="info-icon" />
           <h4>Send Us Email</h4>
-          <p>Greatlakedcl21@gmail.com</p>
+          <p>info@greatlakescdl.com</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
 
         <div className="info-card">
           <FaMapMarkerAlt className="info-icon" />
           <h4>Our Location</h4>
-          <p>1543 Michigan, USA</p>
+          <p>6575 West Burner Highway, Michigan, USA</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
       </div>

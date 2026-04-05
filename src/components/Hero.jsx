@@ -22,7 +22,7 @@ export default function Hero() {
         <Link to="/Application-Form" className="btn-apply">
           Enroll Now
         </Link>
-        <a href="tel:+1234567890" className="btn-call">
+        <a href="tel:+13134749777" className="btn-call">
           Call Now
         </a>
       </div>

@@ -21,7 +21,8 @@ export default function Wsa() {
   const cards = [
     { img: jobImg, title: "Job Results", points: [
       "We deliver top placement rates nationwide",
-      "Others offer no clear job outcomes"
+      "No experience required; training starts day 1."
+      // "Others offer no clear job outcomes"
     ]},
     { img: industryImg, title: "Industry Connection", points: [
       "We connect you directly with employers",
@@ -29,18 +30,21 @@ export default function Wsa() {
     ]},
     { img: trainingImg, title: "Hands-on Training", points: [
       "We provide real driving experience",
-      "Others offer limited practice time"
+      "Others offer limited practice time",
+      "Refresher courses availability"
     ]},
     { img: supportImg, title: "Full Support", points: [
       "We guide you from start to job placement",
+      "Call us for financing support",
       "Others leave you on your own after training"
     ]},
     { img: fastTrackImg, title: "Fast-Track Program", points: [
-      "Get job-ready in 4–6 structured weeks",
+      "Job ready in 2-6 structured weeks.",
       "Others drag out training with no clear structure"
     ]},
     { img: opportunitiesImg, title: "Job Opportunities", points: [
       "We provide direct pathways to employment",
+      "Call us for more information",
       "Others leave you with no clear next step"
     ]}
   ];
@@ -49,7 +53,7 @@ export default function Wsa() {
     <section className="wsa">
       <div className="wsa-header">
         <h2>Why We Stand Above Other <br /> CDL Schools</h2>
-        <p>The difference is clear when you know what to look for.</p>
+        <p>A leading CDL training academy in Michigan</p>
       </div>
 
       <div className="wsa-grid">

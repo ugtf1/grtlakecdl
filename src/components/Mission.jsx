@@ -31,8 +31,7 @@ export default function MissionTwoCards() {
         
         <h3>Want Results You Can Actually Count On?</h3>
         <p>
-          Our commitment to results isn’t just a promise—it’s proven. With multiple national-level
-          records in job placement within the trucking industry, we take pride in turning training
+          Our commitment to results isn’t just a promise—it’s proven. With multiple focus in job placement within the trucking industry, we take pride in turning training
           into real employment opportunities for our graduates.
         </p>
       </div>

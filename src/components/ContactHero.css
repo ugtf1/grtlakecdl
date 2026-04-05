@@ -28,21 +28,34 @@
 
 /* Contact form */
 .contact-form {
-  max-width: 700px;
-  margin: 8.5rem auto 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  text-align: left;
+  max-width: 600px;        /* keeps form at a nice readable width */
+  margin: 2rem auto;       /* centers it horizontally */
+  padding: 2rem;
+  background: #fff;        /* optional: add a subtle background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  flex: 1;
+}
+
+.form-group.half-width {
+  flex: 1; /* each takes half the row */
 }
 
 .form-group.full-width {
-  grid-column: span 2;
+  width: 100%;
 }
 
 .form-group label {
@@ -52,15 +65,19 @@
   margin-bottom: 0.5rem;
 }
 
-.form-group input,
-.form-group textarea {
-  padding: 0.8rem;
-  border: 1px solid #ccc;
+.contact-form input,
+.contact-form textarea {
+  padding: 0.9rem 1.2rem;
   border-radius: 8px;
+  border: 1px solid #ccc;
   font-size: 1rem;
-  font-family: inherit;
-  width: 100%; 
+  width: 100%;
   box-sizing: border-box;
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
 }
 
 .form-group textarea {
@@ -69,21 +86,18 @@
 }
 
 .submit-btn {
-  grid-column: span 2;
-  padding: 1rem;
-  background: #1c2388;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
+  padding: 0.9rem 1.5rem;
   border-radius: 8px;
+  border: none;
+  background: #0A3383;
+  color: #fff;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .submit-btn:hover {
-  background: #3c28f1;
-  transform: translateY(-2px);
+  background: #06245c;
 }
 
 /* Contact Info Cards */

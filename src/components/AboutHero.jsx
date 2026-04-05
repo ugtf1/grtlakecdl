@@ -15,7 +15,7 @@ export default function About() {
             Change Your Future—<span className="highlight">Get your CDL</span>
         </h1>
         <p>
-            Hands-on CDL training, expert instructors, and a proven path to real job opportunities.
+            hands-on training and job opportunities focus
         </p>
     </div>
 

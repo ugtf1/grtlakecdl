@@ -5,7 +5,7 @@ export default function Stats() {
   return (
     <section className="stats">
       <div className="stats-item">
-        <h2>15+</h2>
+        <h2>25+</h2>
         <p>Years of Experience</p>
       </div>
       <div className="stats-item">
@@ -13,11 +13,11 @@ export default function Stats() {
         <p>Students Trained</p>
       </div>
       <div className="stats-item">
-        <h2>90%</h2>
+        <h2>98%</h2>
         <p>Job Placement Rate</p>
       </div>
       <div className="stats-item">
-        <h2>160+</h2>
+        <h3>Class A 160 Class B 40</h3>
         <p>Hours Program Completion Time</p>
       </div>
     </section>
