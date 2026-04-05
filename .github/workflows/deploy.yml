@@ -249,7 +249,7 @@ jobs:
           username: ${{ env.EMAIL_USER }}
           password: ${{ env.EMAIL_PASS }}
           subject: "grtlakecdl deployment report"
-          to: ono@ugtf.org
+          to: ono@ugtf.org, chukseo@gmail.com
           from: UGTF CI Bot
           body: |
             Deployment completed for ${{ env.SERVICE_NAME }}
