@@ -5,7 +5,6 @@ import "./HowItWorks.css";
 import callImg from "../assets/call.webp";
 import advisorImg from "../assets/advisor.webp";
 import trainingImg from "../assets/training.webp";
-// import trucksBg from "../assets/trucks-bg.jpg";
 
 export default function HowItWorks() {
   return (
