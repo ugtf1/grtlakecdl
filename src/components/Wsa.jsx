@@ -2,12 +2,12 @@ import React from "react";
 import "./Wsa.css";
 
 // Import your images
-import jobImg from "../assets/job-results.png";
-import industryImg from "../assets/industry-connection.png";
-import trainingImg from "../assets/hands-on-training.png";
-import supportImg from "../assets/full-support.png";
-import fastTrackImg from "../assets/fast-track.png";
-import opportunitiesImg from "../assets/job-opportunities.png";
+import jobImg from "../assets/job-results.webp";
+import industryImg from "../assets/industry-connection.webp";
+import trainingImg from "../assets/hands-on-training.webp";
+import supportImg from "../assets/full-support.webp";
+import fastTrackImg from "../assets/fast-track.webp";
+import opportunitiesImg from "../assets/job-opportunities.webp";
 
 export default function Wsa() {
   // Reusable arrow icon

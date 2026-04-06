@@ -3,8 +3,8 @@ import "./WhatWeOffer.css";
 import { Link } from "react-router-dom";
 
 // Import images
-import trainingImg from "../assets/training-program.png";
-import careerImg from "../assets/career-support.png";
+import trainingImg from "../assets/training-program.webp";
+import careerImg from "../assets/career-support.webp";
 
 export default function WhatWeOffer() {
   return (

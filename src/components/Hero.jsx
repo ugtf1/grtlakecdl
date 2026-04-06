@@ -1,6 +1,6 @@
 import React from "react";
 import "./Hero.css";
-import truckDriverImg from "../assets/heroimg2.png";
+import truckDriverImg from "../assets/heroimg2.webp";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 

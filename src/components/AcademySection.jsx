@@ -2,9 +2,9 @@ import React from "react";
 import "./AcademySection.css";
 
 // Import images
-import img1 from "../assets/community.png";
-import img2 from "../assets/guidance.png";
-import img3 from "../assets/future.png";
+import img1 from "../assets/community.webp";
+import img2 from "../assets/guidance.webp";
+import img3 from "../assets/future.webp";
 import { Link } from "react-router-dom";
 
 export default function AcademySection() {

@@ -2,7 +2,7 @@ import React from "react";
 import "./Footer.css";
 
 // Import images
-import truckImg from "../assets/footimg.png"; // replace with your truck image
+import truckImg from "../assets/footimg.webp"; 
 import { FaInstagram, FaTwitter, FaLinkedin, FaFacebook, FaPhone } from "react-icons/fa";
 import { Link } from "react-router-dom";
 

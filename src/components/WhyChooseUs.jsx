@@ -2,10 +2,10 @@ import React from "react";
 import "./WhyChooseUs.css";
 
 // Import icons
-import recordIcon from "../assets/record.png";
-import instructorIcon from "../assets/instructor.png";
-import truckIcon from "../assets/truck.png";
-import partnershipIcon from "../assets/partnership.png";
+import recordIcon from "../assets/record.webp";
+import instructorIcon from "../assets/instructor.webp";
+import truckIcon from "../assets/truck.webp";
+import partnershipIcon from "../assets/partnership.webp";
 
 export default function WhyChooseUs() {
   return (

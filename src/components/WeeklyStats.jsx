@@ -2,8 +2,8 @@ import React from "react";
 import "./WeeklyStats.css";
 
 // Import images
-import earningsImg from "../assets/w1.png";   
-import trucksImg from "../assets/w2.jpg";       
+import earningsImg from "../assets/w1.webp";   
+import trucksImg from "../assets/w2.webp";       
 
 export default function WeeklyStats() {
   return (

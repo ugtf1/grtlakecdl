@@ -2,8 +2,8 @@ import React from "react";
 import "./Wcu.css";
 
 // Import your images/icons
-import leftImg1 from "../assets/left-img1.jpg";
-import leftImg2 from "../assets/left-img2.png";
+import leftImg1 from "../assets/left-img1.webp";
+import leftImg2 from "../assets/left-img2.webp";
 import { FaBriefcase, FaTruck, FaChalkboardTeacher, FaHandsHelping } from "react-icons/fa";
 
 export default function Wcu() {

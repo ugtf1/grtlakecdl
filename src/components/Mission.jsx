@@ -2,9 +2,9 @@ import React from "react";
 import "./Mission.css";
 
 // Import your images
-import classroomImg from "../assets/classroom-discussion.png";
-import cabImg from "../assets/truck-cab-training.png";
-import missionImg from "../assets/mission-banner.png";
+import classroomImg from "../assets/classroom-discussion.webp";
+import cabImg from "../assets/truck-cab-training.webp";
+import missionImg from "../assets/mission-banner.webp";
 
 export default function MissionTwoCards() {
   return (

@@ -2,8 +2,8 @@ import React from "react";
 import "./VisionMission.css";
 
 // Import assets
-import handshakeImg from "../assets/handshake.png";
-import lightbulbIcon from "../assets/lightbulb.png";
+import handshakeImg from "../assets/handshake.webp";
+import lightbulbIcon from "../assets/lightbulb.webp";
 // import networkOverlay from "../assets/network-overlay.png";
 
 export default function VisionMission() {

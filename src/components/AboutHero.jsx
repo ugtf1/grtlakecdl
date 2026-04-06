@@ -2,10 +2,10 @@ import React from "react";
 import "./AboutHero.css";
 
 // Import your images
-import classroomImg from "../assets/classroom.jpg";
-import hardhatImg from "../assets/hardhat.jpg";
-import groupImg from "../assets/group.jpg";
-import cabImg from "../assets/cab.jpg";
+import classroomImg from "../assets/classroom.webp";
+import hardhatImg from "../assets/hardhat.webp";
+import groupImg from "../assets/group.webp";
+import cabImg from "../assets/cab.webp";
 
 export default function About() {
   return (

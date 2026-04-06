@@ -2,16 +2,16 @@ import React from "react";
 import "./Testimonials.css";
 
 // Import images properly
-import t1 from "../assets/t1.png";
-import t2 from "../assets/t2.png";
-import t3 from "../assets/t3.png";
-import t4 from "../assets/t4.png";
-import t5 from "../assets/t5.png";
-import t6 from "../assets/t6.png";
-import t7 from "../assets/t7.png";
-import t8 from "../assets/t8.png";
-import t9 from "../assets/t9.png";
-import t10 from "../assets/t10.png";
+import t1 from "../assets/t1.webp";
+import t2 from "../assets/t2.webp";
+import t3 from "../assets/t3.webp";
+import t4 from "../assets/t4.webp";
+import t5 from "../assets/t5.webp";
+import t6 from "../assets/t6.webp";
+import t7 from "../assets/t7.webp";
+import t8 from "../assets/t8.webp";
+import t9 from "../assets/t9.webp";
+import t10 from "../assets/t10.webp";
 
 const testimonials = [
   {
