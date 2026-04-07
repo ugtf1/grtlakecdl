@@ -12,10 +12,8 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-
         setHidden(true);
       } else {
-    
         setHidden(false);
       }
     };
@@ -31,29 +29,39 @@ export default function Navbar() {
         <span className="navbar-brand">Great Lake CDL</span>
       </div>
 
+      {/* Hamburger Icon */}
       <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         <span className={menuOpen ? "bar open" : "bar"}></span>
         <span className={menuOpen ? "bar open" : "bar"}></span>
         <span className={menuOpen ? "bar open" : "bar"}></span>
       </div>
 
+      {/* Navbar Links */}
       <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
         <div className="navbar-center">
-          <NavLink to="/" className="nav-link">Home</NavLink>
-          <NavLink to="/about" className="nav-link">About Us</NavLink>
-          <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
+          <NavLink to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Home</NavLink>
+          <NavLink to="/about" className="nav-link" onClick={() => setMenuOpen(false)}>About Us</NavLink>
+          <NavLink to="/contact" className="nav-link" onClick={() => setMenuOpen(false)}>Contact Us</NavLink>
         </div>
 
         <div className="navbar-right">
           {isAuthenticated ? (
             <>
-              <NavLink to="/admin" className="btn-admin">Admin</NavLink>
-              <button onClick={logout} className="btn-logout">Logout</button>
+              <NavLink to="/admin" className="btn-admin" onClick={() => setMenuOpen(false)}>Admin</NavLink>
+              <button
+                onClick={() => {
+                  logout();
+                  setMenuOpen(false);
+                }}
+                className="btn-logout"
+              >
+                Logout
+              </button>
             </>
           ) : (
-            <NavLink to="/admin-login" className="btn-admin">Sign in as Admin</NavLink>
+            <NavLink to="/admin-login" className="btn-admin" onClick={() => setMenuOpen(false)}>Sign in as Admin</NavLink>
           )}
-          <NavLink to="/application-form" className="btn-apply">Apply Now</NavLink>
+          <NavLink to="/application-form" className="btn-apply" onClick={() => setMenuOpen(false)}>Apply Now</NavLink>
         </div>
       </div>
     </nav>

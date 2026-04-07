@@ -93,6 +93,7 @@
 }
 
 .btn-admin {
+  display: none;
   background: transparent;
   border: 1.5px solid #FF6E00;
   padding: 0.7rem 1.6rem;
