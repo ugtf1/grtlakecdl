@@ -7,7 +7,7 @@ export default function Admin() {
     <div>
       {/* <Pipeline /> */}
       <Dashboard />
-      <Application />
+      {/* <Application /> */}
     </div>
   );
 }

@@ -211,7 +211,7 @@
 /* ===========================
    Modal
    =========================== */
-.modal-overlay {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -223,7 +223,7 @@
   align-items: center;
 }
 
-.modal {
+.modal-content {
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
@@ -237,11 +237,15 @@
   color: #333;
 }
 
+
+
+
+
 .modal p {
   margin: 0.5rem 0;
 }
 
-.modal button {
+.modal-actions {
   padding: 10px 16px;
   border-radius: 6px;
   font-weight: bold;
@@ -272,7 +276,10 @@
   flex: 1 1 300px;
   max-width: 500px;
   padding: 20px;
+  max-height: 350px;   /* 🔑 limit chart height */
+  overflow-y: auto;    /* 🔑 scroll if chart exceeds height */
 }
+
 
 /* ===========================
    Responsive Adjustments

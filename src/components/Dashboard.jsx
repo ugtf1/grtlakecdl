@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Pie, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -25,29 +25,11 @@ ChartJS.register(
   LinearScale
 );
 
-const INITIAL_VISITORS = [
-  { id: 1, name: "Jane Dominuc", origin: "Google", email: "jane@example.com", phone: "+2348012345678", stages: ["Leads", "Applied", "Approved"], date: "Nov 2 2025" },
-  { id: 2, name: "John Tray", origin: "Social Media", email: "john@example.com", phone: "+2348098765432", stages: ["Leads"], date: "Nov 3 2025" },
-  { id: 3, name: "Mary Johnson", origin: "Referral", email: "mary@example.com", phone: "+2348023456789", stages: ["Leads", "Pending"], date: "Nov 4 2025" },
-  { id: 4, name: "David Musa", origin: "Direct", email: "david@example.com", phone: "+2348056789123", stages: ["Leads", "Applied", "Contacted", "Approved"], date: "Nov 5 2025" },
-  { id: 5, name: "John Smith", origin: "Social Media", email: "john@example.com", phone: "+2348098765432", stages: ["Leads", "Contacted"], date: "Nov 6 2025" },
-  { id: 6, name: "Mary Haze", origin: "Referral", email: "mary@example.com", phone: "+2348023456789", stages: ["Leads", "Applied"], date: "Nov 7 2025" },
-  { id: 7, name: "David Karl", origin: "Direct", email: "david@example.com", phone: "+2348056789123", stages: ["Leads", "Applied", "Approved"], date: "Nov 8 2025" },
-  { id: 8, name: "Jane Drake", origin: "Google", email: "jane@example.com", phone: "+2348012345678", stages: ["Leads", "Contacted"], date: "Nov 9 2025" },
-  { id: 9, name: "John Park", origin: "Social Media", email: "john@example.com", phone: "+2348098765432", stages: ["Leads", "Applied"], date: "Nov 10 2025" },
-  { id: 10, name: "Mary Kelly", origin: "Referral", email: "mary@example.com", phone: "+2348023456789", stages: ["Leads", "Applied", "Approved"], date: "Nov 11 2025" }
-];
-
-const INITIAL_MESSAGES = [
-  { id: 1, name: "Jane Dominuc", email: "jane@example.com", subject: "Enrollment Inquiry", message: "I’d like more details about Class B enrollment.", date: "Nov 12 2025" },
-  { id: 2, name: "John Tray", email: "john@example.com", subject: "Payment Options", message: "Do you offer installment payments?", date: "Nov 13 2025" },
-  { id: 3, name: "Mary Johnson", email: "mary@example.com", subject: "Schedule", message: "What’s the next available training schedule?", date: "Nov 14 2025" }
-];
-
 const Dashboard = () => {
-  const [visitors] = useState(INITIAL_VISITORS);
-  const [messages] = useState(INITIAL_MESSAGES);
+  const [applications, setApplications] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [selectedStage, setSelectedStage] = useState("Leads");
+  const [selectedApp, setSelectedApp] = useState(null);
 
   const stages = [
     { name: "Leads", color: "#723e09" },
@@ -57,13 +39,39 @@ const Dashboard = () => {
     { name: "Pending", color: "#4b534c" }
   ];
 
-  const filteredVisitors = visitors.filter(
-    v => Array.isArray(v.stages) && v.stages.includes(selectedStage)
-  );
+  // Fetch data from Django backend
+  useEffect(() => {
+    async function fetchData() {
+      const appRes = await fetch("http://127.0.0.1:8000/api/application/");
+      const appData = await appRes.json();
+      setApplications(appData);
+
+      const msgRes = await fetch("http://127.0.0.1:8000/api/contact/");
+      const msgData = await msgRes.json();
+      setMessages(msgData);
+    }
+    fetchData();
+  }, []);
+
+  // Approve application
+  const approveApplication = async (id) => {
+    await fetch(`http://127.0.0.1:8000/api/application/${id}/approve/`, {
+      method: "POST"
+    });
+
+    // Refresh list
+    const appRes = await fetch("http://127.0.0.1:8000/api/application/");
+    setApplications(await appRes.json());
+  };
+
+  // Generate PDF
+  const generatePDF = (id) => {
+    window.open(`http://127.0.0.1:8000/api/application/${id}/generate_pdf/`, "_blank");
+  };
 
   // Stage counts for pie chart
   const stageCounts = stages.map(stage =>
-    visitors.filter(v => v.stages.includes(stage.name)).length
+    applications.filter(a => a.application_status === stage.name).length
   );
 
   const pieData = {
@@ -77,7 +85,6 @@ const Dashboard = () => {
     ]
   };
 
-  // Line chart: Visit Conversion Rate (Jan–May)
   const lineData = {
     labels: ["January", "February", "March", "April", "May"],
     datasets: [
@@ -97,18 +104,16 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      {/* Pipeline cards */}
       <Pipeline
         selectedStage={selectedStage}
         setSelectedStage={setSelectedStage}
         stages={stages}
-        visitors={visitors}
+        visitors={applications}
       />
 
-      {/* Charts immediately after pipeline */}
       <div className="charts">
         <section className="card">
-          <h2>Leads Distribution (Pie)</h2>
+          <h2>Applications Distribution</h2>
           <Pie data={pieData} />
         </section>
 
@@ -118,45 +123,42 @@ const Dashboard = () => {
         </section>
       </div>
 
-      {/* Leads section */}
+      {/* Applications Table */}
       <section className="card">
-        <h2>{selectedStage}</h2>
+        <h2>Applications ({selectedStage})</h2>
         <div className="table-wrapper">
           <table className="styled-table">
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Origin</th>
                 <th>Email</th>
-                <th>Phone</th>
-                <th>Lead Category</th>
-                <th>Date of Last Interaction</th>
+                <th>Status</th>
+                <th>Date Submitted</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredVisitors.map(v => (
-                <tr key={`${v.id}-${v.name}`}>
-                  <td>{v.name}</td>
-                  <td>{v.origin}</td>
-                  <td>{v.email}</td>
-                  <td>{v.phone}</td>
-                  <td>{v.stages.join(", ")}</td>
-                  <td>{v.date}</td>
-                </tr>
-              ))}
-              {filteredVisitors.length === 0 && (
-                <tr>
-                  <td colSpan="6" style={{ textAlign: "center" }}>
-                    No visitors in this stage
+              {applications.map(app => (
+                <tr key={app.id}>
+                  <td>{app.first_name} {app.last_name}</td>
+                  <td>{app.email}</td>
+                  <td>{app.application_status}</td>
+                  <td>{new Date(app.submitted_at).toLocaleDateString()}</td>
+                  <td>
+                    <button onClick={() => setSelectedApp(app)}>View</button>
+                    {app.application_status === "Pending" && (
+                      <button onClick={() => approveApplication(app.id)}>Approve</button>
+                    )}
+                    <button onClick={() => generatePDF(app.id)}>PDF</button>
                   </td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
         </div>
       </section>
 
-      {/* Contact Messages after Leads */}
+      {/* Contact Messages */}
       <section className="card">
         <h2>Contact Messages</h2>
         <div className="table-wrapper">
@@ -165,7 +167,6 @@ const Dashboard = () => {
               <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Subject</th>
                 <th>Message</th>
                 <th>Date</th>
               </tr>
@@ -173,17 +174,53 @@ const Dashboard = () => {
             <tbody>
               {messages.map(m => (
                 <tr key={m.id}>
-                  <td>{m.name}</td>
+                  <td>{m.first_name} {m.last_name}</td>
                   <td>{m.email}</td>
-                  <td>{m.subject}</td>
                   <td>{m.message}</td>
-                  <td>{m.date}</td>
+                  <td>{new Date(m.submitted_at).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </section>
+
+      {/* Modal for selected application */}
+      {selectedApp && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Application Details</h3>
+
+            {/* Basic Info */}
+            <p><strong>Name:</strong> {selectedApp.first_name} {selectedApp.last_name}</p>
+            <p><strong>Email:</strong> {selectedApp.email}</p>
+            <p><strong>Phone:</strong> {selectedApp.phone_number}</p>
+            <p><strong>Status:</strong> {selectedApp.application_status}</p>
+            <p><strong>Date of Birth:</strong> {selectedApp.date_of_birth}</p>
+            <p><strong>Marital Status:</strong> {selectedApp.marital_status}</p>
+            <p><strong>Citizenship:</strong> {selectedApp.citizenship}</p>
+            <p><strong>Address:</strong> {selectedApp.address}, {selectedApp.city}, {selectedApp.postal_code}</p>
+
+            {/* Emergency Contact */}
+            <h4>Emergency Contact</h4>
+            <p><strong>Name:</strong> {selectedApp.emergency_name}</p>
+            <p><strong>Relationship:</strong> {selectedApp.emergency_relationship}</p>
+            <p><strong>Phone:</strong> {selectedApp.emergency_day_phone} / {selectedApp.emergency_evening_phone}</p>
+            <p><strong>Email:</strong> {selectedApp.emergency_email}</p>
+
+            
+
+            {/* Actions */}
+            <div className="modal-actions">
+              {selectedApp.application_status === "Pending" && (
+                <button onClick={() => approveApplication(selectedApp.id)}>Approve</button>
+              )}
+              <button onClick={() => generatePDF(selectedApp.id)}>Generate PDF</button>
+              <button onClick={() => setSelectedApp(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
