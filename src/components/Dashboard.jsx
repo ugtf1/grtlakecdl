@@ -9,7 +9,8 @@ import {
   LineElement,
   PointElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
+  Filler
 } from "chart.js";
 import "./Dashboard.css";
 import Pipeline from "./Pipeline"; 
@@ -22,7 +23,8 @@ ChartJS.register(
   LineElement,
   PointElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
+  Filler
 );
 
 const Dashboard = () => {
