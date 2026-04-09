@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./ApplicationForm.css";
+import { apiUrl } from "../lib/api";
 
 export default function ApplicationForm() {
   const initialFormData = {
@@ -84,7 +85,7 @@ export default function ApplicationForm() {
       return;
     }
     try {
-      const res = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/", {
+      const res = await fetch(apiUrl("/application/"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -742,4 +743,3 @@ export default function ApplicationForm() {
     </div>
   );
 }
-

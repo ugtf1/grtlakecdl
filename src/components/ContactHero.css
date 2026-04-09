@@ -96,8 +96,31 @@ textarea {
   transition: background 0.3s ease;
 }
 
+.submit-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .submit-btn:hover {
   background: #06245c;
+}
+
+.contact-status {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.contact-status.success {
+  background: #dff5e2;
+  color: #176236;
+}
+
+.contact-status.error {
+  background: #fde4e7;
+  color: #8a1f2d;
 }
 
 /* Contact Info Cards */
