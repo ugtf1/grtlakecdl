@@ -2,6 +2,20 @@ import { useState } from "react";
 import "./ApplicationForm.css";
 import { apiUrl } from "../lib/api";
 
+const OPTIONAL_DATE_FIELDS = [
+  "date_of_birth",
+  "license_expiry_1",
+  "license_expiry_2",
+  "accident_date_1",
+  "accident_date_2",
+  "conviction_date_1",
+  "conviction_date_2",
+  "employer1_from",
+  "employer1_to",
+  "employer2_from",
+  "employer2_to",
+];
+
 export default function ApplicationForm() {
   const initialFormData = {
     // Stage 1
@@ -47,6 +61,19 @@ export default function ApplicationForm() {
     setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
   };
 
+  const buildSubmissionPayload = () => {
+    const payload = { ...formData };
+
+    // The backend treats these dates as optional, but DRF rejects empty strings.
+    OPTIONAL_DATE_FIELDS.forEach((fieldName) => {
+      if (payload[fieldName] === "") {
+        payload[fieldName] = null;
+      }
+    });
+
+    return payload;
+  };
+
   const validateForm = () => {
     const errs = {};
     // Required fields (Stage 1)
@@ -85,10 +112,11 @@ export default function ApplicationForm() {
       return;
     }
     try {
+      const payload = buildSubmissionPayload();
       const res = await fetch(apiUrl("/application/"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setMessage("Application submitted successfully!");
@@ -98,7 +126,11 @@ export default function ApplicationForm() {
       } else {
         const errorData = await res.json();
         console.error(errorData);
-        setMessage("Failed to submit application.");
+        const firstError = Object.values(errorData)[0];
+        const details = Array.isArray(firstError)
+          ? firstError[0]
+          : "Please review the form and try again.";
+        setMessage(`Failed to submit application. ${details}`);
       }
     } catch (error) {
       console.error(error);
