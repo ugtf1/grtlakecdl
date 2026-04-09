@@ -76,18 +76,17 @@ export default function ContactHero() {
               onChange={handleChange}
               required
             />
-        </div>
-        <div className="form-group half-width">
-          <label>Last Name</label>
-          <input
-            type="text"
-            name="last_name"
-            placeholder="Ex. Walker"
-            value={formData.last_name}
-            onChange={handleChange}
-            required
-          />
->>>>>>> 30fc1cb (Wire grtlakecdl to deployed backend API)
+          </div>
+          <div className="form-group half-width">
+            <label>Last Name</label>
+            <input
+              type="text"
+              name="last_name"
+              placeholder="Ex. Walker"
+              value={formData.last_name}
+              onChange={handleChange}
+              required
+            />
           </div>
         </div>
 
