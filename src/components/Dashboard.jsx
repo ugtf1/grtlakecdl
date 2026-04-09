@@ -29,10 +29,10 @@ const Dashboard = () => {
   const [applications, setApplications] = useState([]);
   const [messages, setMessages] = useState([]);
   const [leads, setLeads] = useState([]);
+  const [stats, setStats] = useState({});
   const [selectedStage, setSelectedStage] = useState("Leads");
   const [selectedApp, setSelectedApp] = useState(null);
 
-  // Fetch data from Django backend
   useEffect(() => {
     async function fetchData() {
       const appRes = await fetch("http://127.0.0.1:8000/api/application/");
@@ -43,50 +43,41 @@ const Dashboard = () => {
 
       const leadRes = await fetch("http://127.0.0.1:8000/api/leads/");
       setLeads(await leadRes.json());
+
+      // NEW: fetch summary stats
+      const summaryRes = await fetch("http://127.0.0.1:8000/api/dashboard/summary/");
+      setStats(await summaryRes.json());
     }
     fetchData();
   }, []);
 
-  // Approve application
   const approveApplication = async (id) => {
-    await fetch(`http://127.0.0.1:8000/api/application/${id}/change_status/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "Approved" })
+    await fetch(`http://127.0.0.1:8000/api/application/${id}/approve/`, {
+      method: "POST"
     });
     const appRes = await fetch("http://127.0.0.1:8000/api/application/");
     setApplications(await appRes.json());
   };
 
-  // Generate PDF
   const generatePDF = (id) => {
     window.open(`http://127.0.0.1:8000/api/application/${id}/generate_pdf/`, "_blank");
   };
 
-  // Stats for pipeline
-  const stats = {
-    leads: leads.length,
-    contacted: applications.filter(a => a.application_status === "Contacted").length,
-    applied: applications.filter(a => a.application_status === "Applied").length,
-    approved: applications.filter(a => a.application_status === "Approved").length,
-    pending: applications.filter(a => a.application_status === "Pending").length,
-  };
-
-  // Stage counts for pie chart (applications)
-  const stageCounts = ["Leads","Contacted","Applied","Approved","Pending"].map(stage =>
-    applications.filter(a => a.application_status === stage).length
-  );
-
+  // Pie chart data
   const pieData = {
-    labels: ["Leads","Contacted","Applied","Approved","Pending"],
-    datasets: [
-      {
-        data: stageCounts,
-        backgroundColor: ["#a80a54","#ff9800","#2196f3","#4caf50","#4b534c"],
-        borderWidth: 2
-      }
-    ]
-  };
+  labels: ["Applied","Approved","Pending"],
+  datasets: [
+    {
+      data: [
+        stats.applied || 0,
+        stats.approved || 0,
+        stats.pending || 0
+      ],
+      backgroundColor: ["#2196f3","#4caf50","#4b534c"],
+      borderWidth: 2
+    }
+  ]
+};
 
   const lineData = {
     labels: ["January", "February", "March", "April", "May"],
@@ -107,12 +98,11 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      {/* Pipeline now uses live stats */}
       <Pipeline
-        selectedStage={selectedStage}
-        setSelectedStage={setSelectedStage}
-        stats={stats}
-      />
+  selectedStage={selectedStage}
+  setSelectedStage={setSelectedStage}
+  stats={stats}
+/>
 
       <div className="charts">
         <section className="card">

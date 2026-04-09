@@ -202,6 +202,21 @@ textarea {
   background: #06245c;
 }
 
+.form-message {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.form-message.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+.form-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
 /* ✅ Responsive Breakpoints */
 @media (max-width: 1024px) {
   .application-form {

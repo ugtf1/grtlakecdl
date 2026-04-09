@@ -1,17 +1,15 @@
 import React from "react";
 import "./Pipeline.css";
-import { FaUserPlus, FaPhoneAlt, FaFileAlt, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
+import { FaUserPlus, FaEnvelope, FaFileAlt, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
 
 const Pipeline = ({ selectedStage, setSelectedStage, stats }) => {
-  // stats will be passed from Dashboard (applications + leads summary)
-
   const stages = [
-    { name: "Leads", value: stats.leads || 0, indicator: "Live", color: "#a80a54", icon: <FaUserPlus /> },
-    { name: "Contacted", value: stats.contacted || 0, indicator: "Live", color: "#ff9800", icon: <FaPhoneAlt /> },
-    { name: "Applied", value: stats.applied || 0, indicator: "Live", color: "#2196f3", icon: <FaFileAlt /> },
-    { name: "Approved", value: stats.approved || 0, indicator: "Live", color: "#4caf50", icon: <FaCheckCircle /> },
-    { name: "Pending", value: stats.pending || 0, indicator: "Live", color: "#4b534c", icon: <FaHourglassHalf /> }
-  ];
+  { name: "Leads", value: stats.leads || 0, indicator: "Live", color: "#a80a54", icon: <FaUserPlus /> },
+  { name: "Messages", value: stats.messages || 0, indicator: "Live", color: "#ff9800", icon: <FaEnvelope /> },
+  { name: "Applied", value: stats.applied || 0, indicator: "Live", color: "#2196f3", icon: <FaFileAlt /> },
+  { name: "Approved", value: stats.approved || 0, indicator: "Live", color: "#4caf50", icon: <FaCheckCircle /> },
+  { name: "Pending", value: stats.pending || 0, indicator: "Live", color: "#4b534c", icon: <FaHourglassHalf /> }
+];
 
   return (
     <div className="pipeline-header">
