@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Pie, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -33,6 +33,11 @@ const Dashboard = () => {
   const [selectedStage, setSelectedStage] = useState("Leads");
   const [selectedApp, setSelectedApp] = useState(null);
 
+  // Refs for scrolling
+  const leadsRef = useRef(null);
+  const applicationsRef = useRef(null);
+  const messagesRef = useRef(null);
+
   useEffect(() => {
     async function fetchData() {
       const appRes = await fetch("http://127.0.0.1:8000/api/application/");
@@ -44,7 +49,6 @@ const Dashboard = () => {
       const leadRes = await fetch("http://127.0.0.1:8000/api/leads/");
       setLeads(await leadRes.json());
 
-      // NEW: fetch summary stats
       const summaryRes = await fetch("http://127.0.0.1:8000/api/dashboard/summary/");
       setStats(await summaryRes.json());
     }
@@ -63,21 +67,37 @@ const Dashboard = () => {
     window.open(`http://127.0.0.1:8000/api/application/${id}/generate_pdf/`, "_blank");
   };
 
+  // Scroll handler
+  const scrollToSection = (section) => {
+    if (section === "Leads" && leadsRef.current) {
+      leadsRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (section === "Applications" && applicationsRef.current) {
+      applicationsRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (section === "Messages" && messagesRef.current) {
+      messagesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Automatically scroll when stage changes
+  useEffect(() => {
+    scrollToSection(selectedStage);
+  }, [selectedStage]);
+
   // Pie chart data
   const pieData = {
-  labels: ["Applied","Approved","Pending"],
-  datasets: [
-    {
-      data: [
-        stats.applied || 0,
-        stats.approved || 0,
-        stats.pending || 0
-      ],
-      backgroundColor: ["#2196f3","#4caf50","#4b534c"],
-      borderWidth: 2
-    }
-  ]
-};
+    labels: ["Applied","Approved","Pending"],
+    datasets: [
+      {
+        data: [
+          stats.applied || 0,
+          stats.approved || 0,
+          stats.pending || 0
+        ],
+        backgroundColor: ["#2196f3","#4caf50","#4b534c"],
+        borderWidth: 2
+      }
+    ]
+  };
 
   const lineData = {
     labels: ["January", "February", "March", "April", "May"],
@@ -99,25 +119,36 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <Pipeline
-  selectedStage={selectedStage}
-  setSelectedStage={setSelectedStage}
-  stats={stats}
-/>
+        selectedStage={selectedStage}
+        setSelectedStage={setSelectedStage}
+        stats={stats}
+        scrollToSection={scrollToSection}
+      />
 
       <div className="charts">
-        <section className="card">
+        {/* Applications Distribution card */}
+        <section
+          className="card"
+          onClick={() => scrollToSection("Applications")}
+        >
           <h2>Applications Distribution</h2>
-          <Pie data={pieData} />
+          <Pie
+            data={pieData}
+            options={{
+              onClick: () => scrollToSection("Applications"),
+            }}
+          />
         </section>
 
-        <section className="card">
+        {/* Visit Conversion Rate card */}
+        <section className="card" onClick={() => scrollToSection("Leads")}>
           <h2>Visit Conversion Rate</h2>
           <Line data={lineData} />
         </section>
       </div>
 
       {/* Leads Table */}
-      <section className="card">
+      <section className="card" ref={leadsRef}>
         <h2>Leads</h2>
         <div className="table-wrapper">
           <table className="styled-table">
@@ -144,7 +175,7 @@ const Dashboard = () => {
       </section>
 
       {/* Applications Table */}
-      <section className="card">
+      <section className="card" ref={applicationsRef}>
         <h2>Applications ({selectedStage})</h2>
         <div className="table-wrapper">
           <table className="styled-table">
@@ -165,12 +196,12 @@ const Dashboard = () => {
                   <td>{app.application_status}</td>
                   <td>{new Date(app.submitted_at).toLocaleDateString()}</td>
                   <td>
-  <button className="app-btn view" onClick={() => setSelectedApp(app)}>View</button>
-  {app.application_status === "Pending" && (
-    <button className="app-btn approve" onClick={() => approveApplication(app.id)}>Approve</button>
-  )}
-  <button className="app-btn pdf" onClick={() => generatePDF(app.id)}>PDF</button>
-</td>
+                    <button className="app-btn view" onClick={() => setSelectedApp(app)}>View</button>
+                    {app.application_status === "Pending" && (
+                      <button className="app-btn approve" onClick={() => approveApplication(app.id)}>Approve</button>
+                    )}
+                    <button className="app-btn pdf" onClick={() => generatePDF(app.id)}>PDF</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -179,7 +210,7 @@ const Dashboard = () => {
       </section>
 
       {/* Contact Messages */}
-      <section className="card">
+      <section className="card" ref={messagesRef}>
         <h2>Contact Messages</h2>
         <div className="table-wrapper">
           <table className="styled-table">
@@ -207,39 +238,52 @@ const Dashboard = () => {
 
       {/* Modal for selected application */}
       {selectedApp && (
-  <div className="modal">
-    <div className="modal-content">
-      <h3>Application Details</h3>
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Application Details</h3>
 
-      {/* Basic Info */}
-      <p><strong>Name:</strong> {selectedApp.first_name} {selectedApp.last_name}</p>
-      <p><strong>Email:</strong> {selectedApp.email}</p>
-      <p><strong>Phone:</strong> {selectedApp.phone_number}</p>
-      <p><strong>Status:</strong> {selectedApp.application_status}</p>
-      <p><strong>Date of Birth:</strong> {selectedApp.date_of_birth}</p>
-      <p><strong>Marital Status:</strong> {selectedApp.marital_status}</p>
-      <p><strong>Citizenship:</strong> {selectedApp.citizenship}</p>
-      <p><strong>Address:</strong> {selectedApp.address}, {selectedApp.city}, {selectedApp.postal_code}</p>
+            <p><strong>Name:</strong> {selectedApp.first_name} {selectedApp.last_name}</p>
+            <p><strong>Email:</strong> {selectedApp.email}</p>
+            <p><strong>Phone:</strong> {selectedApp.phone_number}</p>
+            <p><strong>Status:</strong> {selectedApp.application_status}</p>
+            <p><strong>Date of Birth:</strong> {selectedApp.date_of_birth}</p>
+            <p><strong>Marital Status:</strong> {selectedApp.marital_status}</p>
+            <p><strong>Citizenship:</strong> {selectedApp.citizenship}</p>
+            <p><strong>Address:</strong> {selectedApp.address}, {selectedApp.city}, {selectedApp.postal_code}</p>
 
-      {/* Emergency Contact */}
-      <h4>Emergency Contact</h4>
-      <p><strong>Name:</strong> {selectedApp.emergency_name}</p>
-      <p><strong>Relationship:</strong> {selectedApp.emergency_relationship}</p>
-      <p><strong>Phone:</strong> {selectedApp.emergency_day_phone} / {selectedApp.emergency_evening_phone}</p>
-      <p><strong>Email:</strong> {selectedApp.emergency_email}</p>
-      <p><strong>Address:</strong> {selectedApp.emergency_address1} {selectedApp.emergency_address2}, {selectedApp.emergency_city}, {selectedApp.emergency_state}, {selectedApp.emergency_postal_code}</p>
+            <h4>Emergency Contact</h4>
+            <p><strong>Name:</strong> {selectedApp.emergency_name}</p>
+            <p><strong>Relationship:</strong> {selectedApp.emergency_relationship}</p>
+            <p><strong>Phone:</strong> {selectedApp.emergency_day_phone} / {selectedApp.emergency_night_phone}</p>
+            <p><strong>Email:</strong> {selectedApp.emergency_email}</p>
+                        <p><strong>Address:</strong> {selectedApp.emergency_address1} {selectedApp.emergency_address2}, {selectedApp.emergency_city}, {selectedApp.emergency_state}, {selectedApp.emergency_postal_code}</p>
 
-      {/* Actions */}
-      <div className="modal-actions">
-  {selectedApp.application_status === "Pending" && (
-    <button className="app-btn approve" onClick={() => approveApplication(selectedApp.id)}>Approve</button>
-  )}
-  <button className="app-btn pdf" onClick={() => generatePDF(selectedApp.id)}>Generate PDF</button>
-  <button className="app-btn close" onClick={() => setSelectedApp(null)}>Close</button>
-</div>
-    </div>
-  </div>
-)}
+            {/* Actions */}
+            <div className="modal-actions">
+              {selectedApp.application_status === "Pending" && (
+                <button
+                  className="app-btn approve"
+                  onClick={() => approveApplication(selectedApp.id)}
+                >
+                  Approve
+                </button>
+              )}
+              <button
+                className="app-btn pdf"
+                onClick={() => generatePDF(selectedApp.id)}
+              >
+                Generate PDF
+              </button>
+              <button
+                className="app-btn close"
+                onClick={() => setSelectedApp(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
