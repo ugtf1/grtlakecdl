@@ -28,38 +28,32 @@ ChartJS.register(
 const Dashboard = () => {
   const [applications, setApplications] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [leads, setLeads] = useState([]);
   const [selectedStage, setSelectedStage] = useState("Leads");
   const [selectedApp, setSelectedApp] = useState(null);
-
-  const stages = [
-    { name: "Leads", color: "#723e09" },
-    { name: "Contacted", color: "#ff9800" },
-    { name: "Applied", color: "#2196f3" },
-    { name: "Approved", color: "#4caf50" },
-    { name: "Pending", color: "#4b534c" }
-  ];
 
   // Fetch data from Django backend
   useEffect(() => {
     async function fetchData() {
       const appRes = await fetch("http://127.0.0.1:8000/api/application/");
-      const appData = await appRes.json();
-      setApplications(appData);
+      setApplications(await appRes.json());
 
       const msgRes = await fetch("http://127.0.0.1:8000/api/contact/");
-      const msgData = await msgRes.json();
-      setMessages(msgData);
+      setMessages(await msgRes.json());
+
+      const leadRes = await fetch("http://127.0.0.1:8000/api/leads/");
+      setLeads(await leadRes.json());
     }
     fetchData();
   }, []);
 
   // Approve application
   const approveApplication = async (id) => {
-    await fetch(`http://127.0.0.1:8000/api/application/${id}/approve/`, {
-      method: "POST"
+    await fetch(`http://127.0.0.1:8000/api/application/${id}/change_status/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "Approved" })
     });
-
-    // Refresh list
     const appRes = await fetch("http://127.0.0.1:8000/api/application/");
     setApplications(await appRes.json());
   };
@@ -69,17 +63,26 @@ const Dashboard = () => {
     window.open(`http://127.0.0.1:8000/api/application/${id}/generate_pdf/`, "_blank");
   };
 
-  // Stage counts for pie chart
-  const stageCounts = stages.map(stage =>
-    applications.filter(a => a.application_status === stage.name).length
+  // Stats for pipeline
+  const stats = {
+    leads: leads.length,
+    contacted: applications.filter(a => a.application_status === "Contacted").length,
+    applied: applications.filter(a => a.application_status === "Applied").length,
+    approved: applications.filter(a => a.application_status === "Approved").length,
+    pending: applications.filter(a => a.application_status === "Pending").length,
+  };
+
+  // Stage counts for pie chart (applications)
+  const stageCounts = ["Leads","Contacted","Applied","Approved","Pending"].map(stage =>
+    applications.filter(a => a.application_status === stage).length
   );
 
   const pieData = {
-    labels: stages.map(s => s.name),
+    labels: ["Leads","Contacted","Applied","Approved","Pending"],
     datasets: [
       {
         data: stageCounts,
-        backgroundColor: stages.map(s => s.color),
+        backgroundColor: ["#a80a54","#ff9800","#2196f3","#4caf50","#4b534c"],
         borderWidth: 2
       }
     ]
@@ -104,11 +107,11 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
+      {/* Pipeline now uses live stats */}
       <Pipeline
         selectedStage={selectedStage}
         setSelectedStage={setSelectedStage}
-        stages={stages}
-        visitors={applications}
+        stats={stats}
       />
 
       <div className="charts">
@@ -122,6 +125,33 @@ const Dashboard = () => {
           <Line data={lineData} />
         </section>
       </div>
+
+      {/* Leads Table */}
+      <section className="card">
+        <h2>Leads</h2>
+        <div className="table-wrapper">
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>IP Address</th>
+                <th>Location</th>
+                <th>Origin</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leads.map(lead => (
+                <tr key={lead.id}>
+                  <td>{lead.ip_address}</td>
+                  <td>{lead.location}</td>
+                  <td>{lead.origin}</td>
+                  <td>{new Date(lead.visited_at).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       {/* Applications Table */}
       <section className="card">
@@ -145,12 +175,12 @@ const Dashboard = () => {
                   <td>{app.application_status}</td>
                   <td>{new Date(app.submitted_at).toLocaleDateString()}</td>
                   <td>
-                    <button onClick={() => setSelectedApp(app)}>View</button>
-                    {app.application_status === "Pending" && (
-                      <button onClick={() => approveApplication(app.id)}>Approve</button>
-                    )}
-                    <button onClick={() => generatePDF(app.id)}>PDF</button>
-                  </td>
+  <button className="app-btn view" onClick={() => setSelectedApp(app)}>View</button>
+  {app.application_status === "Pending" && (
+    <button className="app-btn approve" onClick={() => approveApplication(app.id)}>Approve</button>
+  )}
+  <button className="app-btn pdf" onClick={() => generatePDF(app.id)}>PDF</button>
+</td>
                 </tr>
               ))}
             </tbody>
@@ -187,40 +217,39 @@ const Dashboard = () => {
 
       {/* Modal for selected application */}
       {selectedApp && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Application Details</h3>
+  <div className="modal">
+    <div className="modal-content">
+      <h3>Application Details</h3>
 
-            {/* Basic Info */}
-            <p><strong>Name:</strong> {selectedApp.first_name} {selectedApp.last_name}</p>
-            <p><strong>Email:</strong> {selectedApp.email}</p>
-            <p><strong>Phone:</strong> {selectedApp.phone_number}</p>
-            <p><strong>Status:</strong> {selectedApp.application_status}</p>
-            <p><strong>Date of Birth:</strong> {selectedApp.date_of_birth}</p>
-            <p><strong>Marital Status:</strong> {selectedApp.marital_status}</p>
-            <p><strong>Citizenship:</strong> {selectedApp.citizenship}</p>
-            <p><strong>Address:</strong> {selectedApp.address}, {selectedApp.city}, {selectedApp.postal_code}</p>
+      {/* Basic Info */}
+      <p><strong>Name:</strong> {selectedApp.first_name} {selectedApp.last_name}</p>
+      <p><strong>Email:</strong> {selectedApp.email}</p>
+      <p><strong>Phone:</strong> {selectedApp.phone_number}</p>
+      <p><strong>Status:</strong> {selectedApp.application_status}</p>
+      <p><strong>Date of Birth:</strong> {selectedApp.date_of_birth}</p>
+      <p><strong>Marital Status:</strong> {selectedApp.marital_status}</p>
+      <p><strong>Citizenship:</strong> {selectedApp.citizenship}</p>
+      <p><strong>Address:</strong> {selectedApp.address}, {selectedApp.city}, {selectedApp.postal_code}</p>
 
-            {/* Emergency Contact */}
-            <h4>Emergency Contact</h4>
-            <p><strong>Name:</strong> {selectedApp.emergency_name}</p>
-            <p><strong>Relationship:</strong> {selectedApp.emergency_relationship}</p>
-            <p><strong>Phone:</strong> {selectedApp.emergency_day_phone} / {selectedApp.emergency_evening_phone}</p>
-            <p><strong>Email:</strong> {selectedApp.emergency_email}</p>
+      {/* Emergency Contact */}
+      <h4>Emergency Contact</h4>
+      <p><strong>Name:</strong> {selectedApp.emergency_name}</p>
+      <p><strong>Relationship:</strong> {selectedApp.emergency_relationship}</p>
+      <p><strong>Phone:</strong> {selectedApp.emergency_day_phone} / {selectedApp.emergency_evening_phone}</p>
+      <p><strong>Email:</strong> {selectedApp.emergency_email}</p>
+      <p><strong>Address:</strong> {selectedApp.emergency_address1} {selectedApp.emergency_address2}, {selectedApp.emergency_city}, {selectedApp.emergency_state}, {selectedApp.emergency_postal_code}</p>
 
-            
-
-            {/* Actions */}
-            <div className="modal-actions">
-              {selectedApp.application_status === "Pending" && (
-                <button onClick={() => approveApplication(selectedApp.id)}>Approve</button>
-              )}
-              <button onClick={() => generatePDF(selectedApp.id)}>Generate PDF</button>
-              <button onClick={() => setSelectedApp(null)}>Close</button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Actions */}
+      <div className="modal-actions">
+  {selectedApp.application_status === "Pending" && (
+    <button className="app-btn approve" onClick={() => approveApplication(selectedApp.id)}>Approve</button>
+  )}
+  <button className="app-btn pdf" onClick={() => generatePDF(selectedApp.id)}>Generate PDF</button>
+  <button className="app-btn close" onClick={() => setSelectedApp(null)}>Close</button>
+</div>
+    </div>
+  </div>
+)}
     </div>
   );
 };

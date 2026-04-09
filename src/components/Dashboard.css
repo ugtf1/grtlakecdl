@@ -261,6 +261,66 @@
   background: #121a61;
 }
 
+
+/* ===========================
+   Buttons (Applications + Modal)
+   =========================== */
+.app-btn {
+  padding: 8px 14px;
+  margin: 0 4px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* View button */
+.app-btn.view {
+  background: #2196f3;
+  color: #fff;
+}
+.app-btn.view:hover {
+  background: #1976d2;
+}
+
+/* Approve button */
+.app-btn.approve {
+  background: #4caf50;
+  color: #fff;
+}
+.app-btn.approve:hover {
+  background: #388e3c;
+}
+
+/* PDF button */
+.app-btn.pdf {
+  background: #ff9800;
+  color: #fff;
+}
+.app-btn.pdf:hover {
+  background: #e68900;
+}
+
+/* Close button (modal only) */
+.app-btn.close {
+  background: #f44336;
+  color: #fff;
+}
+.app-btn.close:hover {
+  background: #d32f2f;
+}
+
+/* Align modal actions */
+.modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+
 /* ===========================
    Charts
    =========================== */

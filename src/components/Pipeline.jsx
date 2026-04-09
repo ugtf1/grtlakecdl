@@ -2,15 +2,17 @@ import React from "react";
 import "./Pipeline.css";
 import { FaUserPlus, FaPhoneAlt, FaFileAlt, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
 
-const stages = [
-  { name: "Leads", value: 10, indicator: "0.43% ↑", color: "#a80a54", icon: <FaUserPlus /> },
-  { name: "Contacted", value: 3, indicator: "0.43% ↑", color: "#ff9800", icon: <FaPhoneAlt /> },
-  { name: "Applied", value: 6, indicator: "0.43% ↑", color: "#2196f3", icon: <FaFileAlt /> },
-  { name: "Approved", value: 4, indicator: "0.43% ↑", color: "#4caf50", icon: <FaCheckCircle /> },
-  { name: "Pending", value: 1, indicator: "0.43% ↑", color: "#4b534c", icon: <FaHourglassHalf /> }
-];
+const Pipeline = ({ selectedStage, setSelectedStage, stats }) => {
+  // stats will be passed from Dashboard (applications + leads summary)
 
-const Pipeline = ({ selectedStage, setSelectedStage }) => {
+  const stages = [
+    { name: "Leads", value: stats.leads || 0, indicator: "Live", color: "#a80a54", icon: <FaUserPlus /> },
+    { name: "Contacted", value: stats.contacted || 0, indicator: "Live", color: "#ff9800", icon: <FaPhoneAlt /> },
+    { name: "Applied", value: stats.applied || 0, indicator: "Live", color: "#2196f3", icon: <FaFileAlt /> },
+    { name: "Approved", value: stats.approved || 0, indicator: "Live", color: "#4caf50", icon: <FaCheckCircle /> },
+    { name: "Pending", value: stats.pending || 0, indicator: "Live", color: "#4b534c", icon: <FaHourglassHalf /> }
+  ];
+
   return (
     <div className="pipeline-header">
       {stages.map(stage => (
@@ -22,7 +24,6 @@ const Pipeline = ({ selectedStage, setSelectedStage }) => {
         >
           <div className="pipeline-icon">{stage.icon}</div>
           <h3>{stage.name}</h3>
-          {/* <p>This month</p> */}
           <div className="pipeline-value">{stage.value}</div>
           <div className="pipeline-indicator">{stage.indicator}</div>
         </div>
