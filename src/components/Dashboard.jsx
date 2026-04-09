@@ -42,31 +42,32 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const appRes = await fetch("http://127.0.0.1:8000/api/application/");
+      // const appRes = await fetch("http://127.0.0.1:8000/api/application/");
+      const appRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/");
       setApplications(await appRes.json());
 
-      const msgRes = await fetch("http://127.0.0.1:8000/api/contact/");
+      const msgRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/contact/");
       setMessages(await msgRes.json());
 
-      const leadRes = await fetch("http://127.0.0.1:8000/api/leads/");
+      const leadRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/leads/");
       setLeads(await leadRes.json());
 
-      const summaryRes = await fetch("http://127.0.0.1:8000/api/dashboard/summary/");
+      const summaryRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/dashboard/summary/");
       setStats(await summaryRes.json());
     }
     fetchData();
   }, []);
 
   const approveApplication = async (id) => {
-    await fetch(`http://127.0.0.1:8000/api/application/${id}/approve/`, {
+    await fetch(`https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/${id}/approve/`, {
       method: "POST"
     });
-    const appRes = await fetch("http://127.0.0.1:8000/api/application/");
+    const appRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/");
     setApplications(await appRes.json());
   };
 
   const generatePDF = (id) => {
-    window.open(`http://127.0.0.1:8000/api/application/${id}/generate_pdf/`, "_blank");
+    window.open(`https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/${id}/generate_pdf/`, "_blank");
   };
 
   // Scroll handler
