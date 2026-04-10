@@ -134,6 +134,15 @@ textarea {
   resize: vertical;
 }
 
+.field-error {
+  border-color: #d93025 !important;
+  box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.15);
+}
+
+.checkbox-error {
+  color: #b42318;
+}
+
 /* Form Rows */
 .form-row {
   display: flex;
