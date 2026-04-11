@@ -140,14 +140,14 @@ export default function ContactHero() {
         <div className="info-card">
           <FaEnvelope className="info-icon" />
           <h4>Send Us Email</h4>
-          <p>info@greatlakescdl.com</p>
+          <p>info@greatlakescdlacademy.net</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
 
         <div className="info-card">
           <FaMapMarkerAlt className="info-icon" />
           <h4>Our Location</h4>
-          <p>6575 West Burner Highway, Michigan, USA</p>
+          <p>6575 W. Vernor Hwy, Detroit MI 48209</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
       </div>
