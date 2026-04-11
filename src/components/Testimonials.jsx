@@ -17,7 +17,7 @@ const testimonials = [
   {
     name: "Anonymous",
     rating: "★★★★☆",
-    text: “I came in unsure about my future, but within weeks of graduating, I was hired and earning steady income.”,
+    text: "I came in unsure about my future, but within weeks of graduating, I was hired and earning steady income.",
     footer: "Trusted by 50,000+ People in Michigan",
     cta: "Apply Now",
   
@@ -25,21 +25,21 @@ const testimonials = [
   {
     name: "Sofia Mendez",
     rating: "★★★★★",
-    text: “They didn’t just teach driving — they helped me start providing for my family.”,
+    text: "They didn’t just teach driving — they helped me start providing for my family.",
     footer: "Sofia Mendez",
     image: t1
   },
   {
     name: "John Kelly",
     rating: "★★★★★",
-    text: “The instructors truly care. I’m now on a stable career path.”,
+    text: "The instructors truly care. I’m now on a stable career path.",
     footer: "John Kelly",
     image: t2
   },
   {
     name: "Jacob Olabode",
     rating: "★★★★★",
-    text: “I finally feel secure about my future.”,
+    text: "I finally feel secure about my future.",
     footer: "Jacob Olabode",
     image: t3
   },
@@ -53,7 +53,7 @@ const testimonials = [
   {
     name: "Rita Johnson",
     rating: "★★★★★",
-    text: “The job placement support was incredible. I’m working full-time now.”,
+    text: "The job placement support was incredible. I’m working full-time now. I finally feel like I have a future again.",
     footer: "Rita Johnson",
     image: t5
   },
