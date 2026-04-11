@@ -19,7 +19,8 @@ export default function MissionTwoCards() {
         </p>
         <p>
           We’re a top CDL training academy delivering hands-on learning, expert instruction,
-          and real career results—so every student is fully prepared to succeed on the road.
+          real career results and “ELDT-Compliant Training Program (FMCSA Approved Curriculum)”. 
+          So every student is fully prepared to succeed on the road.
         </p>
         <img src={cabImg} alt="Classroom Training" />
       </div>
