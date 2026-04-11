@@ -849,7 +849,7 @@ export default function ApplicationForm() {
           name="student_acknowledgement"
           checked={formData.student_acknowledgement}
           onChange={handleChange}
-        /> I hereby certify acknowledgement and signature.
+        /> By initialing this application, I certify that all information provided is true, complete, and accurate. I understand that providing false or misleading information may impact my eligibility for enrollment at Great Lakes CDL Academy
       </label>
     </div>
   </div>
