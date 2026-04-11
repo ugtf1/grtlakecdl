@@ -17,7 +17,7 @@ const testimonials = [
   {
     name: "Anonymous",
     rating: "★★★★☆",
-    text: "I came in unsure about my future, but the instructors supported me every step of the way. Within weeks of graduating, I got hired and now I’m earning steady income.",
+    text: “I came in unsure about my future, but within weeks of graduating, I was hired and earning steady income.”,
     footer: "Trusted by 50,000+ People in Michigan",
     cta: "Apply Now",
   
@@ -25,21 +25,21 @@ const testimonials = [
   {
     name: "Sofia Mendez",
     rating: "★★★★★",
-    text: "The training was practical and easy to follow. They didn’t just teach driving — they helped me find a real job and start providing for my family.",
+    text: “They didn’t just teach driving — they helped me start providing for my family.”,
     footer: "Sofia Mendez",
     image: t1
   },
   {
     name: "John Kelly",
     rating: "★★★★★",
-    text: "I was skeptical at first, but this academy truly delivers. The instructors are knowledgeable and genuinely care about your success. I’m now on a stable career path thanks to them.",
+    text: “The instructors truly care. I’m now on a stable career path.”,
     footer: "John Kelly",
     image: t2
   },
   {
     name: "Jacob Olabode",
     rating: "★★★★★",
-    text: "Before enrolling, I was struggling to find stable work. This academy gave me the skills, confidence, and job placement support I needed. I finally feel secure about my future.",
+    text: “I finally feel secure about my future.”,
     footer: "Jacob Olabode",
     image: t3
   },
@@ -53,7 +53,7 @@ const testimonials = [
   {
     name: "Rita Johnson",
     rating: "★★★★★",
-    text: "I had been unemployed for months before I found this academy. The training was practical and the job placement support was incredible. I’m now working full-time and finally feel like I have a future again.",
+    text: “The job placement support was incredible. I’m working full-time now.”,
     footer: "Rita Johnson",
     image: t5
   },
