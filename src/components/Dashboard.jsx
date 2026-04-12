@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import "./Dashboard.css";
 import Pipeline from "./Pipeline"; 
+import { apiUrl } from "../lib/api";
 
 ChartJS.register(
   Title,
@@ -42,32 +43,32 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function fetchData() {
-      // const appRes = await fetch("http://127.0.0.1:8000/api/application/");
-      const appRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/");
+      const appRes = await fetch(apiUrl("/application/"));
       setApplications(await appRes.json());
 
-      const msgRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/contact/");
+      const msgRes = await fetch(apiUrl("/contact/"));
       setMessages(await msgRes.json());
 
-      const leadRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/leads/");
+      const leadRes = await fetch(apiUrl("/leads/"));
       setLeads(await leadRes.json());
 
-      const summaryRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/dashboard/summary/");
+      // NEW: fetch summary stats
+      const summaryRes = await fetch(apiUrl("/dashboard/summary/"));
       setStats(await summaryRes.json());
     }
     fetchData();
   }, []);
 
   const approveApplication = async (id) => {
-    await fetch(`https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/${id}/approve/`, {
+    await fetch(apiUrl(`/application/${id}/approve/`), {
       method: "POST"
     });
-    const appRes = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/");
+    const appRes = await fetch(apiUrl("/application/"));
     setApplications(await appRes.json());
   };
 
   const generatePDF = (id) => {
-    window.open(`https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/${id}/generate_pdf/`, "_blank");
+    window.open(apiUrl(`/application/${id}/generate_pdf/`), "_blank");
   };
 
   // Scroll handler

@@ -1,5 +1,59 @@
 import { useState } from "react";
 import "./ApplicationForm.css";
+import { apiUrl } from "../lib/api";
+
+const STEP_TITLES = {
+  1: "Personal Details",
+  2: "Driving History",
+  3: "Employment History",
+  4: "Certification",
+};
+
+const FIELD_LABELS = {
+  first_name: "First Name",
+  last_name: "Last Name",
+  email: "Email",
+  phone_number: "Phone Number",
+  citizenship: "Citizenship",
+  address: "Address",
+  city: "City",
+  postal_code: "ZIP/Postal Code",
+  emergency_name: "Emergency Contact Name",
+  emergency_relationship: "Emergency Relationship",
+  years_experience: "Years of Experience",
+  employer1_name: "Employer 1 Name",
+  waiver_acceptance: "Waiver Acceptance",
+};
+
+const FIELD_STEPS = {
+  first_name: 1,
+  last_name: 1,
+  email: 1,
+  phone_number: 1,
+  citizenship: 1,
+  address: 1,
+  city: 1,
+  postal_code: 1,
+  emergency_name: 1,
+  emergency_relationship: 1,
+  years_experience: 2,
+  employer1_name: 3,
+  waiver_acceptance: 4,
+};
+
+const OPTIONAL_DATE_FIELDS = [
+  "date_of_birth",
+  "license_expiry_1",
+  "license_expiry_2",
+  "accident_date_1",
+  "accident_date_2",
+  "conviction_date_1",
+  "conviction_date_2",
+  "employer1_from",
+  "employer1_to",
+  "employer2_from",
+  "employer2_to",
+];
 
 export default function ApplicationForm() {
   const initialFormData = {
@@ -38,12 +92,34 @@ export default function ApplicationForm() {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
 
-  const nextStep = () => { if (step < 4) setStep(step + 1); };
   const prevStep = () => { if (step > 1) setStep(step - 1); };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
+  };
+
+  const focusField = (fieldName) => {
+    window.requestAnimationFrame(() => {
+      const field = document.querySelector(`[name="${fieldName}"]`);
+      if (field) {
+        field.scrollIntoView({ behavior: "smooth", block: "center" });
+        field.focus();
+      }
+    });
+  };
+
+  const buildSubmissionPayload = () => {
+    const payload = { ...formData };
+
+    // The backend treats these dates as optional, but DRF rejects empty strings.
+    OPTIONAL_DATE_FIELDS.forEach((fieldName) => {
+      if (payload[fieldName] === "") {
+        payload[fieldName] = null;
+      }
+    });
+
+    return payload;
   };
 
   const validateForm = () => {
@@ -75,19 +151,60 @@ export default function ApplicationForm() {
   return errs;
 };
 
+  const showValidationErrors = (validationErrors) => {
+    setErrors(validationErrors);
+
+    const firstErrorField = Object.keys(validationErrors)[0];
+    const targetStep = FIELD_STEPS[firstErrorField] || step;
+    const fieldLabel = FIELD_LABELS[firstErrorField] || "the highlighted field";
+    const stepTitle = STEP_TITLES[targetStep] || "this section";
+
+    setMessage(`Please fix ${fieldLabel} in ${stepTitle} before continuing.`);
+    if (targetStep !== step) {
+      setStep(targetStep);
+    }
+    focusField(firstErrorField);
+  };
+
+  const validateCurrentStep = () => {
+    const validationErrors = validateForm();
+    return Object.fromEntries(
+      Object.entries(validationErrors).filter(([fieldName]) => FIELD_STEPS[fieldName] === step),
+    );
+  };
+
+  const nextStep = () => {
+    const stepErrors = validateCurrentStep();
+    if (Object.keys(stepErrors).length > 0) {
+      showValidationErrors(stepErrors);
+      return;
+    }
+
+    setMessage("");
+    setErrors((currentErrors) =>
+      Object.fromEntries(
+        Object.entries(currentErrors).filter(([fieldName]) => FIELD_STEPS[fieldName] !== step),
+      ),
+    );
+
+    if (step < 4) {
+      setStep(step + 1);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      setMessage("Please fix the errors before submitting.");
+      showValidationErrors(validationErrors);
       return;
     }
     try {
-      const res = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/application/", {
+      const payload = buildSubmissionPayload();
+      const res = await fetch(apiUrl("/application/"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setMessage("Application submitted successfully!");
@@ -97,7 +214,11 @@ export default function ApplicationForm() {
       } else {
         const errorData = await res.json();
         console.error(errorData);
-        setMessage("Failed to submit application.");
+        const firstError = Object.values(errorData)[0];
+        const details = Array.isArray(firstError)
+          ? firstError[0]
+          : "Please review the form and try again.";
+        setMessage(`Failed to submit application. ${details}`);
       }
     } catch (error) {
       console.error(error);
@@ -146,6 +267,7 @@ export default function ApplicationForm() {
         placeholder="First Name"
         value={formData.first_name}
         onChange={handleChange}
+        className={errors.first_name ? "field-error" : ""}
       />
       {errors.first_name && <span className="error">{errors.first_name}</span>}
 
@@ -155,6 +277,7 @@ export default function ApplicationForm() {
         placeholder="Last Name"
         value={formData.last_name}
         onChange={handleChange}
+        className={errors.last_name ? "field-error" : ""}
       />
       {errors.last_name && <span className="error">{errors.last_name}</span>}
 
@@ -179,6 +302,7 @@ export default function ApplicationForm() {
         placeholder="Email"
         value={formData.email}
         onChange={handleChange}
+        className={errors.email ? "field-error" : ""}
       />
       {errors.email && <span className="error">{errors.email}</span>}
 
@@ -188,6 +312,7 @@ export default function ApplicationForm() {
         placeholder="Phone Number"
         value={formData.phone_number}
         onChange={handleChange}
+        className={errors.phone_number ? "field-error" : ""}
       />
       {errors.phone_number && <span className="error">{errors.phone_number}</span>}
 
@@ -195,6 +320,7 @@ export default function ApplicationForm() {
         name="citizenship"
         value={formData.citizenship}
         onChange={handleChange}
+        className={errors.citizenship ? "field-error" : ""}
       >
         <option value="">Select Citizenship</option>
         <option value="Nigeria">Nigeria</option>
@@ -210,6 +336,7 @@ export default function ApplicationForm() {
         placeholder="Address"
         value={formData.address}
         onChange={handleChange}
+        className={errors.address ? "field-error" : ""}
       />
       {errors.address && <span className="error">{errors.address}</span>}
 
@@ -219,6 +346,7 @@ export default function ApplicationForm() {
         placeholder="City"
         value={formData.city}
         onChange={handleChange}
+        className={errors.city ? "field-error" : ""}
       />
       {errors.city && <span className="error">{errors.city}</span>}
 
@@ -228,6 +356,7 @@ export default function ApplicationForm() {
         placeholder="ZIP/Postal Code"
         value={formData.postal_code}
         onChange={handleChange}
+        className={errors.postal_code ? "field-error" : ""}
       />
       {errors.postal_code && <span className="error">{errors.postal_code}</span>}
     </div>
@@ -240,6 +369,7 @@ export default function ApplicationForm() {
         placeholder="Full Name"
         value={formData.emergency_name}
         onChange={handleChange}
+        className={errors.emergency_name ? "field-error" : ""}
       />
       {errors.emergency_name && <span className="error">{errors.emergency_name}</span>}
 
@@ -249,6 +379,7 @@ export default function ApplicationForm() {
         placeholder="Relationship"
         value={formData.emergency_relationship}
         onChange={handleChange}
+        className={errors.emergency_relationship ? "field-error" : ""}
       />
       {errors.emergency_relationship && <span className="error">{errors.emergency_relationship}</span>}
 
@@ -341,6 +472,7 @@ export default function ApplicationForm() {
       placeholder="Years of Experience"
       value={formData.years_experience}
       onChange={handleChange}
+      className={errors.years_experience ? "field-error" : ""}
     />
 
     <div className="form-row">
@@ -479,6 +611,7 @@ export default function ApplicationForm() {
         placeholder="Company Name"
         value={formData.employer1_name}
         onChange={handleChange}
+        className={errors.employer1_name ? "field-error" : ""}
       />
       <input
         type="text"
@@ -646,7 +779,7 @@ export default function ApplicationForm() {
 
     <h3 className="form-subtitle">Great Lakes CDL Academy Student Certification</h3>
     <div className="form-row">
-      <label>
+      <label className={errors.waiver_acceptance ? "checkbox-error" : ""}>
         <input
           type="checkbox"
           name="waiver_acceptance"
@@ -716,7 +849,7 @@ export default function ApplicationForm() {
           name="student_acknowledgement"
           checked={formData.student_acknowledgement}
           onChange={handleChange}
-        /> I hereby certify acknowledgement and signature.
+        /> By initialing this application, I certify that all information provided is true, complete, and accurate. I understand that providing false or misleading information may impact my eligibility for enrollment at Great Lakes CDL Academy
       </label>
     </div>
   </div>
@@ -742,4 +875,3 @@ export default function ApplicationForm() {
     </div>
   );
 }
-

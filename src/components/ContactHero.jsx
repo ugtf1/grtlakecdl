@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ContactHero.css";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaPlus } from "react-icons/fa";
+import { apiUrl } from "../lib/api";
 
 export default function ContactHero() {
   const [formData, setFormData] = useState({
@@ -10,38 +11,45 @@ export default function ContactHero() {
     email: "",
     message: "",
   });
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState({ type: "", text: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: "", text: "" });
+
     try {
-      const res = await fetch("https://cdlbackend-lagfzewagq-ue.a.run.app/api/contact/", {
+      const response = await fetch(apiUrl("/contact/"), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
-      if (res.ok) {
-        setStatus("Message submitted successfully!");
-        setFormData({
-          first_name: "",
-          last_name: "",
-          phone_number: "",
-          email: "",
-          message: "",
-        });
-      } else {
-        const errorData = await res.json();
-        console.error(errorData);
-        setStatus("Failed to submit message.");
+
+      if (!response.ok) {
+        throw new Error("Contact submission failed");
       }
+
+      setFormData({
+        first_name: "",
+        last_name: "",
+        phone_number: "",
+        email: "",
+        message: "",
+      });
+      setStatus({ type: "success", text: "Thanks. Your message was sent successfully." });
     } catch (error) {
       console.error(error);
-      setStatus("Error submitting message.");
+      setStatus({ type: "error", text: "We couldn't send your message. Please try again." });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -57,25 +65,15 @@ export default function ContactHero() {
 
       {/* Contact Form */}
       <form className="contact-form" onSubmit={handleSubmit}>
-        {status && (
-          <div
-            className={`form-message ${
-              status.toLowerCase().includes("success") ? "success" : "error"
-            }`}
-          >
-            {status}
-          </div>
-        )}
-
         <div className="form-row">
           <div className="form-group half-width">
             <label>First Name</label>
             <input
               type="text"
               name="first_name"
+              placeholder="Ex. James"
               value={formData.first_name}
               onChange={handleChange}
-              placeholder="Ex. James"
               required
             />
           </div>
@@ -84,9 +82,9 @@ export default function ContactHero() {
             <input
               type="text"
               name="last_name"
+              placeholder="Ex. Walker"
               value={formData.last_name}
               onChange={handleChange}
-              placeholder="Ex. Walker"
               required
             />
           </div>
@@ -97,9 +95,9 @@ export default function ContactHero() {
           <input
             type="text"
             name="phone_number"
+            placeholder="Ex. (225) 454-2586"
             value={formData.phone_number}
             onChange={handleChange}
-            placeholder="Ex. (225) 454-2586"
             required
           />
         </div>
@@ -108,9 +106,9 @@ export default function ContactHero() {
           <input
             type="email"
             name="email"
+            placeholder="Ex. jane@example.com"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Ex. jane@example.com"
             required
           />
         </div>
@@ -118,14 +116,15 @@ export default function ContactHero() {
           <label>Leave Us a Message</label>
           <textarea
             name="message"
+            placeholder="Write your message here..."
             value={formData.message}
             onChange={handleChange}
-            placeholder="Write your message here..."
             required
           ></textarea>
         </div>
-        <button type="submit" className="submit-btn">
-          Start My CDL Career
+        {status.text && <p className={`contact-status ${status.type}`}>{status.text}</p>}
+        <button type="submit" className="submit-btn" disabled={isSubmitting}>
+          {isSubmitting ? "Sending..." : "Start My CDL Career"}
         </button>
       </form>
 
@@ -141,14 +140,14 @@ export default function ContactHero() {
         <div className="info-card">
           <FaEnvelope className="info-icon" />
           <h4>Send Us Email</h4>
-          <p>info@greatlakescdl.com</p>
+          <p>info@greatlakescdlacademy.net</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
 
         <div className="info-card">
           <FaMapMarkerAlt className="info-icon" />
           <h4>Our Location</h4>
-          <p>6575 West Burner Highway, Michigan, USA</p>
+          <p>6575 W. Vernor Hwy, Detroit MI 48209</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
       </div>
