@@ -1,4 +1,3 @@
-// generate-sitemap-greatlakes.mjs
 import { SitemapStream } from 'sitemap';
 import { createWriteStream } from 'fs';
 
