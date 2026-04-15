@@ -31,7 +31,7 @@ ChartJS.register(
 const Dashboard = () => {
   const [applications, setApplications] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [leads, setLeads] = useState([]);
+  const [, setLeads] = useState([]);
   const [stats, setStats] = useState({});
   const [selectedStage, setSelectedStage] = useState("Leads");
   const [selectedApp, setSelectedApp] = useState(null);
@@ -151,8 +151,8 @@ const Dashboard = () => {
         </section>
       </div>
 
-      {/* Leads Table */}
-      <section className="card" ref={leadsRef}>
+      
+      {/* <section className="card" ref={leadsRef}>
         <h2>Leads</h2>
         <div className="table-wrapper">
           <table className="styled-table">
@@ -176,7 +176,7 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
-      </section>
+      </section> */}
 
       {/* Applications Table */}
       <section className="card" ref={applicationsRef}>
