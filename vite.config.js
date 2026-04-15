@@ -9,9 +9,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    manifest: true,   // generate manifest.json
-    rollupOptions: {
-      input: resolve(__dirname, 'src/main.jsx')  // absolute path is safer
-    }
+    manifest: true,   // generate manifest.json for Django-Vite integration
+    // ⚠️ Removed rollupOptions.input so Vite uses index.html as entry point
   }
 })

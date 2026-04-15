@@ -2,17 +2,11 @@ FROM node:22-alpine AS build
 
 WORKDIR /app
 
-ARG VITE_API_BASE=https://cdlbackend-lagfzewagq-ue.a.run.app/api
-ENV VITE_API_BASE=$VITE_API_BASE
-
 COPY package*.json ./
 RUN npm ci
 
 COPY . .
 RUN npm run build
-
-RUN ls -l /app
-RUN ls -l /app/dist
 
 FROM nginx:1.27-alpine
 
