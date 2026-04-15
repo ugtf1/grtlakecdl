@@ -151,78 +151,67 @@ const Dashboard = () => {
         </section>
       </div>
 
-      
-      {/* <section className="card" ref={leadsRef}>
-        <h2>Leads</h2>
-        <div className="table-wrapper">
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>IP Address</th>
-                <th>Location</th>
-                <th>Origin</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leads.map(lead => (
-                <tr key={lead.id}>
-                  <td>{lead.ip_address}</td>
-                  <td>{lead.location}</td>
-                  <td>{lead.origin}</td>
-                  <td>{new Date(lead.visited_at).toLocaleDateString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section> */}
 
-      {/* Applications Table */}
-      <section className="card" ref={applicationsRef}>
-        <h2>Applications ({selectedStage})</h2>
-        <div className="table-wrapper">
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Date Submitted</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {applications.map(app => (
-                <tr key={app.id}>
-                  <td>{app.first_name} {app.last_name}</td>
-                  <td>{app.email}</td>
-                  <td>{app.application_status}</td>
-                  <td>{new Date(app.submitted_at).toLocaleDateString()}</td>
-                  <td>
-                    <button className="app-btn view" onClick={() => setSelectedApp(app)}>View</button>
-                    {app.application_status === "Pending" && (
-                      <button className="app-btn approve" onClick={() => approveApplication(app.id)}>Approve</button>
-                    )}
-                    <button className="app-btn pdf" onClick={() => generatePDF(app.id)}>PDF</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      {/* Applications Table (desktop) */}
+<section className="card1" ref={applicationsRef}>
+  <h2>Submitted Applications</h2>
+  <div className="table-wrapper">
+    <table className="styled-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Date Submitted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {applications.map(app => (
+          <tr key={app.id}>
+            <td>{app.first_name} {app.last_name}</td>
+            <td>{app.email}</td>
+            <td>{app.application_status}</td>
+            <td>{new Date(app.submitted_at).toLocaleDateString()}</td>
+            <td>
+              <button className="app-btn view" onClick={() => setSelectedApp(app)}>View</button>
+              {app.application_status === "Pending" && (
+                <button className="app-btn approve" onClick={() => approveApplication(app.id)}>Approve</button>
+              )}
+              <button className="app-btn pdf" onClick={() => generatePDF(app.id)}>PDF</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
 
-      {/* Mobile Applications List */}
+{/* Applications List (mobile) */}
 <section className="card mobile-list" ref={applicationsRef}>
-  <h2>Applications</h2>
+  <h2>Submitted Applications</h2>
   {applications.map(app => (
     <details key={app.id} className="mobile-item">
-      <summary>{app.first_name} {app.last_name}</summary>
+      <summary>
+        <span className="summary-left">
+          <span className="arrow"></span>
+          <strong>Name:</strong>
+        </span>
+        <span className="summary-right">{app.first_name} {app.last_name}</span>
+      </summary>
       <div className="mobile-details">
-        <p><strong>Email:</strong> {app.email}</p>
-        <p><strong>Status:</strong> {app.application_status}</p>
-        <p><strong>Date Submitted:</strong> {new Date(app.submitted_at).toLocaleDateString()}</p>
+        <div className="detail-row">
+          <span className="detail-label">Email:</span>
+          <span className="detail-value">{app.email}</span>
+        </div>
+        <div className="detail-row">
+          <span className="detail-label">Status:</span>
+          <span className="detail-value">{app.application_status}</span>
+        </div>
+        <div className="detail-row">
+          <span className="detail-label">Date Submitted:</span>
+          <span className="detail-value">{new Date(app.submitted_at).toLocaleDateString()}</span>
+        </div>
         <div className="actions">
           {app.application_status === "Pending" && (
             <button className="app-btn approve" onClick={() => approveApplication(app.id)}>Approve</button>
@@ -234,9 +223,10 @@ const Dashboard = () => {
   ))}
 </section>
 
+
       {/* Contact Messages */}
-      <section className="card" ref={messagesRef}>
-        <h2>Contact Messages</h2>
+      <section className="card1" ref={messagesRef}>
+        <h2>Contact Form Submitted</h2>
         <div className="table-wrapper">
           <table className="styled-table">
             <thead>
@@ -261,20 +251,36 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* Mobile Contact Messages List */}
+      {/* Contact Messages List (mobile) */}
 <section className="card mobile-list" ref={messagesRef}>
   <h2>Contact Messages</h2>
   {messages.map(m => (
     <details key={m.id} className="mobile-item">
-      <summary>{m.first_name} {m.last_name}</summary>
+      <summary>
+        <span className="summary-left">
+          <span className="arrow"></span>
+          <strong>Name:</strong>
+        </span>
+        <span className="summary-right">{m.first_name} {m.last_name}</span>
+      </summary>
       <div className="mobile-details">
-        <p><strong>Email:</strong> {m.email}</p>
-        <p><strong>Message:</strong> {m.message}</p>
-        <p><strong>Date:</strong> {new Date(m.submitted_at).toLocaleDateString()}</p>
+        <div className="detail-row">
+          <span className="detail-label">Email:</span>
+          <span className="detail-value">{m.email}</span>
+        </div>
+        <div className="detail-row">
+          <span className="detail-label">Message:</span>
+          <span className="detail-value">{m.message}</span>
+        </div>
+        <div className="detail-row">
+          <span className="detail-label">Date:</span>
+          <span className="detail-value">{new Date(m.submitted_at).toLocaleDateString()}</span>
+        </div>
       </div>
     </details>
   ))}
 </section>
+
 
       {/* Modal for selected application */}
       {selectedApp && (

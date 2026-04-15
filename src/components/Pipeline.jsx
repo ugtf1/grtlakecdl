@@ -1,6 +1,12 @@
 import React from "react";
 import "./Pipeline.css";
-import { FaUserPlus, FaEnvelope, FaFileAlt, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
+import {
+  FaUserPlus,
+  FaEnvelope,
+  FaFileAlt,
+  FaCheckCircle,
+  FaHourglassHalf
+} from "react-icons/fa";
 
 const Pipeline = ({ selectedStage, setSelectedStage, stats, scrollToSection }) => {
   const stages = [
@@ -17,10 +23,9 @@ const Pipeline = ({ selectedStage, setSelectedStage, stats, scrollToSection }) =
         <div
           key={stage.name}
           className={`pipeline-card ${selectedStage === stage.name ? "active" : ""}`}
-          style={{ borderTop: `4px solid ${stage.color}` }}
+          style={{ borderTop: `6px solid ${stage.color}` }}
           onClick={() => {
             setSelectedStage(stage.name);
-            // Scroll to Applications table if Applied, Approved, or Pending
             if (["Applied", "Approved", "Pending"].includes(stage.name)) {
               scrollToSection("Applications");
             } else {
@@ -28,10 +33,16 @@ const Pipeline = ({ selectedStage, setSelectedStage, stats, scrollToSection }) =
             }
           }}
         >
-          <div className="pipeline-icon">{stage.icon}</div>
-          <h3>{stage.name}</h3>
+          <div className="pipeline-top">
+            <div className="pipeline-icon" style={{ color: stage.color }}>
+              {stage.icon}
+            </div>
+            <div className="pipeline-info">
+              <h3>{stage.name}</h3>
+              <div className="pipeline-indicator">{stage.indicator}</div>
+            </div>
+          </div>
           <div className="pipeline-value">{stage.value}</div>
-          <div className="pipeline-indicator">{stage.indicator}</div>
         </div>
       ))}
     </div>

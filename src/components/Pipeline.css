@@ -1,58 +1,72 @@
 .pipeline-header {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;          
+  margin: 2rem 0;
 }
 
 .pipeline-card {
-  flex: 1;
+  flex: 1 1 120px;     
+  max-width: 160px;      
   background: #fff;
-  border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 0.8rem;
+  transition: transform 0.2s ease;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .pipeline-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.pipeline-card.active {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.pipeline-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
 }
 
 .pipeline-icon {
   font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: #ff6e00;
 }
 
-.pipeline-card h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  color: #2b2727;
-}
-
-.pipeline-card p {
-  font-size: 0.85rem;
-  color: #777;
-  margin-bottom: 0.5rem;
-}
-
-.pipeline-value {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 0.3rem;
+.pipeline-info h3 {
+  font-size: 0.95rem;
+  margin: 0;
+  color: #333;
 }
 
 .pipeline-indicator {
-  font-size: 0.85rem;
-  color: #4caf50; /* green for positive trend */
-  font-weight: 600;
+  font-size: 0.8rem;
+  color: #777;
 }
 
-/* Active card highlight */
-.pipeline-card.active {
-  border: 2px solid #ff6e00;
+.pipeline-value {
+  margin-top: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #222;
+  text-align: left;
+}
+
+
+@media (max-width: 768px) {
+  .pipeline-card {
+    flex: 0 0 calc(50% - 0.75rem); 
+    max-width: calc(50% - 0.75rem); 
+  }
+}
+
+/* Extra small screens*/
+@media (max-width: 480px) {
+  .pipeline-card {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }

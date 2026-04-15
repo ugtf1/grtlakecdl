@@ -25,42 +25,54 @@
   margin: 2rem 0;
 }
 
-.pipeline-stage {
-  position: relative;
-  flex: 1 1 auto;
-  min-width: 140px;
-  text-align: center;
-  padding: 12px 30px;
-  border-radius: 6px 0 0 6px;
-  color: #fff;
-  font-weight: 600;
+/* Card style for pipeline stages */
+.pipeline-card {
+  flex: 1 1 120px;
+  max-width: 160px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 0.8rem;
+  transition: transform 0.2s ease;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  margin-right: 40px;
 }
 
-.pipeline-stage::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -30px;
-  width: 0;
-  height: 0;
-  border-top: 24px solid transparent;
-  border-bottom: 24px solid transparent;
-  border-left: 30px solid;
+.pipeline-card:hover {
+  transform: translateY(-4px);
 }
 
-.pipeline-stage:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-  opacity: 0.95;
+.pipeline-card.active {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.pipeline-stage.active {
-  border: 2px solid #fff;
-  box-shadow: 0 0 12px rgba(255,255,255,0.6);
+.pipeline-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
+}
+
+.pipeline-icon {
+  font-size: 1.5rem;
+}
+
+.pipeline-info h3 {
+  font-size: 0.95rem;
+  margin: 0;
+  color: #333;
+}
+
+.pipeline-indicator {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.pipeline-value {
+  margin-top: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #222;
+  text-align: left;
 }
 
 /* Stage Colors */
@@ -121,10 +133,14 @@
   transition: background 0.3s ease;
 }
 
+.mobile-list {
+  display: none;
+}
+
 /* ===========================
    Cards
    =========================== */
-.card {
+.card1 {
   max-width: 95%;
   margin: 1rem auto; /* reduced from 2rem */
   padding: 1.5rem;
@@ -133,7 +149,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.card h2 {
+.card1 h2 {
   margin-bottom: 1rem;
   padding-left: 1rem;
   font-size: 1.3rem;
@@ -349,47 +365,93 @@
    Responsive Adjustments
    =========================== */
 @media (max-width: 768px) {
-  .pipeline-header {
-    flex-direction: column;
-    align-items: stretch;
+  .styled-table {
+    display: none !important;
+  }
+  .mobile-list {
+    display: block !important;
   }
 
-  .pipeline-stage {
-    margin-right: 0;
-    border-radius: 6px;
-  }
-
-  .pipeline-stage::after {
+  .card1 {
     display: none;
   }
 
-  .styled-table {
-    font-size: 0.8rem;
-    min-width: unset;
+  .card1 h2 {
+    display: none;
   }
 
-  .card {
-    padding: 1rem;
+  .mobile-item {
+    margin-bottom: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #ddd;
   }
 
-  .contact-btn {
-    font-size: 0.75rem;
-    padding: 6px 10px;
+  .mobile-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7b437fa; /* green header background */
+    color: #fff;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
   }
 
-  .modal {
-    width: 95%;
-    padding: 1rem;
+  .summary-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff; /* white arrow */
+    transition: transform 0.3s ease;
+  }
+
+  details[open] .arrow {
+    transform: rotate(180deg);
+  }
+
+  .summary-right {
+    font-size: 14px;
+    opacity: 0.95;
+  }
+
+  .mobile-details {
+    background: #fff;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .detail-label {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .detail-value {
+    color: #555;
+  }
+
+  .pipeline-header {
+    justify-content: space-between; /* spread cards across row */
+  }
+  .pipeline-card {
+    flex: 0 0 calc(50% - 0.5rem); /* half width minus gap */
+    max-width: calc(50% - 0.5rem); /* override desktop max-width */
   }
 }
 
-@media (max-width: 768px) {
-   .styled-table {
-    display: none; /* hide full table on mobile */
-  }
-  
-  .mobile-list {
-    display: block;
-  }
-}
 
