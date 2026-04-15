@@ -213,6 +213,27 @@ const Dashboard = () => {
         </div>
       </section>
 
+      {/* Mobile Applications List */}
+<section className="card mobile-list" ref={applicationsRef}>
+  <h2>Applications</h2>
+  {applications.map(app => (
+    <details key={app.id} className="mobile-item">
+      <summary>{app.first_name} {app.last_name}</summary>
+      <div className="mobile-details">
+        <p><strong>Email:</strong> {app.email}</p>
+        <p><strong>Status:</strong> {app.application_status}</p>
+        <p><strong>Date Submitted:</strong> {new Date(app.submitted_at).toLocaleDateString()}</p>
+        <div className="actions">
+          {app.application_status === "Pending" && (
+            <button className="app-btn approve" onClick={() => approveApplication(app.id)}>Approve</button>
+          )}
+          <button className="app-btn pdf" onClick={() => generatePDF(app.id)}>PDF</button>
+        </div>
+      </div>
+    </details>
+  ))}
+</section>
+
       {/* Contact Messages */}
       <section className="card" ref={messagesRef}>
         <h2>Contact Messages</h2>
@@ -239,6 +260,21 @@ const Dashboard = () => {
           </table>
         </div>
       </section>
+
+      {/* Mobile Contact Messages List */}
+<section className="card mobile-list" ref={messagesRef}>
+  <h2>Contact Messages</h2>
+  {messages.map(m => (
+    <details key={m.id} className="mobile-item">
+      <summary>{m.first_name} {m.last_name}</summary>
+      <div className="mobile-details">
+        <p><strong>Email:</strong> {m.email}</p>
+        <p><strong>Message:</strong> {m.message}</p>
+        <p><strong>Date:</strong> {new Date(m.submitted_at).toLocaleDateString()}</p>
+      </div>
+    </details>
+  ))}
+</section>
 
       {/* Modal for selected application */}
       {selectedApp && (

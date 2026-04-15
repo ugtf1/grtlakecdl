@@ -142,6 +142,10 @@
   text-align: left;
 }
 
+.card.mobile-list {
+  display: none;
+}
+
 /* Special spacing for Submitted Applications */
 .card.submitted-applications {
   margin-top: 0.5rem;
@@ -379,29 +383,13 @@
   }
 }
 
-@media (max-width: 480px) {
-  .styled-table {
-    font-size: 0.75rem;
-    min-width: 450px;
+@media (max-width: 768px) {
+   .styled-table {
+    display: none; /* hide full table on mobile */
   }
-
-  .styled-table th,
-  .styled-table td {
-    padding: 8px;
-  }
-
-  .card h2 {
-    font-size: 1rem;
-    padding-left: 0.5rem;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    font-size: 0.85rem;
-  }
-
-  .contact-btn {
-    width: 100%;
-    text-align: center;
+  
+  .mobile-list {
+    display: block;
   }
 }
+
