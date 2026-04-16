@@ -1,7 +1,7 @@
 // generate-sitemap.js
 import { writeFileSync } from "fs";
 
-const hostname = "https://yourdomain.com"; // replace with your actual domain
+const hostname = "https://gl-cdl.com";
 const routes = [
   "/", 
   "/about", 
@@ -20,4 +20,4 @@ ${routes.map(route => `
 </urlset>`;
 
 writeFileSync("dist/sitemap.xml", sitemap);
-console.log("✅ Sitemap generated at dist/sitemap.xml");
+console.log(" Sitemap generated at dist/sitemap.xml");
