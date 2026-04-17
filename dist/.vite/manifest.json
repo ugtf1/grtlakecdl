@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index-nLsl3V5u.js",
+    "file": "assets/index-g9981jfX.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -10,17 +10,21 @@
       "node_modules/canvg/lib/index.es.js"
     ],
     "css": [
-      "assets/index-ovA_lLJv.css"
+      "assets/index-RaWDqbKe.css"
     ],
     "assets": [
-      "assets/heroimg2-jA3jIwCn.webp",
-      "assets/handshake-WJwj-CFt.webp",
+      "assets/heroimg2-6IIX2VXq.webp",
+      "assets/handshake-CrZWJ6ta.webp",
       "assets/w1-BxY8SHEs.webp",
-      "assets/w2-BusVYU-O.webp",
-      "assets/call-KfXmF2jg.webp",
-      "assets/advisor-9dQcz1vd.webp",
-      "assets/training-gdO_jGPT.webp",
-      "assets/training-program-r903XN-z.webp",
+      "assets/w2-Mtn6C8FH.webp",
+      "assets/record-CjJXPm5l.webp",
+      "assets/instructor-CnYaJ_-m.webp",
+      "assets/truck-CsmOGbKV.webp",
+      "assets/partnership-BcdBwLWG.webp",
+      "assets/call-B4aDl4sw.webp",
+      "assets/advisor-GdFBR9yC.webp",
+      "assets/training-B7Z-C4mN.webp",
+      "assets/training-program-CASI8-FA.webp",
       "assets/career-support-Bc7A23oy.webp",
       "assets/t1-CIgM2lXc.webp",
       "assets/t2-BFQIBGHK.webp",
@@ -28,14 +32,14 @@
       "assets/t4-jqV-uF9p.webp",
       "assets/t5-Cndfj9iR.webp",
       "assets/t6-EkINynO2.webp",
-      "assets/t7-WfbaG30z.webp",
+      "assets/t7-4cynrqUK.webp",
       "assets/t8-DHlyi4SB.webp",
       "assets/t9-CgYsjx1u.webp",
       "assets/t10-bl4r5IdS.webp",
-      "assets/community-Be7FyI_H.webp",
-      "assets/guidance-pokyorEn.webp",
-      "assets/future-DFknwrKN.webp",
-      "assets/footimg-fALhMAZN.webp",
+      "assets/community-CPNrUWWY.webp",
+      "assets/guidance-CzcC9Ukt.webp",
+      "assets/future-BiiedT1T.webp",
+      "assets/footimg-CeLHo-HZ.webp",
       "assets/classroom-Bpuq0iNv.webp",
       "assets/hardhat-BfcY_dN-.webp",
       "assets/group-mdCwaTQT.webp",
@@ -51,13 +55,13 @@
       "assets/full-support-B7n77V4a.webp",
       "assets/fast-track-c3sjsGje.webp",
       "assets/job-opportunities-CAdwek9v.webp",
-      "assets/logo-DrhpBcxC.webp",
+      "assets/success-confetti-5L5wvkSG.webp",
       "assets/trucks-bg-C4DvcgCy.webp",
       "assets/vite-CiWUAkja.svg"
     ]
   },
   "node_modules/canvg/lib/index.es.js": {
-    "file": "assets/index.es-Ci8r8798.js",
+    "file": "assets/index.es-B9KKYKe_.js",
     "name": "index.es",
     "src": "node_modules/canvg/lib/index.es.js",
     "isDynamicEntry": true,
@@ -72,7 +76,7 @@
     "isDynamicEntry": true
   },
   "node_modules/html2canvas/dist/html2canvas.js": {
-    "file": "assets/html2canvas-Dr0O2qEk.js",
+    "file": "assets/html2canvas-BdkTnoPD.js",
     "name": "html2canvas",
     "src": "node_modules/html2canvas/dist/html2canvas.js",
     "isDynamicEntry": true,
@@ -81,7 +85,7 @@
     ]
   },
   "src/assets/advisor.webp": {
-    "file": "assets/advisor-9dQcz1vd.webp",
+    "file": "assets/advisor-GdFBR9yC.webp",
     "src": "src/assets/advisor.webp"
   },
   "src/assets/cab.webp": {
@@ -89,7 +93,7 @@
     "src": "src/assets/cab.webp"
   },
   "src/assets/call.webp": {
-    "file": "assets/call-KfXmF2jg.webp",
+    "file": "assets/call-B4aDl4sw.webp",
     "src": "src/assets/call.webp"
   },
   "src/assets/career-support.webp": {
@@ -105,7 +109,7 @@
     "src": "src/assets/classroom.webp"
   },
   "src/assets/community.webp": {
-    "file": "assets/community-Be7FyI_H.webp",
+    "file": "assets/community-CPNrUWWY.webp",
     "src": "src/assets/community.webp"
   },
   "src/assets/fast-track.webp": {
@@ -113,7 +117,7 @@
     "src": "src/assets/fast-track.webp"
   },
   "src/assets/footimg.webp": {
-    "file": "assets/footimg-fALhMAZN.webp",
+    "file": "assets/footimg-CeLHo-HZ.webp",
     "src": "src/assets/footimg.webp"
   },
   "src/assets/full-support.webp": {
@@ -121,7 +125,7 @@
     "src": "src/assets/full-support.webp"
   },
   "src/assets/future.webp": {
-    "file": "assets/future-DFknwrKN.webp",
+    "file": "assets/future-BiiedT1T.webp",
     "src": "src/assets/future.webp"
   },
   "src/assets/group.webp": {
@@ -129,7 +133,7 @@
     "src": "src/assets/group.webp"
   },
   "src/assets/guidance.webp": {
-    "file": "assets/guidance-pokyorEn.webp",
+    "file": "assets/guidance-CzcC9Ukt.webp",
     "src": "src/assets/guidance.webp"
   },
   "src/assets/hands-on-training.webp": {
@@ -137,7 +141,7 @@
     "src": "src/assets/hands-on-training.webp"
   },
   "src/assets/handshake.webp": {
-    "file": "assets/handshake-WJwj-CFt.webp",
+    "file": "assets/handshake-CrZWJ6ta.webp",
     "src": "src/assets/handshake.webp"
   },
   "src/assets/hardhat.webp": {
@@ -145,12 +149,16 @@
     "src": "src/assets/hardhat.webp"
   },
   "src/assets/heroimg2.webp": {
-    "file": "assets/heroimg2-jA3jIwCn.webp",
+    "file": "assets/heroimg2-6IIX2VXq.webp",
     "src": "src/assets/heroimg2.webp"
   },
   "src/assets/industry-connection.webp": {
     "file": "assets/industry-connection-BQ82KSQt.webp",
     "src": "src/assets/industry-connection.webp"
+  },
+  "src/assets/instructor.webp": {
+    "file": "assets/instructor-CnYaJ_-m.webp",
+    "src": "src/assets/instructor.webp"
   },
   "src/assets/job-opportunities.webp": {
     "file": "assets/job-opportunities-CAdwek9v.webp",
@@ -168,13 +176,21 @@
     "file": "assets/left-img2-DgJ71Ot6.webp",
     "src": "src/assets/left-img2.webp"
   },
-  "src/assets/logo.webp": {
-    "file": "assets/logo-DrhpBcxC.webp",
-    "src": "src/assets/logo.webp"
-  },
   "src/assets/mission-banner.webp": {
     "file": "assets/mission-banner-CDlJ6Q0F.webp",
     "src": "src/assets/mission-banner.webp"
+  },
+  "src/assets/partnership.webp": {
+    "file": "assets/partnership-BcdBwLWG.webp",
+    "src": "src/assets/partnership.webp"
+  },
+  "src/assets/record.webp": {
+    "file": "assets/record-CjJXPm5l.webp",
+    "src": "src/assets/record.webp"
+  },
+  "src/assets/success-confetti.webp": {
+    "file": "assets/success-confetti-5L5wvkSG.webp",
+    "src": "src/assets/success-confetti.webp"
   },
   "src/assets/t1.webp": {
     "file": "assets/t1-CIgM2lXc.webp",
@@ -205,7 +221,7 @@
     "src": "src/assets/t6.webp"
   },
   "src/assets/t7.webp": {
-    "file": "assets/t7-WfbaG30z.webp",
+    "file": "assets/t7-4cynrqUK.webp",
     "src": "src/assets/t7.webp"
   },
   "src/assets/t8.webp": {
@@ -217,16 +233,20 @@
     "src": "src/assets/t9.webp"
   },
   "src/assets/training-program.webp": {
-    "file": "assets/training-program-r903XN-z.webp",
+    "file": "assets/training-program-CASI8-FA.webp",
     "src": "src/assets/training-program.webp"
   },
   "src/assets/training.webp": {
-    "file": "assets/training-gdO_jGPT.webp",
+    "file": "assets/training-B7Z-C4mN.webp",
     "src": "src/assets/training.webp"
   },
   "src/assets/truck-cab-training.webp": {
     "file": "assets/truck-cab-training-Du65C0QB.webp",
     "src": "src/assets/truck-cab-training.webp"
+  },
+  "src/assets/truck.webp": {
+    "file": "assets/truck-CsmOGbKV.webp",
+    "src": "src/assets/truck.webp"
   },
   "src/assets/trucks-bg.webp": {
     "file": "assets/trucks-bg-C4DvcgCy.webp",
@@ -241,7 +261,7 @@
     "src": "src/assets/w1.webp"
   },
   "src/assets/w2.webp": {
-    "file": "assets/w2-BusVYU-O.webp",
+    "file": "assets/w2-Mtn6C8FH.webp",
     "src": "src/assets/w2.webp"
   }
 }
