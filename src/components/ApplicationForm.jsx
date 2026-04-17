@@ -2,6 +2,10 @@ import { useState } from "react";
 import "./ApplicationForm.css";
 import { apiUrl } from "../lib/api";
 
+// Import the success image
+import successConfetti from "../assets/success-confetti.webp"; 
+// 👆 Adjust the path to where your image is stored
+
 const STEP_TITLES = {
   1: "Personal Details",
   2: "Driving History",
@@ -91,6 +95,7 @@ export default function ApplicationForm() {
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const prevStep = () => { if (step > 1) setStep(step - 1); };
 
@@ -111,20 +116,16 @@ export default function ApplicationForm() {
 
   const buildSubmissionPayload = () => {
     const payload = { ...formData };
-
-    // The backend treats these dates as optional, but DRF rejects empty strings.
     OPTIONAL_DATE_FIELDS.forEach((fieldName) => {
       if (payload[fieldName] === "") {
         payload[fieldName] = null;
       }
     });
-
     return payload;
   };
 
   const validateForm = () => {
     const errs = {};
-    // Required fields (Stage 1)
     if (!formData.first_name.trim()) errs.first_name = "First name is required";
     if (!formData.last_name.trim()) errs.last_name = "Last name is required";
     if (!formData.email.trim()) errs.email = "Email is required";
@@ -136,29 +137,24 @@ export default function ApplicationForm() {
     if (!formData.postal_code.trim()) errs.postal_code = "Postal code is required";
     if (!formData.emergency_name.trim()) errs.emergency_name = "Emergency contact name is required";
     if (!formData.emergency_relationship.trim()) errs.emergency_relationship = "Relationship is required";
-    // Stage 2 checks (optional, e.g. if commercial_experience is true then require years_experience)
-  if (formData.commercial_experience && !formData.years_experience.trim()) {
-    errs.years_experience = "Years of experience required if commercial experience is checked";
-  }
-  // Stage 3 checks (optional, e.g. require employer1_name if provided dates)
-  if (formData.employer1_from && !formData.employer1_name.trim()) {
-    errs.employer1_name = "Employer name required if employment dates are provided";
-  }
-  // Stage 4 checks (optional, e.g. require waiver_acceptance)
-  if (!formData.waiver_acceptance) {
-    errs.waiver_acceptance = "You must accept the waiver";
-  }
-  return errs;
-};
+    if (formData.commercial_experience && !formData.years_experience.trim()) {
+      errs.years_experience = "Years of experience required if commercial experience is checked";
+    }
+    if (formData.employer1_from && !formData.employer1_name.trim()) {
+      errs.employer1_name = "Employer name required if employment dates are provided";
+    }
+    if (!formData.waiver_acceptance) {
+      errs.waiver_acceptance = "You must accept the waiver";
+    }
+    return errs;
+  };
 
   const showValidationErrors = (validationErrors) => {
     setErrors(validationErrors);
-
     const firstErrorField = Object.keys(validationErrors)[0];
     const targetStep = FIELD_STEPS[firstErrorField] || step;
     const fieldLabel = FIELD_LABELS[firstErrorField] || "the highlighted field";
     const stepTitle = STEP_TITLES[targetStep] || "this section";
-
     setMessage(`Please fix ${fieldLabel} in ${stepTitle} before continuing.`);
     if (targetStep !== step) {
       setStep(targetStep);
@@ -179,14 +175,12 @@ export default function ApplicationForm() {
       showValidationErrors(stepErrors);
       return;
     }
-
     setMessage("");
     setErrors((currentErrors) =>
       Object.fromEntries(
         Object.entries(currentErrors).filter(([fieldName]) => FIELD_STEPS[fieldName] !== step),
       ),
     );
-
     if (step < 4) {
       setStep(step + 1);
     }
@@ -207,10 +201,11 @@ export default function ApplicationForm() {
         body: JSON.stringify(payload),
       });
       if (res.ok) {
-        setMessage("Application submitted successfully!");
+        setShowModal(true);
         setFormData(initialFormData);
         setStep(1);
         setErrors({});
+        setMessage("");
       } else {
         const errorData = await res.json();
         console.error(errorData);
@@ -220,23 +215,24 @@ export default function ApplicationForm() {
           : "Please review the form and try again.";
         setMessage(`Failed to submit application. ${details}`);
       }
-    } catch (error) {
-      console.error(error);
-      setMessage("Error submitting application.");
-    }
-  };
-
-  return (
-  <div className="application-form">
-    {message && (
-      <div
-        className={`form-message ${
-          message.toLowerCase().includes("success") ? "success" : "error"
-        }`}
-      >
-        {message}
-      </div>
-    )}
+      } catch (error) {
+        console.error(error);
+        setMessage("Error submitting application.");
+      }
+    };
+  
+    return (
+      <div className="application-form">
+      {/* Banner only for errors */}
+      {message && !showModal && (
+        <div
+          className={`form-message ${
+            message.toLowerCase().includes("success") ? "success" : "error"
+          }`}
+        >
+          {message}
+        </div>
+      )}
 
       {/* Progress Bar */}
       <div className="progress-bar">
@@ -244,10 +240,12 @@ export default function ApplicationForm() {
           { num: 1, title: "Personal Details" },
           { num: 2, title: "Driving History" },
           { num: 3, title: "Employment History" },
-          { num: 4, title: "Certification" }
+          { num: 4, title: "Certification" },
         ].map((stepItem, index, arr) => (
           <div className="progress-step-wrapper" key={stepItem.num}>
-            <div className={`progress-step ${step >= stepItem.num ? "active" : ""}`}>
+            <div
+              className={`progress-step ${step >= stepItem.num ? "active" : ""}`}
+            >
               {stepItem.num}
             </div>
             <div className="progress-title">{stepItem.title}</div>
@@ -257,11 +255,11 @@ export default function ApplicationForm() {
       </div>
 
       {/* Stage 1 */}
-{step === 1 && (
-  <div>
-    <h2 className="form-section-title">Basic Information</h2>
-    <div className="form-content">
-      <input
+      {step === 1 && (
+        <div>
+          <h2 className="form-section-title">Basic Information</h2>
+          <div className="form-content">
+            <input
         type="text"
         name="first_name"
         placeholder="First Name"
@@ -359,10 +357,9 @@ export default function ApplicationForm() {
         className={errors.postal_code ? "field-error" : ""}
       />
       {errors.postal_code && <span className="error">{errors.postal_code}</span>}
-    </div>
-
-    <h2 className="form-section-title">Emergency Information</h2>
-    <div className="form-content">
+          </div>
+          <h2 className="form-section-title">Emergency Information</h2>
+          <div className="form-content">
       <input
         type="text"
         name="emergency_name"
@@ -448,14 +445,13 @@ export default function ApplicationForm() {
       />
     </div>
   </div>
-)}
+      )}
 
-{/* Stage 2 */}
-{step === 2 && (
-  <div>
-    <h2 className="form-section-title">Driving History</h2>
-
-    <div className="form-row">
+      {/* Stage 2 */}
+      {step === 2 && (
+        <div>
+          <h2 className="form-section-title">Driving History</h2>
+          <div className="form-row">
       <label>
         <input
           type="checkbox"
@@ -595,15 +591,14 @@ export default function ApplicationForm() {
       value={formData.compliance_details}
       onChange={handleChange}
     />
-  </div>
-)}
+        </div>
+      )}
 
-{/* Stage 3 */}
-{step === 3 && (
-  <div>
-    <h2 className="form-section-title">Employment History</h2>
-
-    <h3 className="form-subtitle">Employer 1</h3>
+      {/* Stage 3 */}
+      {step === 3 && (
+        <div>
+          <h2 className="form-section-title">Employment History</h2>
+          <h3 className="form-subtitle">Employer 1</h3>
     <div className="form-content">
       <input
         type="text"
@@ -768,16 +763,14 @@ export default function ApplicationForm() {
         /> I hereby certify that I accept the conditions of the driver release waiver.
       </label>
     </div>
-  </div>
-)}
+        </div>
+      )}
 
-
-{/* Stage 4 */}
-{step === 4 && (
-  <div>
-    <h2 className="form-section-title">Certification</h2>
-
-    <h3 className="form-subtitle">Great Lakes CDL Academy Student Certification</h3>
+      {/* Stage 4 */}
+      {step === 4 && (
+        <div>
+          <h2 className="form-section-title">Certification</h2>
+          <h3 className="form-subtitle">Great Lakes CDL Academy Student Certification</h3>
     <div className="form-row">
       <label className={errors.waiver_acceptance ? "checkbox-error" : ""}>
         <input
@@ -852,10 +845,10 @@ export default function ApplicationForm() {
         /> By initialing this application, I certify that all information provided is true, complete, and accurate. I understand that providing false or misleading information may impact my eligibility for enrollment at Great Lakes CDL Academy
       </label>
     </div>
-  </div>
-)}
+        </div>
+      )}
 
-            {/* Navigation Buttons */}
+      {/* Navigation Buttons */}
       <div className="form-navigation">
         {step > 1 && (
           <button className="nav-btn prev" onClick={prevStep}>
@@ -872,6 +865,29 @@ export default function ApplicationForm() {
           </button>
         )}
       </div>
+
+      {/* Success Modal */}
+{showModal && (
+  <div className="success-modal-overlay">
+    <div
+      className="success-modal-card"
+      style={{ backgroundImage: `url(${successConfetti})` }}
+    >
+      <div className="success-modal-content">
+        <h2>Congratulations!</h2>
+        <p>Your application has been received successfully.</p>
+        <p>Our team will review it and contact you soon.</p>
+        <button
+          className="success-modal-button"
+          onClick={() => (window.location.href = "/")}
+        >
+          Back to Home →
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

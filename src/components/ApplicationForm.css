@@ -170,6 +170,58 @@ textarea {
   gap: 0.3rem;
 }
 
+.success-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.success-modal-card {
+  width: 700px;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* push content down */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  padding-bottom: 40px;
+}
+
+.success-modal-content {
+  text-align: center;
+  color: #222; /* text directly on background */
+}
+
+.success-modal-content h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* optional for readability */
+}
+
+.success-modal-content p {
+  font-size: 18px;
+  margin: 4px 0;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* optional */
+}
+
+.success-modal-button {
+  margin-top: 10px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
 /* Navigation Buttons */
 .form-navigation {
   display: flex;
