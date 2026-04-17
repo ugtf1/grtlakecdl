@@ -89,13 +89,26 @@
     flex-wrap: nowrap;     
     justify-content: space-between;
     gap: 0.5rem;
-    width: 100%;          
+    width: 85%;
   }
+  
+  .about-hero h1 {
+    width: 80%;          
+    
+  }
+  
+  .about-hero p {
+    width: 80%;          
+    /* border: red solid 2px; */
 
+    
+  }
+  
   .about-card {
     flex: 1 1 auto;           
     min-width: 0;         
-    max-width: 100%;          
+    max-width: 100%; 
+
   }
 
   .about-card img {

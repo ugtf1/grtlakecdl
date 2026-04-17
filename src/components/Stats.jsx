@@ -17,7 +17,8 @@ export default function Stats() {
         <p>Job Placement Rate</p>
       </div>
       <div className="stats-item">
-        <h3>Class A 160 Class B 40</h3>
+        <h3>Class A 160hrs, Class B 40hrs</h3>
+        <h4>4-5 weeks</h4>
         <p>Hours Program Completion Time</p>
       </div>
     </section>

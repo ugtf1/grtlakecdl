@@ -58,13 +58,13 @@ export default function ContactHero() {
       <div className="contact-hero-content">
         <h1>Got Questions? We’ve Got Answers</h1>
         <p>
-          Reach out today and get the guidance you need to start your CDL training
-          and secure a high-paying career.
+          Fill this out and a team member will contact you shortly
         </p>
       </div>
 
       {/* Contact Form */}
       <form className="contact-form" onSubmit={handleSubmit}>
+        <div className="form-headtitle">Your information is secure and will never be shared</div>
         <div className="form-row">
           <div className="form-group half-width">
             <label>First Name</label>
@@ -132,21 +132,21 @@ export default function ContactHero() {
       <div className="contact-info">
         <div className="info-card">
           <FaPhoneAlt className="info-icon" />
-          <h4>Give Us a Call</h4>
+          <h4>Call Us Directly</h4>
           <p>(313)-474-9777</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
 
         <div className="info-card">
           <FaEnvelope className="info-icon" />
-          <h4>Send Us Email</h4>
+          <h4>Send Us a Message</h4>
           <p>info@greatlakescdlacademy.net</p>
           <button className="info-btn"><FaPlus /></button>
         </div>
 
         <div className="info-card">
           <FaMapMarkerAlt className="info-icon" />
-          <h4>Our Location</h4>
+          <h4>Conviniently Located at</h4>
           <p>6575 W. Vernor Hwy, Detroit MI 48209</p>
           <button className="info-btn"><FaPlus /></button>
         </div>

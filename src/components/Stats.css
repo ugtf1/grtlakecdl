@@ -18,10 +18,19 @@
 }
 
 .stats-item h3 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: #f7f6f5;            
     margin-bottom: 0.5rem;
+    font-family: 'inter', sans-serif;
+}
+.stats-item h4 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #f7f6f5;            
+    margin-bottom: 0.5rem;
+    text-align: left;
+    margin-left: 1rem;
     font-family: 'inter', sans-serif;
 }
 
@@ -37,10 +46,32 @@
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .stats-item h4 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #f7f6f5;            
+    margin-bottom: 0.5rem;
+    text-align: left;
+    margin-left: 4rem;
+    /* border: red solid 2px; */
+    font-family: 'inter', sans-serif;
+}
 }
 
 @media (max-width: 600px) {
   .stats {
     grid-template-columns: 1fr;
   }
+
+  .stats-item h4 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #f7f6f5;            
+    margin-bottom: 0.5rem;
+    text-align: left;
+    margin-left: 4rem;
+    font-family: 'inter', sans-serif;
+    
+}
 }

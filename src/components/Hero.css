@@ -218,6 +218,7 @@ p, .subtext, .trust-top {
   .btn-apply, .btn-call { width: 60%; text-align: center; }
   .hero-image { height: 50vh; margin-top: 1rem; }
   .hero-image img { height: 100%; object-fit: cover; }
+  .trust-bottom-container { display: none; }
 }
 
 /* Small Mobile */
@@ -225,7 +226,7 @@ p, .subtext, .trust-top {
   .hero-content h1 { font-size: 1.6rem; width: 80vw; }
   .subtext { font-size: 0.85rem; }
   .trust-top { width: 90vw; justify-content: center; }
-  .trust-bottom-container { width: 100%; padding: 2rem 0; }
+  .trust-bottom-container { display: none; }
   .btn-call { width: 7rem; }
   .btn-apply, .btn-call { font-size: 0.9rem; padding: 0.7rem 1rem; }
 }

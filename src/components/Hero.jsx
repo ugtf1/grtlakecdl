@@ -36,7 +36,7 @@ export default function Hero() {
   
   <div className="trust-bottom-container">
     <p className="trust-bottom">
-      Trusted by 50,000+ businesses for innovative design and growth
+      25+ years of combined experience serving the state of Michigan
     </p>
   </div>
 </section>

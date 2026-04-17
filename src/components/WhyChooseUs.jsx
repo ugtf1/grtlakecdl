@@ -12,7 +12,7 @@ export default function WhyChooseUs() {
     <section className="why-choose-us">
       <h2 className="wcu-heading">Why Choose Us</h2>
       <p className="wcu-subheading">
-        Most schools chase tuition. We focus on your success.
+        Most schools chase tuition. We focus on your success with Direct access to employers actively hiring our graduates
       </p>
 
       <div className="wcu-cards">
