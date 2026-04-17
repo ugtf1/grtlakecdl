@@ -175,6 +175,16 @@
     flex-direction: column;
   }
 
+  .wcu {
+    width: 70%;
+  }
+  
+  .wcu-left-images {
+    /* border: red solid 2px; */
+    flex-direction: column;
+
+  }
+
   .wcu-right {
     grid-template-columns: 1fr;
     width: 90%;

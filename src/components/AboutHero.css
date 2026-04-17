@@ -92,17 +92,22 @@
     width: 85%;
   }
   
-  .about-hero h1 {
+  .about {
+    /* border: red solid 2px; */
+    width: 85%;
+
+  }
+
+  /* .about-hero h1 {
     width: 80%;          
     
   }
   
   .about-hero p {
     width: 80%;          
-    /* border: red solid 2px; */
 
     
-  }
+  } */
   
   .about-card {
     flex: 1 1 auto;           
