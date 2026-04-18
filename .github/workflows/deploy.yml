@@ -99,6 +99,7 @@ jobs:
         env:
           SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
         run: |
+          rm -rf .lighthouseci
           mkdir -p .lighthouseci
 
           echo "Running Lighthouse (Desktop)..."
@@ -107,19 +108,29 @@ jobs:
             --numberOfRuns=1 \
             --settings.formFactor=desktop \
             --settings.screenEmulation.mobile=false \
-            --settings.throttlingMethod=provided || true
+            --settings.throttlingMethod=provided
 
-          DESKTOP_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
+          DESKTOP_REPORT=$(find .lighthouseci -name "lhr-*.json" -type f | sort | tail -n 1)
+          if [ -z "$DESKTOP_REPORT" ]; then
+            echo "Desktop Lighthouse report was not generated."
+            exit 1
+          fi
           cp "$DESKTOP_REPORT" .lighthouseci/lighthouse-desktop.json
+          rm -f .lighthouseci/lhr-*.json .lighthouseci/manifest.json
 
           echo "Running Lighthouse (Mobile)..."
           lhci collect \
             --url="$SERVICE_URL" \
             --numberOfRuns=1 \
             --settings.formFactor=mobile \
-            --settings.throttlingMethod=simulate || true
+            --settings.screenEmulation.mobile=true \
+            --settings.throttlingMethod=simulate
 
-          MOBILE_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
+          MOBILE_REPORT=$(find .lighthouseci -name "lhr-*.json" -type f | sort | tail -n 1)
+          if [ -z "$MOBILE_REPORT" ]; then
+            echo "Mobile Lighthouse report was not generated."
+            exit 1
+          fi
           cp "$MOBILE_REPORT" .lighthouseci/lighthouse-mobile.json
 
       - name: Extract Lighthouse scores
@@ -133,15 +144,26 @@ jobs:
             exit 1
           fi
 
-          DESKTOP_PERF=$(jq '.categories.performance.score' "$DESKTOP_REPORT")
-          DESKTOP_ACC=$(jq '.categories.accessibility.score' "$DESKTOP_REPORT")
-          DESKTOP_BP=$(jq '.categories["best-practices"].score' "$DESKTOP_REPORT")
-          DESKTOP_SEO=$(jq '.categories.seo.score' "$DESKTOP_REPORT")
+          score() {
+            local report="$1"
+            local category="$2"
+            jq -er --arg category "$category" '.categories[$category].score' "$report"
+          }
 
-          MOBILE_PERF=$(jq '.categories.performance.score' "$MOBILE_REPORT")
-          MOBILE_ACC=$(jq '.categories.accessibility.score' "$MOBILE_REPORT")
-          MOBILE_BP=$(jq '.categories["best-practices"].score' "$MOBILE_REPORT")
-          MOBILE_SEO=$(jq '.categories.seo.score' "$MOBILE_REPORT")
+          echo "Desktop categories:"
+          jq -r '.categories | to_entries[] | "\(.key)=\(.value.title): \(.value.score)"' "$DESKTOP_REPORT"
+          echo "Mobile categories:"
+          jq -r '.categories | to_entries[] | "\(.key)=\(.value.title): \(.value.score)"' "$MOBILE_REPORT"
+
+          DESKTOP_PERF=$(score "$DESKTOP_REPORT" "performance")
+          DESKTOP_ACC=$(score "$DESKTOP_REPORT" "accessibility")
+          DESKTOP_BP=$(score "$DESKTOP_REPORT" "best-practices")
+          DESKTOP_SEO=$(score "$DESKTOP_REPORT" "seo")
+
+          MOBILE_PERF=$(score "$MOBILE_REPORT" "performance")
+          MOBILE_ACC=$(score "$MOBILE_REPORT" "accessibility")
+          MOBILE_BP=$(score "$MOBILE_REPORT" "best-practices")
+          MOBILE_SEO=$(score "$MOBILE_REPORT" "seo")
 
           SUMMARY="Desktop: Performance=$DESKTOP_PERF, Accessibility=$DESKTOP_ACC, BestPractices=$DESKTOP_BP, SEO=$DESKTOP_SEO | Mobile: Performance=$MOBILE_PERF, Accessibility=$MOBILE_ACC, BestPractices=$MOBILE_BP, SEO=$MOBILE_SEO"
           echo "lighthouse_summary=$SUMMARY" >> "$GITHUB_OUTPUT"
