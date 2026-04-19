@@ -1,11 +1,26 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./Footer.css";
 
-// Import images
+// Import image from public or assets
 import truckImg from "../assets/footimg.webp"; 
-import { FaInstagram, FaTwitter, FaLinkedin, FaFacebook, FaPhone } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+// Lazy load each icon
+const InstagramIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaInstagram }))
+);
+const TwitterIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaTwitter }))
+);
+const LinkedinIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaLinkedin }))
+);
+const FacebookIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaFacebook }))
+);
+const PhoneIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaPhone }))
+);
 
 export default function Footer() {
   return (
@@ -22,32 +37,20 @@ export default function Footer() {
               <li><a href="/">Home</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
-              {/* <li><a href="/admin">Admin Page</a></li> */}
-              {/* <li>Blog</li> */}
             </ul>
           </div>
-
-          <div className="link-group">
-            
-            <ul>
-              {/* <li>Sign Up</li>
-              <li>Forgot</li>
-              <li>Confirm Email</li> */}
-              {/* <li>Privacy Policy</li> */}
-            </ul>
-          </div>
-
-         
         </div>
 
         <div className="footer-social">
-          <FaInstagram className="social-icon" />
-          <FaTwitter className="social-icon" />
-          <FaLinkedin className="social-icon" />
-          <FaFacebook className="social-icon" />
-          <div className="footer-contact">
-            <FaPhone /> <span>+1 (313) 474-9777</span>
-          </div>
+          <Suspense fallback={<span />}>
+            <InstagramIcon className="social-icon" />
+            <TwitterIcon className="social-icon" />
+            <LinkedinIcon className="social-icon" />
+            <FacebookIcon className="social-icon" />
+            <div className="footer-contact">
+              <PhoneIcon /> <span>+1 (313) 474-9777</span>
+            </div>
+          </Suspense>
         </div>
       </div>
     </footer>

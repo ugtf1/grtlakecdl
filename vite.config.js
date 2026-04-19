@@ -9,6 +9,16 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    manifest: true,  
+    manifest: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split heavy dependencies into separate chunks
+          chart: ['chart.js', 'react-chartjs-2'],
+          pdf: ['jspdf'],
+          icons: ['react-icons'],
+        }
+      }
+    }
   }
 })

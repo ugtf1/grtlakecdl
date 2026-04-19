@@ -1,27 +1,37 @@
+import React, { Suspense } from "react";
+
+// Critical above-the-fold component
 import Hero from "../components/Hero";
-import VisionMission from "../components/VisionMission";
-import WeeklyStats from "../components/WeeklyStats";
-import WhyChooseUs from "../components/WhyChooseUs";
-import HowItWorks from "../components/HowItWorks";
-import WhatWeOffer from "../components/WhatWeOffer";
-import Testimonials from "../components/Testimonials";
-import AcademySection from "../components/AcademySection";
-import Banner from "../components/Banner";
-import Footer from "../components/Footer"
+
+// Lazy load the rest
+const VisionMission = React.lazy(() => import("../components/VisionMission"));
+const WeeklyStats = React.lazy(() => import("../components/WeeklyStats"));
+const WhyChooseUs = React.lazy(() => import("../components/WhyChooseUs"));
+const HowItWorks = React.lazy(() => import("../components/HowItWorks"));
+const WhatWeOffer = React.lazy(() => import("../components/WhatWeOffer"));
+const Testimonials = React.lazy(() => import("../components/Testimonials"));
+const AcademySection = React.lazy(() => import("../components/AcademySection"));
+const Banner = React.lazy(() => import("../components/Banner"));
+const Footer = React.lazy(() => import("../components/Footer"));
 
 export default function Home() {
   return (
     <div>
+      {/* Hero loads immediately */}
       <Hero />
-      <VisionMission />
-      <WeeklyStats />
-      <WhyChooseUs />
-      <HowItWorks />
-      <WhatWeOffer />
-      <Testimonials />
-      <AcademySection />
-      <Banner />
-      <Footer />
+
+      {/* Other sections load lazily */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <VisionMission />
+        <WeeklyStats />
+        <WhyChooseUs />
+        <HowItWorks />
+        <WhatWeOffer />
+        <Testimonials />
+        <AcademySection />
+        <Banner />
+        <Footer />
+      </Suspense>
     </div>
   );
 }

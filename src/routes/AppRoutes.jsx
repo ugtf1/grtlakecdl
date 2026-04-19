@@ -1,34 +1,39 @@
+import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import AboutUs from "../pages/AboutUs";
-// import Services from "../pages/Services";
-import ContactUs from "../pages/ContactUs";
-import Admin from "../pages/Admin";
-import AdminLogin from "../pages/AdminLogin";
-import ApplicationForm from "../pages/ApplicationForm";
 import Navbar from "../components/Navbar";
 import ProtectedRoute from "./ProtectedRoute";
+
+// Lazy load each page
+const Home = React.lazy(() => import("../pages/Home"));
+const AboutUs = React.lazy(() => import("../pages/AboutUs"));
+const ContactUs = React.lazy(() => import("../pages/ContactUs"));
+const Admin = React.lazy(() => import("../pages/Admin"));
+const AdminLogin = React.lazy(() => import("../pages/AdminLogin"));
+const ApplicationForm = React.lazy(() => import("../pages/ApplicationForm"));
+// const Services = React.lazy(() => import("../pages/Services")); // if needed later
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<AboutUs />} />
-        {/* <Route path="/services" element={<Services />} /> */}
-        <Route path="/contact" element={<ContactUs />} />
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <Admin />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/application-form" element={<ApplicationForm />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          {/* <Route path="/services" element={<Services />} /> */}
+          <Route path="/contact" element={<ContactUs />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/application-form" element={<ApplicationForm />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

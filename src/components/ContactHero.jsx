@@ -1,7 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import "./ContactHero.css";
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaPlus } from "react-icons/fa";
 import { apiUrl } from "../lib/api";
+
+// Lazy load icons
+const PhoneIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaPhoneAlt }))
+);
+const EnvelopeIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaEnvelope }))
+);
+const MapIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaMapMarkerAlt }))
+);
+const PlusIcon = React.lazy(() =>
+  import("react-icons/fa").then(mod => ({ default: mod.FaPlus }))
+);
 
 export default function ContactHero() {
   const [formData, setFormData] = useState({
@@ -27,15 +40,11 @@ export default function ContactHero() {
     try {
       const response = await fetch(apiUrl("/contact/"), {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Contact submission failed");
-      }
+      if (!response.ok) throw new Error("Contact submission failed");
 
       setFormData({
         first_name: "",
@@ -57,14 +66,15 @@ export default function ContactHero() {
     <section className="contact-hero">
       <div className="contact-hero-content">
         <h1>Got Questions? We’ve Got Answers</h1>
-        <p>
-          Fill this out and a team member will contact you shortly
-        </p>
+        <p>Fill this out and a team member will contact you shortly</p>
       </div>
 
       {/* Contact Form */}
       <form className="contact-form" onSubmit={handleSubmit}>
-        <div className="form-headtitle">Your information is secure and will never be shared</div>
+        <div className="form-headtitle">
+          Your information is secure and will never be shared
+        </div>
+
         <div className="form-row">
           <div className="form-group half-width">
             <label>First Name</label>
@@ -101,6 +111,7 @@ export default function ContactHero() {
             required
           />
         </div>
+
         <div className="form-group">
           <label>Email Address</label>
           <input
@@ -112,6 +123,7 @@ export default function ContactHero() {
             required
           />
         </div>
+
         <div className="form-group full-width">
           <label>Leave Us a Message</label>
           <textarea
@@ -122,7 +134,11 @@ export default function ContactHero() {
             required
           ></textarea>
         </div>
-        {status.text && <p className={`contact-status ${status.type}`}>{status.text}</p>}
+
+        {status.text && (
+          <p className={`contact-status ${status.type}`}>{status.text}</p>
+        )}
+
         <button type="submit" className="submit-btn" disabled={isSubmitting}>
           {isSubmitting ? "Sending..." : "Start My CDL Career"}
         </button>
@@ -130,26 +146,28 @@ export default function ContactHero() {
 
       {/* Contact Info Cards */}
       <div className="contact-info">
-        <div className="info-card">
-          <FaPhoneAlt className="info-icon" />
-          <h4>Call Us Directly</h4>
-          <p>(313)-474-9777</p>
-          <button className="info-btn"><FaPlus /></button>
-        </div>
+        <Suspense fallback={<span />}>
+          <div className="info-card">
+            <PhoneIcon className="info-icon" />
+            <h4>Call Us Directly</h4>
+            <p>(313)-474-9777</p>
+            <button className="info-btn"><PlusIcon /></button>
+          </div>
 
-        <div className="info-card">
-          <FaEnvelope className="info-icon" />
-          <h4>Send Us a Message</h4>
-          <p>info@greatlakescdlacademy.net</p>
-          <button className="info-btn"><FaPlus /></button>
-        </div>
+          <div className="info-card">
+            <EnvelopeIcon className="info-icon" />
+            <h4>Send Us a Message</h4>
+            <p>info@greatlakescdlacademy.net</p>
+            <button className="info-btn"><PlusIcon /></button>
+          </div>
 
-        <div className="info-card">
-          <FaMapMarkerAlt className="info-icon" />
-          <h4>Conviniently Located at</h4>
-          <p>6575 W. Vernor Hwy, Detroit MI 48209</p>
-          <button className="info-btn"><FaPlus /></button>
-        </div>
+          <div className="info-card">
+            <MapIcon className="info-icon" />
+            <h4>Conveniently Located at</h4>
+            <p>6575 W. Vernor Hwy, Detroit MI 48209</p>
+            <button className="info-btn"><PlusIcon /></button>
+          </div>
+        </Suspense>
       </div>
     </section>
   );
