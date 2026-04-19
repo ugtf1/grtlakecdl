@@ -91,60 +91,197 @@ jobs:
 
       - name: Install Lighthouse CI
         run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
           npm install -g @lhci/cli@0.13.x
 
       - name: Run Lighthouse audit
         env:
           SERVICE_URL: ${{ needs.build-and-deploy.outputs.service_url }}
         run: |
+          rm -rf .lighthouseci
           mkdir -p .lighthouseci
 
-          echo "Running Lighthouse (Desktop)..."
-          lhci collect \
-            --url="$SERVICE_URL" \
-            --numberOfRuns=1 \
-            --settings.formFactor=desktop \
-            --settings.screenEmulation.mobile=false \
-            --settings.throttlingMethod=provided || true
+          ROUTES=(
+            "/"
+            "/about"
+            "/contact"
+            "/application-form"
+            "/admin-login"
+          )
 
-          DESKTOP_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
-          cp "$DESKTOP_REPORT" .lighthouseci/lighthouse-desktop.json
+          slug_for_route() {
+            local route="$1"
+            if [ "$route" = "/" ]; then
+              echo "home"
+            else
+              echo "${route#/}" | tr '/' '-'
+            fi
+          }
 
-          echo "Running Lighthouse (Mobile)..."
-          lhci collect \
-            --url="$SERVICE_URL" \
-            --numberOfRuns=1 \
-            --settings.formFactor=mobile \
-            --settings.throttlingMethod=simulate || true
+          collect_report() {
+            local mode="$1"
+            local route="$2"
+            local slug
+            local url
+            local report
 
-          MOBILE_REPORT=$(find .lighthouseci -name "lhr-*.json" | sort | tail -n 1)
-          cp "$MOBILE_REPORT" .lighthouseci/lighthouse-mobile.json
+            slug=$(slug_for_route "$route")
+            url="${SERVICE_URL%/}${route}"
+
+            rm -f .lighthouseci/lhr-*.json .lighthouseci/manifest.json
+            echo "Running Lighthouse ($mode) for $url..."
+
+            if [ "$mode" = "desktop" ]; then
+              lhci collect \
+                --url="$url" \
+                --numberOfRuns=1 \
+                --settings.formFactor=desktop \
+                --settings.screenEmulation.mobile=false \
+                --settings.throttlingMethod=provided
+            else
+              lhci collect \
+                --url="$url" \
+                --numberOfRuns=1 \
+                --settings.formFactor=mobile \
+                --settings.screenEmulation.mobile=true \
+                --settings.throttlingMethod=simulate
+            fi
+
+            report=$(find .lighthouseci -name "lhr-*.json" -type f | sort | tail -n 1)
+            if [ -z "$report" ]; then
+              echo "$mode Lighthouse report was not generated for $route."
+              exit 1
+            fi
+            cp "$report" ".lighthouseci/lighthouse-${mode}-${slug}.json"
+          }
+
+          for route in "${ROUTES[@]}"; do
+            collect_report "desktop" "$route"
+            collect_report "mobile" "$route"
+          done
 
       - name: Extract Lighthouse scores
         id: summary
         run: |
-          DESKTOP_REPORT=".lighthouseci/lighthouse-desktop.json"
-          MOBILE_REPORT=".lighthouseci/lighthouse-mobile.json"
+          SUMMARY=$(python3 - <<'EOF'
+          import glob
+          import json
+          import os
+          import statistics
 
-          if [ ! -f "$DESKTOP_REPORT" ] || [ ! -f "$MOBILE_REPORT" ]; then
-            echo "Missing one or both Lighthouse reports."
-            exit 1
-          fi
+          categories = [
+              ("performance", "Perf"),
+              ("accessibility", "Access"),
+              ("best-practices", "Best"),
+              ("seo", "SEO"),
+          ]
 
-          DESKTOP_PERF=$(jq '.categories.performance.score' "$DESKTOP_REPORT")
-          DESKTOP_ACC=$(jq '.categories.accessibility.score' "$DESKTOP_REPORT")
-          DESKTOP_BP=$(jq '.categories["best-practices"].score' "$DESKTOP_REPORT")
-          DESKTOP_SEO=$(jq '.categories.seo.score' "$DESKTOP_REPORT")
+          route_names = {
+              "home": "/",
+              "about": "/about",
+              "contact": "/contact",
+              "application-form": "/application-form",
+              "admin-login": "/admin-login",
+          }
 
-          MOBILE_PERF=$(jq '.categories.performance.score' "$MOBILE_REPORT")
-          MOBILE_ACC=$(jq '.categories.accessibility.score' "$MOBILE_REPORT")
-          MOBILE_BP=$(jq '.categories["best-practices"].score' "$MOBILE_REPORT")
-          MOBILE_SEO=$(jq '.categories.seo.score' "$MOBILE_REPORT")
+          rows = []
+          for path in sorted(glob.glob(".lighthouseci/lighthouse-*.json")):
+              name = os.path.basename(path).removeprefix("lighthouse-").removesuffix(".json")
+              mode, slug = name.split("-", 1)
+              with open(path, "r", encoding="utf-8") as f:
+                  data = json.load(f)
+              scores = {
+                  key: round(data["categories"][key]["score"] * 100)
+                  for key, _ in categories
+              }
+              rows.append(
+                  {
+                      "mode": mode.capitalize(),
+                      "route": route_names.get(slug, f"/{slug}"),
+                      "requested_url": data.get("requestedUrl", ""),
+                      "final_url": data.get("finalDisplayedUrl", ""),
+                      **scores,
+                  }
+              )
 
-          SUMMARY="Desktop: Performance=$DESKTOP_PERF, Accessibility=$DESKTOP_ACC, BestPractices=$DESKTOP_BP, SEO=$DESKTOP_SEO | Mobile: Performance=$MOBILE_PERF, Accessibility=$MOBILE_ACC, BestPractices=$MOBILE_BP, SEO=$MOBILE_SEO"
-          echo "lighthouse_summary=$SUMMARY" >> "$GITHUB_OUTPUT"
+          if not rows:
+              raise SystemExit("No Lighthouse reports found.")
+
+          mode_order = {"Desktop": 0, "Mobile": 1}
+          route_order = {route: index for index, route in enumerate(route_names.values())}
+          rows.sort(key=lambda row: (mode_order[row["mode"]], route_order.get(row["route"], 99)))
+
+          aggregates = []
+          for mode in ("Desktop", "Mobile"):
+              mode_rows = [row for row in rows if row["mode"] == mode]
+              if not mode_rows:
+                  continue
+              aggregates.append(
+                  {
+                      "mode": mode,
+                      **{
+                          key: round(statistics.mean(row[key] for row in mode_rows))
+                          for key, _ in categories
+                      },
+                  }
+              )
+
+          def table(headers, body_rows):
+              widths = [
+                  max(len(str(row[index])) for row in [headers, *body_rows])
+                  for index in range(len(headers))
+              ]
+              header = " | ".join(str(value).ljust(widths[index]) for index, value in enumerate(headers))
+              divider = "-+-".join("-" * width for width in widths)
+              body = [
+                  " | ".join(str(value).ljust(widths[index]) for index, value in enumerate(row))
+                  for row in body_rows
+              ]
+              return "\n".join([header, divider, *body])
+
+          headers = ["Mode", "Perf", "Access", "Best", "SEO"]
+          aggregate_rows = [
+              [
+                  f"**{row['mode']}**",
+                  f"**{row['performance']}**",
+                  f"**{row['accessibility']}**",
+                  f"**{row['best-practices']}**",
+                  f"**{row['seo']}**",
+              ]
+              for row in aggregates
+          ]
+          page_rows = [
+              [
+                  row["route"],
+                  row["mode"],
+                  row["performance"],
+                  row["accessibility"],
+                  row["best-practices"],
+                  row["seo"],
+              ]
+              for row in rows
+          ]
+
+          audited_routes = ", ".join(route_names.values())
+          requested_urls = sorted({row["requested_url"] for row in rows if row["requested_url"]})
+
+          print("Scores are whole-number Lighthouse scores from 0-100.")
+          print(f"Audited routes: {audited_routes}")
+          print("Skipped protected route: /admin")
+          print(f"Base deployment URL: {requested_urls[0].rsplit('/', 1)[0] if requested_urls else 'unknown'}")
+          print()
+          print("AGGREGATED SCORES - average across audited pages")
+          print(table(headers, aggregate_rows))
+          print()
+          print("INDIVIDUAL PAGE SCORES")
+          print(table(["Page", "Mode", "Perf", "Access", "Best", "SEO"], page_rows))
+          EOF
+          )
+
+          {
+            echo "lighthouse_summary<<EOF"
+            echo "$SUMMARY"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
   seo-audit:
     needs: [build-and-deploy, lighthouse-audit]
