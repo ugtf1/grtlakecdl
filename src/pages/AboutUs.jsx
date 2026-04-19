@@ -5,12 +5,14 @@ import Stats from "../components/Stats";
 import Wsa from "../components/Wsa";
 import Banner from "../components/BannerA";
 import Footer from "../components/Footer";
+import AboutFounder from "../components/AboutFounder";
 
 export default function AboutUs() {
   return (
     <div>
       <AboutHero />
       <Mission />
+      <AboutFounder />
       <Wcu />
       <Stats />
       <Wsa />
