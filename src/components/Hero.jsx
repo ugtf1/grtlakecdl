@@ -23,7 +23,7 @@ export default function Hero() {
           Enroll Now
         </Link>
         <a href="tel:+13134749777" className="btn-call">
-          Call Now
+          Speak with a Supervisor Now
         </a>
       </div>
     </div>
