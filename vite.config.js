@@ -12,11 +12,16 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Split heavy dependencies into separate chunks
-          chart: ['chart.js', 'react-chartjs-2'],
-          pdf: ['jspdf'],
-          icons: ['react-icons'],
+        manualChunks(id) {
+          if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
+            return 'chart'
+          }
+          if (id.includes('jspdf')) {
+            return 'pdf'
+          }
+          if (id.includes('react-icons')) {
+            return 'icons'
+          }
         }
       }
     }

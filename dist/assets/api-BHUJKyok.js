@@ -1,0 +1,1 @@
+var e=`https://cdlbackend-lagfzewagq-ue.a.run.app/api`.replace(/\/+$/,``);function t(t){return`${e}${t.startsWith(`/`)?t:`/${t}`}`}export{t};
