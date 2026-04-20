@@ -130,7 +130,7 @@
   position: relative;
   flex: 1;
   border-radius: 8px;
-  background: url("/src/assets/network-overlay.png") center/cover no-repeat;
+  background: url("../assets/network-overlay.webp") center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;

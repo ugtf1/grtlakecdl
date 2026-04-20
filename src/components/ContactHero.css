@@ -63,6 +63,8 @@
   font-weight: 600;
   color: #0a162c;
   margin-bottom: 0.5rem;
+  /* border: red solid 2px; */
+  text-align: left;
 }
 
 .contact-form input,

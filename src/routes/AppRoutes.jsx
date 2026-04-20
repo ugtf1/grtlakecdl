@@ -2,9 +2,9 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProtectedRoute from "./ProtectedRoute";
+import Home from "../pages/Home";
 
-// Lazy load each page
-const Home = React.lazy(() => import("../pages/Home"));
+// Keep secondary pages lazy, but load Home eagerly for the landing route.
 const AboutUs = React.lazy(() => import("../pages/AboutUs"));
 const ContactUs = React.lazy(() => import("../pages/ContactUs"));
 const Admin = React.lazy(() => import("../pages/Admin"));
@@ -16,7 +16,7 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />

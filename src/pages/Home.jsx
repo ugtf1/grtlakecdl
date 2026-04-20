@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 
 // Critical above-the-fold component
 import Hero from "../components/Hero";
+import IdleRender from "../components/IdleRender";
 
 // Lazy load the rest
 const VisionMission = React.lazy(() => import("../components/VisionMission"));
@@ -20,18 +21,20 @@ export default function Home() {
       {/* Hero loads immediately */}
       <Hero />
 
-      {/* Other sections load lazily */}
-      <Suspense fallback={<div>Loading...</div>}>
-        <VisionMission />
-        <WeeklyStats />
-        <WhyChooseUs />
-        <HowItWorks />
-        <WhatWeOffer />
-        <Testimonials />
-        <AcademySection />
-        <Banner />
-        <Footer />
-      </Suspense>
+      {/* Below-the-fold sections load after the critical path is done. */}
+      <IdleRender>
+        <Suspense fallback={null}>
+          <VisionMission />
+          <WeeklyStats />
+          <WhyChooseUs />
+          <HowItWorks />
+          <WhatWeOffer />
+          <Testimonials />
+          <AcademySection />
+          <Banner />
+          <Footer />
+        </Suspense>
+      </IdleRender>
     </div>
   );
 }
