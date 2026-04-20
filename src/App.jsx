@@ -1,12 +1,15 @@
-import React from "react";
-import AppRoutes from "./routes/AppRoutes";
+import { Suspense, lazy } from "react";
 import { AuthProvider } from "./context/AuthContext";
+
+const AppRoutes = lazy(() => import("./routes/AppRoutes"));
 
 function App() {
   return (
     <AuthProvider>
       <div className="App">
-        <AppRoutes />
+        <Suspense fallback={null}>
+          <AppRoutes />
+        </Suspense>
       </div>
     </AuthProvider>
   );

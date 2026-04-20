@@ -1,91 +1,91 @@
 {
-  "_BannerA-CZUpWNC_.js": {
-    "file": "assets/BannerA-CZUpWNC_.js",
+  "_BannerA-C_tEflhW.css": {
+    "file": "assets/BannerA-C_tEflhW.css",
+    "src": "_BannerA-C_tEflhW.css"
+  },
+  "_BannerA-DSN68LKc.js": {
+    "file": "assets/BannerA-DSN68LKc.js",
     "name": "BannerA",
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/BannerA-C_tEflhW.css"
     ]
   },
-  "_BannerA-C_tEflhW.css": {
-    "file": "assets/BannerA-C_tEflhW.css",
-    "src": "_BannerA-C_tEflhW.css"
-  },
   "_Dashboard-BeE3PLMA.css": {
     "file": "assets/Dashboard-BeE3PLMA.css",
     "src": "_Dashboard-BeE3PLMA.css"
   },
-  "_api-QcrfcleK.js": {
-    "file": "assets/api-QcrfcleK.js",
+  "_api--wkmdF5w.js": {
+    "file": "assets/api--wkmdF5w.js",
     "name": "api"
   },
-  "_react-vendor-SLSd7RaF.js": {
-    "file": "assets/react-vendor-SLSd7RaF.js",
+  "_react-dom-D8tNOWnt.js": {
+    "file": "assets/react-dom-D8tNOWnt.js",
+    "name": "react-dom",
+    "imports": [
+      "_rolldown-runtime-297CnYNL.js"
+    ]
+  },
+  "_react-vendor-DFwRxZ6l.js": {
+    "file": "assets/react-vendor-DFwRxZ6l.js",
     "name": "react-vendor",
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-dom-D8tNOWnt.js"
     ]
   },
-  "_rolldown-runtime-CJ_koDw0.js": {
-    "file": "assets/rolldown-runtime-CJ_koDw0.js",
+  "_rolldown-runtime-297CnYNL.js": {
+    "file": "assets/rolldown-runtime-297CnYNL.js",
     "name": "rolldown-runtime"
-  },
-  "_router-vendor-MfTO5L3y.js": {
-    "file": "assets/router-vendor-MfTO5L3y.js",
-    "name": "router-vendor",
-    "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_react-vendor-SLSd7RaF.js"
-    ]
   },
   "_typeof-Du9ZCqab.js": {
     "file": "assets/typeof-Du9ZCqab.js",
     "name": "typeof"
   },
+  "_ui-vendor-BfJCIDIj.js": {
+    "file": "assets/ui-vendor-BfJCIDIj.js",
+    "name": "ui-vendor",
+    "imports": [
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-dom-D8tNOWnt.js"
+    ]
+  },
   "index.html": {
-    "file": "assets/index-CVka9ZgQ.js",
+    "file": "assets/index-BS99Fc0r.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "dynamicImports": [
-      "src/components/VisionMission.jsx",
-      "src/components/WeeklyStats.jsx",
-      "src/components/WhyChooseUs.jsx",
-      "src/components/HowItWorks.jsx",
-      "src/components/WhatWeOffer.jsx",
-      "src/components/Testimonials.jsx",
-      "src/components/AcademySection.jsx",
-      "src/components/Banner.jsx",
-      "src/components/Footer.jsx",
+      "src/routes/AppRoutes.jsx",
       "src/pages/AboutUs.jsx",
       "src/pages/ContactUs.jsx",
+      "src/pages/ApplicationForm.jsx",
       "src/pages/Admin.jsx",
-      "src/pages/AdminLogin.jsx",
-      "src/pages/ApplicationForm.jsx"
+      "src/pages/AdminLogin.jsx"
     ],
     "css": [
-      "assets/index-B7x8iyTh.css"
+      "assets/index-y4n-lxKi.css"
     ],
     "assets": [
       "assets/heroimg2-F2CvRi90.webp"
     ]
   },
   "node_modules/canvg/lib/index.es.js": {
-    "file": "assets/index.es-DEek6Q7u.js",
+    "file": "assets/index.es-CxnQXnsQ.js",
     "name": "index.es",
     "src": "node_modules/canvg/lib/index.es.js",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
+      "_rolldown-runtime-297CnYNL.js",
       "_typeof-Du9ZCqab.js"
     ]
   },
@@ -96,12 +96,21 @@
     "isDynamicEntry": true
   },
   "node_modules/html2canvas/dist/html2canvas.js": {
-    "file": "assets/html2canvas-B6lrth-O.js",
+    "file": "assets/html2canvas-DcPOKDFn.js",
     "name": "html2canvas",
     "src": "node_modules/html2canvas/dist/html2canvas.js",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js"
+      "_rolldown-runtime-297CnYNL.js"
+    ]
+  },
+  "node_modules/react-icons/fa/index.mjs": {
+    "file": "assets/fa-khccuivl.js",
+    "name": "fa",
+    "src": "node_modules/react-icons/fa/index.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ui-vendor-BfJCIDIj.js"
     ]
   },
   "src/assets/advisor.webp": {
@@ -245,14 +254,14 @@
     "src": "src/assets/w2.webp"
   },
   "src/components/AcademySection.jsx": {
-    "file": "assets/AcademySection-B0LcIjHZ.js",
+    "file": "assets/AcademySection-DKRg7fu5.js",
     "name": "AcademySection",
     "src": "src/components/AcademySection.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/AcademySection-Cal0LbiI.css"
@@ -264,15 +273,15 @@
     ]
   },
   "src/components/Appplication.jsx": {
-    "file": "assets/Appplication-eYRneTCO.js",
+    "file": "assets/Appplication-MdGEesPn.js",
     "name": "Appplication",
     "src": "src/components/Appplication.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
       "_typeof-Du9ZCqab.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_react-dom-D8tNOWnt.js"
     ],
     "dynamicImports": [
       "node_modules/html2canvas/dist/html2canvas.js",
@@ -284,32 +293,32 @@
     ]
   },
   "src/components/Banner.jsx": {
-    "file": "assets/Banner-BrV8YAHL.js",
+    "file": "assets/Banner-D-LQyKTq.js",
     "name": "Banner",
     "src": "src/components/Banner.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/Banner-Bjl_MWk9.css"
     ]
   },
   "src/components/Dashboard.jsx": {
-    "file": "assets/Dashboard-DK5tFfaa.js",
+    "file": "assets/Dashboard-CvTL2I1Q.js",
     "name": "Dashboard",
     "src": "src/components/Dashboard.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js",
-      "_api-QcrfcleK.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js",
+      "_api--wkmdF5w.js"
     ],
     "dynamicImports": [
-      "_react-vendor-SLSd7RaF.js"
+      "_ui-vendor-BfJCIDIj.js"
     ],
     "css": [
       "assets/Dashboard-CT-3g69D.css",
@@ -317,14 +326,14 @@
     ]
   },
   "src/components/Footer.jsx": {
-    "file": "assets/Footer-DFhYgDui.js",
+    "file": "assets/Footer-BwHd0NYP.js",
     "name": "Footer",
     "src": "src/components/Footer.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/Footer-DTVDnCqd.css"
@@ -334,16 +343,17 @@
     ]
   },
   "src/components/HowItWorks.jsx": {
-    "file": "assets/HowItWorks-DUHaJF_3.js",
+    "file": "assets/HowItWorks-DjzSBEM5.js",
     "name": "HowItWorks",
     "src": "src/components/HowItWorks.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
-      "assets/HowItWorks-0r6XvWf1.css"
+      "assets/HowItWorks-CmydIWx9.css"
     ],
     "assets": [
       "assets/call-S5n5Oz46.webp",
@@ -353,13 +363,14 @@
     ]
   },
   "src/components/Testimonials.jsx": {
-    "file": "assets/Testimonials-BuQTJ8qz.js",
+    "file": "assets/Testimonials-CeVAOTKz.js",
     "name": "Testimonials",
     "src": "src/components/Testimonials.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/Testimonials-C0d_tzCp.css"
@@ -372,13 +383,14 @@
     ]
   },
   "src/components/VisionMission.jsx": {
-    "file": "assets/VisionMission-CbM2r2VK.js",
+    "file": "assets/VisionMission-B_K3lTfD.js",
     "name": "VisionMission",
     "src": "src/components/VisionMission.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/VisionMission-DJKfQg_4.css"
@@ -389,13 +401,14 @@
     ]
   },
   "src/components/WeeklyStats.jsx": {
-    "file": "assets/WeeklyStats-DQ8WQVEH.js",
+    "file": "assets/WeeklyStats-BkUgNTUs.js",
     "name": "WeeklyStats",
     "src": "src/components/WeeklyStats.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/WeeklyStats-COCWe2ZD.css"
@@ -405,14 +418,14 @@
     ]
   },
   "src/components/WhatWeOffer.jsx": {
-    "file": "assets/WhatWeOffer-DVrkmuQs.js",
+    "file": "assets/WhatWeOffer-MbxrAwpf.js",
     "name": "WhatWeOffer",
     "src": "src/components/WhatWeOffer.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/WhatWeOffer-BIjRhGdI.css"
@@ -423,32 +436,33 @@
     ]
   },
   "src/components/WhyChooseUs.jsx": {
-    "file": "assets/WhyChooseUs-BCPzF3dB.js",
+    "file": "assets/WhyChooseUs-BMCtlHO9.js",
     "name": "WhyChooseUs",
     "src": "src/components/WhyChooseUs.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "css": [
       "assets/WhyChooseUs-m9TAYoII.css"
     ]
   },
   "src/pages/AboutUs.jsx": {
-    "file": "assets/AboutUs-DJMIcgPF.js",
+    "file": "assets/AboutUs-CvcUqDbr.js",
     "name": "AboutUs",
     "src": "src/pages/AboutUs.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js",
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js",
       "src/components/Footer.jsx",
-      "_BannerA-CZUpWNC_.js"
+      "_BannerA-DSN68LKc.js"
     ],
     "dynamicImports": [
-      "_react-vendor-SLSd7RaF.js"
+      "_ui-vendor-BfJCIDIj.js"
     ],
     "css": [
       "assets/AboutUs-dDOQ97jg.css"
@@ -473,14 +487,14 @@
     ]
   },
   "src/pages/Admin.jsx": {
-    "file": "assets/Admin-DuDnfNYt.js",
+    "file": "assets/Admin-fIOSv-D0.js",
     "name": "Admin",
     "src": "src/pages/Admin.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js"
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js"
     ],
     "dynamicImports": [
       "src/components/Dashboard.jsx",
@@ -488,15 +502,15 @@
     ]
   },
   "src/pages/AdminLogin.jsx": {
-    "file": "assets/AdminLogin-yVx7B2eW.js",
+    "file": "assets/AdminLogin-C-oTnUEz.js",
     "name": "AdminLogin",
     "src": "src/pages/AdminLogin.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
       "index.html",
-      "_react-vendor-SLSd7RaF.js",
+      "_react-dom-D8tNOWnt.js",
       "src/components/Footer.jsx"
     ],
     "css": [
@@ -504,15 +518,16 @@
     ]
   },
   "src/pages/ApplicationForm.jsx": {
-    "file": "assets/ApplicationForm-ZivGw-XN.js",
+    "file": "assets/ApplicationForm-w5t72YB_.js",
     "name": "ApplicationForm",
     "src": "src/pages/ApplicationForm.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_react-vendor-SLSd7RaF.js",
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js",
       "src/components/Footer.jsx",
-      "_api-QcrfcleK.js"
+      "_api--wkmdF5w.js"
     ],
     "css": [
       "assets/ApplicationForm-CMVdtbHB.css"
@@ -522,23 +537,57 @@
     ]
   },
   "src/pages/ContactUs.jsx": {
-    "file": "assets/ContactUs-ChdJOCbk.js",
+    "file": "assets/ContactUs-CIJ3DiJ_.js",
     "name": "ContactUs",
     "src": "src/pages/ContactUs.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_rolldown-runtime-CJ_koDw0.js",
-      "_router-vendor-MfTO5L3y.js",
-      "_react-vendor-SLSd7RaF.js",
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "_react-dom-D8tNOWnt.js",
       "src/components/Footer.jsx",
-      "_BannerA-CZUpWNC_.js",
-      "_api-QcrfcleK.js"
+      "_BannerA-DSN68LKc.js",
+      "_api--wkmdF5w.js"
     ],
     "dynamicImports": [
-      "_react-vendor-SLSd7RaF.js"
+      "_ui-vendor-BfJCIDIj.js"
     ],
     "css": [
       "assets/ContactUs-LdwvuEG9.css"
+    ]
+  },
+  "src/routes/AppRoutes.jsx": {
+    "file": "assets/AppRoutes-C1UlkU7E.js",
+    "name": "AppRoutes",
+    "src": "src/routes/AppRoutes.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-297CnYNL.js",
+      "_react-vendor-DFwRxZ6l.js",
+      "index.html",
+      "_react-dom-D8tNOWnt.js"
+    ],
+    "dynamicImports": [
+      "src/components/VisionMission.jsx",
+      "src/components/WeeklyStats.jsx",
+      "src/components/WhyChooseUs.jsx",
+      "src/components/HowItWorks.jsx",
+      "src/components/WhatWeOffer.jsx",
+      "src/components/Testimonials.jsx",
+      "src/components/AcademySection.jsx",
+      "src/components/Banner.jsx",
+      "src/components/Footer.jsx",
+      "src/pages/AboutUs.jsx",
+      "src/pages/ContactUs.jsx",
+      "src/pages/Admin.jsx",
+      "src/pages/AdminLogin.jsx",
+      "src/pages/ApplicationForm.jsx"
+    ],
+    "css": [
+      "assets/AppRoutes-DNYNuX5e.css"
+    ],
+    "assets": [
+      "assets/heroimg2-F2CvRi90.webp"
     ]
   }
 }

@@ -1,15 +1,15 @@
-import React, { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "../pages/Home";
 
 // Keep secondary pages lazy, but load Home eagerly for the landing route.
-const AboutUs = React.lazy(() => import("../pages/AboutUs"));
-const ContactUs = React.lazy(() => import("../pages/ContactUs"));
-const Admin = React.lazy(() => import("../pages/Admin"));
-const AdminLogin = React.lazy(() => import("../pages/AdminLogin"));
-const ApplicationForm = React.lazy(() => import("../pages/ApplicationForm"));
+const AboutUs = lazy(() => import("../pages/AboutUs"));
+const ContactUs = lazy(() => import("../pages/ContactUs"));
+const Admin = lazy(() => import("../pages/Admin"));
+const AdminLogin = lazy(() => import("../pages/AdminLogin"));
+const ApplicationForm = lazy(() => import("../pages/ApplicationForm"));
 // const Services = React.lazy(() => import("../pages/Services")); // if needed later
 
 export default function AppRoutes() {

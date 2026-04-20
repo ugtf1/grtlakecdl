@@ -10,10 +10,12 @@ export default defineConfig({
     modulePreload: false,
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          if (id.includes('react') && !id.includes('react-router')) return 'react-vendor';
-          if (id.includes('react-router')) return 'router-vendor';
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return;
+          if (id.includes('react-dom')) return 'react-dom';
+          if (id.includes('react-router-dom')) return 'router-vendor';
           if (id.includes('react-icons')) return 'ui-vendor';
+          if (id.includes('react')) return 'react-vendor';
         },
       },
     },

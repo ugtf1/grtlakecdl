@@ -1,19 +1,19 @@
 .how-it-works {
   background: url("/src/assets/trucks-bg.webp") center/cover no-repeat;
-  padding: 4rem 2rem 6rem;   
+  padding: 4rem 2rem 6rem;
   font-family: 'Inter', sans-serif;
   color: #fff;
   position: relative;
-  height: 30vh;
+  min-height: 60vh;
 }
 
 .hiw-overlay {
-  background: rgba(0,0,0,0.5); 
+  background: rgba(0,0,0,0.5);
   padding: 3rem 2rem;
   border-radius: 12px;
   max-width: 1100px;
   margin: 0 auto;
-  height: 30vh;
+  min-height: 48vh;
 }
 
 .hiw-heading {
@@ -47,17 +47,15 @@
 }
 
 
-.hiw-card1 {
+.hiw-card-right {
   background: #fff;
   color: #121212;
   border-radius: 10px;
   padding: 1rem;
-  flex: 1;                  
-  min-width: 280px;          
+  flex: 1;
+  min-width: 280px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* margin-top: 8rem; */
-  /* border: #121212 2px solid; */
   transform: rotate(-15deg);
 }
 
@@ -111,28 +109,28 @@
   }
 
   .hiw-card,
-  .hiw-card1 {
-    flex: 1 1 45%;                
+  .hiw-card-right {
+    flex: 1 1 45%;
     margin-top: 0;
-    transform: none;              
+    transform: none;
   }
 }
 
 @media (max-width: 600px) {
   .hiw-cards {
-    flex-wrap: wrap;            
-    justify-content: center;     
-    align-items: center;     
-    gap: 1.5rem;                  
-    margin: 3rem auto 0;         
-    max-width: 900px;            
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 3rem auto 0;
+    max-width: 900px;
   }
 
   .hiw-card,
-  .hiw-card1 {
-    flex: 1 1 45%;                
+  .hiw-card-right {
+    flex: 1 1 45%;
     margin-top: 0;
-    transform: none;              
+    transform: none;
   }
 
   .hiw-training-image {
@@ -153,17 +151,17 @@
   text-align: center;
   }
 
-  .hiw-card1 {
+  .hiw-card-right {
     background: #fff;
     color: #121212;
     border-radius: 10px;
-    /* padding: 1rem; */
+    padding: 1rem;
     flex: 1;
     min-width: 280px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: 0;
-    transform: none;          
+    transform: none;
   }
 
   .hiw-training-image:hover {
