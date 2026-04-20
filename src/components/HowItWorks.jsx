@@ -25,8 +25,8 @@ export default function HowItWorks() {
             <p>Get clear guidance on your path.</p>
           </div>
 
-          <div className="hiw-card hiw-card-right">
-            <img src={trainingImg} alt="Start Training" className="hiw-training-image" />
+          <div className="hiw-card1 hiw-card-right">
+  <         img src={trainingImg} alt="Start Training" className="hiw-training-image" />
             <h3>Start Training</h3>
             <p>Begin building your new career.</p>
           </div>
