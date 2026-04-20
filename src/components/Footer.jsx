@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function SocialIcon({ label, path }) {
   return (
-    <span className="social-icon" aria-label={label} title={label}>
+    <span className="social-icon" role="img" aria-label={label} title={label}>
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d={path} />
       </svg>

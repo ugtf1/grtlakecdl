@@ -6,7 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;          
+  box-sizing: border-box;
+  contain: layout style paint;
 }
 .banner-content {
   text-align: center;
@@ -31,7 +32,7 @@
   padding: 0.8rem 1.6rem;
   border-radius: 25px;
   border: none;
-  background: #ff6e00;
+  background: #d45a00;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -44,7 +45,7 @@
 }
 
 .banner-btn:hover {
-  background: #99460f;
+  background: #b84700;
 }
 
 /* Responsive */

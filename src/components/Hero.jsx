@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import truckDriverImg from "../assets/heroimg2.webp";
 import "./Hero.css";
 
-export default function Hero() {
+const Hero = React.memo(() => {
   return (
     <section className="hero">
       <div className="hero-container">
@@ -45,4 +45,6 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+});
+
+export default Hero;

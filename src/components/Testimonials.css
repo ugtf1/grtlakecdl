@@ -13,21 +13,7 @@
     #f9d52309
   );
   box-sizing: border-box;             
-}
-
-
-.testimonials-heading {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  color: #121212;
-  text-align: left;
-}
-
-/* Slider container */
-.slider {
-  overflow: hidden;
-  position: relative;
+  contain: layout style paint;
   width: 100%;
 }
 
@@ -94,7 +80,7 @@
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   border: none;
-  background: #ff6e00;
+  background: #d45a00;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -102,7 +88,7 @@
 }
 
 .testimonial-btn:hover {
-  background: #e65c00;
+  background: #b84700;
 }
 
 /* Auto-scroll animation */

@@ -10,6 +10,7 @@
     #e6783411 100%,
     #f0f4ff44 40%
   );
+  contain: layout style paint;
 }
 
 .hero-container {

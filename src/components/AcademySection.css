@@ -10,7 +10,8 @@
     #ffffff 0%,        
     #e678341a 100%,       
     #f0f4ff44 40%     
-  ); 
+  );
+  contain: layout style paint;
 }
 
 .academy-card {
@@ -46,7 +47,7 @@
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   border: none;
-  background: #ff6e00;
+  background: #d45a00;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -55,7 +56,7 @@
 }
 
 .academy-btn:hover {
-  background: #e65c00;
+  background: #b84700;
 }
 
 /* Subcards inside left card */

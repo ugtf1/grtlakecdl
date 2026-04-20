@@ -6,7 +6,7 @@ import handshakeImg from "../assets/handshake.webp";
 import lightbulbIcon from "../assets/lightbulb.webp";
 // import networkOverlay from "../assets/network-overlay.png";
 
-export default function VisionMission() {
+const VisionMission = React.memo(() => {
   return (
     <section className="vision-mission">
       {/* Top headline */}
@@ -45,15 +45,17 @@ export default function VisionMission() {
 
           {/* Lightbulb beside text */}
           <div className="vm-lightbulb-container">
-            <img src={lightbulbIcon} alt="Lightbulb Icon" className="vm-lightbulb" />
+            <img src={lightbulbIcon} alt="Lightbulb Icon" className="vm-lightbulb" loading="lazy" />
           </div>
         </div>
 
         {/* Right card */}
         <div className="vm-card vm-right-card">
-          <img src={handshakeImg} alt="Handshake" className="vm-handshake" />
+          <img src={handshakeImg} alt="Handshake" className="vm-handshake" loading="lazy" />
         </div>
       </div>
     </section>
   );
-}
+});
+
+export default VisionMission;

@@ -32,7 +32,7 @@
   padding: 0.8rem 1.6rem;
   border-radius: 17px;
   border: none;
-  background: #ff6e00;
+  background: #d45a00;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -45,7 +45,7 @@
 }
 
 .banner-btn:hover {
-  background: #99460f;
+  background: #b84700;
 }
 
 /* Responsive */

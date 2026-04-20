@@ -11,6 +11,7 @@
     #f9d52309
   );
   box-sizing: border-box;
+  contain: layout style paint;
 }
 
 .wcu-heading {

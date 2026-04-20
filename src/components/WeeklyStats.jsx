@@ -5,7 +5,7 @@ import "./WeeklyStats.css";
 import earningsImg from "../assets/w1.webp";   
 import trucksImg from "../assets/w2.webp";       
 
-export default function WeeklyStats() {
+const WeeklyStats = React.memo(() => {
   return (
     <section className="weekly-stats">
       <div className="stats-container">
@@ -15,7 +15,7 @@ export default function WeeklyStats() {
           <p>
             Join an industry with consistent demand and thousands of job openings.
           </p>
-          <img src={trucksImg} alt="Trucks on Highway" className="stats-image" />
+          <img src={trucksImg} alt="Trucks on Highway" className="stats-image" loading="lazy" />
         </div>
 
         <div className="stats-card stats-card-small">
@@ -24,10 +24,12 @@ export default function WeeklyStats() {
             Start earning weekly paychecks that can support your bills, family,
             and future goals.
           </p>
-          <img src={earningsImg} alt="Earnings Chart" className="stats-image" />
+          <img src={earningsImg} alt="Earnings Chart" className="stats-image" loading="lazy" />
         </div>
 
       </div>
     </section>
   );
-}
+});
+
+export default WeeklyStats;
