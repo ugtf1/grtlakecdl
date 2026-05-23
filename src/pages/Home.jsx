@@ -1,40 +1,41 @@
-import React, { Suspense } from "react";
-
-// Critical above-the-fold component
 import Hero from "../components/Hero";
-import IdleRender from "../components/IdleRender";
-
-// Lazy load the rest
-const VisionMission = React.lazy(() => import("../components/VisionMission"));
-const WeeklyStats = React.lazy(() => import("../components/WeeklyStats"));
-const WhyChooseUs = React.lazy(() => import("../components/WhyChooseUs"));
-const HowItWorks = React.lazy(() => import("../components/HowItWorks"));
-const WhatWeOffer = React.lazy(() => import("../components/WhatWeOffer"));
-const Testimonials = React.lazy(() => import("../components/Testimonials"));
-const AcademySection = React.lazy(() => import("../components/AcademySection"));
-const Banner = React.lazy(() => import("../components/Banner"));
-const Footer = React.lazy(() => import("../components/Footer"));
+import VisionMission from "../components/VisionMission";
+import WeeklyStats from "../components/WeeklyStats";
+import WhyChooseUs from "../components/WhyChooseUs";
+import HowItWorks from "../components/HowItWorks";
+import WhatWeOffer from "../components/WhatWeOffer";
+import Testimonials from "../components/Testimonials";
+import AcademySection from "../components/AcademySection";
+import Banner from "../components/Banner";
+import Footer from "../components/Footer"
 
 export default function Home() {
   return (
     <div>
-      {/* Hero loads immediately */}
       <Hero />
-
-      {/* Below-the-fold sections load after the critical path is done. */}
-      <IdleRender>
-        <Suspense fallback={null}>
-          <VisionMission />
-          <WeeklyStats />
-          <WhyChooseUs />
-          <HowItWorks />
-          <WhatWeOffer />
-          <Testimonials />
-          <AcademySection />
-          <Banner />
-          <Footer />
-        </Suspense>
-      </IdleRender>
+            <h1
+        style={{
+          textAlign: "center",
+          fontFamily: "Poppins, Inter, sans-serif",
+          fontSize: "1.5rem",
+          fontWeight: "700",
+          color: "#2c3e50",
+          marginTop: "40px",
+          marginBottom: "20px",
+          letterSpacing: "1px"
+        }}
+      >
+        CDL Training in Detroit, Michigan – Great Lakes CDL Academy
+      </h1>
+      <VisionMission />
+      <WeeklyStats />
+      <WhyChooseUs />
+      <HowItWorks />
+      <WhatWeOffer />
+      <Testimonials />
+      <AcademySection />
+      <Banner />
+      <Footer />
     </div>
   );
 }
