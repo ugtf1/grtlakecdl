@@ -163,8 +163,9 @@ export default function ContactHero() {
 
           <div className="info-card">
             <MapIcon className="info-icon" />
-            <h4>Conveniently Located at</h4>
-            <p>6575 W. Vernor Hwy, Detroit MI 48209</p>
+            <h4>Conveniently Located within</h4>
+            <p>The Samaritan Center Workforce Development Campus</p>
+            <p>5555 Conner Street, Suite 1646 Detroit, MI 48213</p>
             <button className="info-btn"><PlusIcon /></button>
           </div>
         </Suspense>
