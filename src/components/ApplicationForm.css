@@ -337,3 +337,158 @@ textarea {
     justify-content: flex-start;
   }
 }
+
+/* ========== ENROLMENT COMING SOON OVERLAY ========== */
+/* Remove this entire section when applications are open */
+
+.enrolment-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 1rem;
+}
+
+.enrolment-overlay-card {
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 110, 0, 0.15);
+  animation: overlayCardPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.enrolment-overlay-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.enrolment-overlay-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0A3383;
+  margin: 0 0 0.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.enrolment-overlay-subtitle {
+  font-size: 1.05rem;
+  color: #475569;
+  margin: 0 0 1rem;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.5;
+}
+
+.enrolment-overlay-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6e00, #0A3383);
+  border-radius: 2px;
+  margin: 0 auto 1rem;
+}
+
+.enrolment-overlay-body {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.enrolment-overlay-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.enrolment-overlay-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.enrolment-overlay-btn.call {
+  background: #ff6e00;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255, 110, 0, 0.3);
+}
+
+.enrolment-overlay-btn.call:hover {
+  background: #e65c00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 110, 0, 0.4);
+}
+
+.enrolment-overlay-btn.home {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+
+.enrolment-overlay-btn.home:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+}
+
+.enrolment-overlay-footer {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.enrolment-overlay-footer strong {
+  color: #ff6e00;
+}
+
+@keyframes overlayCardPop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Overlay responsive */
+@media (max-width: 480px) {
+  .enrolment-overlay-card {
+    padding: 2rem 1.5rem;
+  }
+  .enrolment-overlay-title {
+    font-size: 1.4rem;
+  }
+  .enrolment-overlay-subtitle {
+    font-size: 0.9rem;
+  }
+  .enrolment-overlay-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .enrolment-overlay-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

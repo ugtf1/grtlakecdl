@@ -12,6 +12,14 @@ const Hero = React.memo(() => {
             <span className="glow-dot"></span> Trusted by 1000s of CDL graduates
           </p>
 
+          <div className="coming-soon-banner">
+            <span className="coming-soon-icon">🚀</span>
+            <div className="coming-soon-text">
+              <strong>We're Launching Soon!</strong>
+              <p>Great Lakes CDL Academy operations are commencing soon. Enrolment opens shortly — stay tuned!</p>
+            </div>
+          </div>
+
           <h1>Struggling with money? Your high-paying CDL path starts here.</h1>
           <p className="subtext">
             This is your pathway to stable, real income and a better future.
