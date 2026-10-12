@@ -190,7 +190,7 @@ jobs:
               with open(path, "r", encoding="utf-8") as f:
                   data = json.load(f)
               scores = {
-                  key: round(data["categories"][key]["score"] * 100)
+                  key: round((data.get("categories", {}).get(key, {}).get("score") or 0) * 100)
                   for key, _ in categories
               }
               rows.append(
