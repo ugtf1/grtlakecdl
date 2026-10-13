@@ -68,7 +68,7 @@ export default function ComingSoon() {
         </div>
 
         {/* Contact Section */}
-        <div className="cs-contact">
+        {/* <div className="cs-contact">
           <p className="cs-contact-label">Get in touch with us</p>
           <div className="cs-contact-items">
             <a href="tel:+13134749777" className="cs-contact-item">
@@ -93,7 +93,7 @@ export default function ComingSoon() {
               </span>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Footer */}
         <p className="cs-footer">
